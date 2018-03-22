@@ -17,6 +17,7 @@ public:
     void mouseDown(float x, float y);
     void mouseDrag(float x, float y);
     void idle();
+    bool idle;  
 };
 
 #endif
