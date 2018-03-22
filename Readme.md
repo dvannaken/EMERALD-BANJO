@@ -32,5 +32,5 @@ Unlike the proposal, each team member will be required to submit a final report.
 * Lessons Learned:  In this section, please write about any interesting lessons you learned while workingon the project.  These do not need to necessarily be about C++ or Object-Oriented Programming,they can be on teamwork, time management skills, or any other aspect related to the project.
 * Additional Comments.  This section is optional.  Feel free to write any comment/suggestion/complaintabout the project that has not been covered in the above sections.
 
-The report should be well-written and presented.  The sections should be clearly labelled and should containfull paragraphs.  Please do not write everything in bullet point form and do not use one-liners such as “Theteam worked well together”.  Instead, write a story that demonstrates this.
+The report should be well-written and presented.  The sections should be clearly labelled and should containfull paragraphs.  Please do not write everything in bullet point form and do not use one-liners such as “The team worked well together”.  Instead, write a story that demonstrates this.
 
