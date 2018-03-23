@@ -1,5 +1,8 @@
 # Version:  Emerald-Banjo
 
+### Team Members
+Russell, Marielle, Irene, An Thien
+
 ## Task 
 Implement a 2D video game.  It can be a well-known game, such as Space Invaders or Pac-man, or a gameof your own invention.  You are required to use the GLUT template provided in class as a starting point.  Ifyou do not wish to use this, you may use a GLUT equivalent library, not a game engine such as Unity.Your game needs to have at least one object that moves autonomously and at least one object controlled bythe player.  You are also required to use textures on your objects and/or backgrounds to make your gamelook better.  Your game should be as close to a finished product as possible.  You should have things likepower-ups, keeping high scores, ability to pause/reset game, ability to save game, etc . . .
 
