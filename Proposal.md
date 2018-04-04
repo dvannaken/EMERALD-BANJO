@@ -21,7 +21,7 @@ TIMELINE
   - 4/9 - Map generation 
   - 4/16 - Player generation + movement + monsters + AI
   - 4/23 - Combat + collision + fog of war
-  - 4/30 - + Graphics + COMPLETE GAME!!!
+  - 4/30 - Graphics + COMPLETE GAME!!!
   
   
  Map generation
