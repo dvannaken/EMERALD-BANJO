@@ -10,6 +10,7 @@
 
 #include "Square.h"
 
+
 Square::Square() : Rect(){
     symbol = 0;
     symbolName = N;
@@ -29,9 +30,6 @@ Square::Square(float x, float y, float w, float r, float g, float b) : Rect(x, y
 
 void Square::draw() const {
 
-    if (symbol != 0) {
-        symbol->draw();
-    }
 
     glColor3f(r, g, b);
 

@@ -4,36 +4,32 @@
 #include "Square.h"
 
 class Board {
-	std::vector<Square*> squares;
-	float lx, ly, cx, cy, rx, ry;
-	//Turn turn;
-	//Player player;
-	bool upToDate;
-	bool inProgress;
-	int counter;
-	int delay;
-
-	void endTurn();
-	void reset();
-
-	void catchUp();
-	void behind();
-
-	//void checkForVictory();
-
-	//int selectMove(Turn);
-
+    std::vector<Square*> squares;
+	std::vector < std::vector<Square*> > gameboard; // 2d vector map
+    float lx, ly, cx, cy, rx, ry;
+    bool upToDate;
+    bool inProgress;
+    int counter;
+    int delay;
+    
+    void endTurn();
+    void reset();
+    
+    void catchUp();
+    void behind();
+    
 public:
-	Board();
-
-	void draw();
-
-	void check();
-
-	bool isUpToDate() const;
-	void movementHandle(unsigned char);
-
-	~Board();
+    Board();
+	Board(int);
+    
+    void draw();
+    void handle(unsigned char);
+    
+    void check();
+    
+    bool isUpToDate() const;
+    
+    ~Board();
 };
 
 #endif

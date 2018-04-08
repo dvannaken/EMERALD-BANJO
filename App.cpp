@@ -4,23 +4,22 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     // Initialize state variables
     mx = 0.0;
     my = 0.0;
-	std::cout << "initing" << '\n';
-	gameBoard = new Board();
+    gameBoard = new Board(50);
 }
 
 void App::draw() {
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	gameBoard->draw();
-
-	glFlush();
-	glutSwapBuffers();
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    gameBoard->draw();
+    
+    glFlush();
+    glutSwapBuffers();
 }
 
 void App::mouseDown(float x, float y){
@@ -43,20 +42,22 @@ void App::mouseDrag(float x, float y){
 
 void App::keyPress(unsigned char key) {
     if (key == 27){
-        // Exit the app when Esc key is pressed
+        delete gameBoard;
+        
         exit(0);
     }
-	else {
-		gameBoard->movementHandle(key);
-	}
+    else {
+        gameBoard->handle(key);
+    }
+    redraw();
 }
 
 void App::idle() {
-	if (!gameBoard->isUpToDate()) {
-		redraw();
-	}
-	else {
-		gameBoard->check();
-	}
-
+    if (!gameBoard->isUpToDate()){
+        redraw();
+    }
+    else{
+        gameBoard->check();
+    }
+    
 }
