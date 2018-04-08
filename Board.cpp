@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 #include <thread>
 #include "Board.h"
 
@@ -38,6 +38,34 @@ Board::Board() {
    // delay = 1000;
 }
 
+Board::Board(int ii) {
+	int size = ii;
+	float xinc = 0.04;
+	float yinc = 0.04;
+	float startx = -1;
+	float starty = 1;
+	for (int row = 0; row < size; row++)
+	{
+		gameboard.push_back(std::vector<Square*>());
+		for (int col = 0; col < size; col++)
+		{
+			if (row == 0 || row == 49 || col == 0 || col == 49) {
+				gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, 0, 0, 0));
+			}
+			gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8));
+		}
+	}
+	upToDate = true;
+	inProgress = false;
+
+	lx = 0.0;
+	ly = 0.0;
+	cx = 0.0;
+	cy = 0.0;
+	rx = 0.0;
+	ry = 0.0;
+}
+
 void Board::draw() {
     if (1){
         glLineWidth(4.0);
@@ -49,25 +77,35 @@ void Board::draw() {
         glEnd();
         glLineWidth(2.0);
     }
-    for (int i = 0; i < squares.size(); i++) {
+    /*for (int i = 0; i < squares.size(); i++) {
         squares[i]->draw();
-    }
+    }*/
+	for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			gameboard[i][j]->draw();
+		}
+	}
     catchUp();
 }
 
-void Board::handle(unsigned char key){
-    if (key == 'r'){
-        reset();
-    }
-    if (key == '0'){
-        //setCvC();
-    }
-    if (key == '1'){
-        //setPvC();
-    }
-    if (key == '2'){
-        //setPvP();
-    }
+
+void Board::handle(unsigned char key) {
+	if (key == 'r') {
+		reset();
+	}
+	if (key == 'w') {
+		//setCvC();
+	}
+	if (key == 'a') {
+		//setPvC();
+	}
+	if (key == 's') {
+		//setPvP();
+	}
+	if (key == 'd'){
+	}
 }
 
 void Board::check(){
@@ -76,9 +114,16 @@ void Board::check(){
 
 void Board::reset(){
     counter = 0;
-    for (int i = 0; i < squares.size(); i++) {
+    /*for (int i = 0; i < squares.size(); i++) {
         squares[i]->clear();
-    }
+    }*/
+	for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			gameboard[i][j]->clear();
+		}
+	}
 }
 
 void Board::behind(){
@@ -95,7 +140,14 @@ bool Board::isUpToDate() const {
 
 
 Board::~Board() {
-    for (int i = 0; i < squares.size(); i++) {
+   /* for (int i = 0; i < squares.size(); i++) {
         delete squares[i];
-    }
+    }*/
+	for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			delete gameboard[i][j];
+		}
+	}
 }
