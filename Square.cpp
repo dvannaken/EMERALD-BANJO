@@ -10,6 +10,7 @@
 
 #include "Square.h"
 
+
 Square::Square() : Rect(){
     symbol = 0;
     symbolName = N;
@@ -28,17 +29,17 @@ Square::Square(float x, float y, float w, float r, float g, float b) : Rect(x, y
 }
 
 void Square::draw() const {
-    
-    
+
+
     glColor3f(r, g, b);
-    
+
     glBegin(GL_POLYGON);
-    
+
     glVertex2f(x, y);
     glVertex2f(x + w, y);
     glVertex2f(x + w, y - h);
     glVertex2f(x, y - h);
-    
+
     glEnd();
 }
 
