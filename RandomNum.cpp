@@ -1,8 +1,8 @@
 #include "RandomNum.h"
 
 RandomNum::RandomNum(){
-  this->min = 4;
-  this->max = 4;
+  this->minNum = 4;
+  this->maxNum = 4;
 }
 RandomNum::RandomNum(int min, int max){
   this->minNum = min; // min num;
@@ -15,4 +15,14 @@ int RandomNum::genRandom(){
 int RandomNum::genRandom(int minimum, int maximum){
   srand(time(NULL));
   return rand() % maximum + minimum; //generates a random num between min and max;
+}
+
+int RandomNum::getMinNum()
+{
+	return minNum;
+}
+
+int RandomNum::getMaxNum()
+{
+	return maxNum;
 }

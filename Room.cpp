@@ -1,6 +1,11 @@
 #include "Room.h"
+#include "Corridor.h"
 #include <cmath>
-Room::Room(RandomNum* widthRange, RandomNum* heightRange,int cols, int rows){
+
+Room::Room() {
+	roomWidth = 0;
+}
+void Room::setupRoom(RandomNum* widthRange, RandomNum* heightRange,int cols, int rows){
 	//  set a random width and height
 	roomWidth = widthRange->genRandom();
 	roomHeight = heightRange->genRandom();
@@ -10,14 +15,13 @@ Room::Room(RandomNum* widthRange, RandomNum* heightRange,int cols, int rows){
 
 }
 
-Room::Room(RandomNum* widthRange,RandomNum* heightRange, int columns, int rows, Corridor* corridor){
+void Room::setupRoom(RandomNum* widthRange,RandomNum* heightRange, int columns, int rows, Corridor* corridor){
 enteringCorridor = corridor->direction;  // set the entering corridor directions
 
 // random vals for height and width
 
 roomWidth = widthRange->genRandom();
 roomHeight = heightRange->genRandom();
-
 
 switch(corridor->direction){
 	// if its going north
@@ -62,6 +66,7 @@ switch(corridor->direction){
 
 
 }
-int clip(float n, float lower, float upper) { // clips a bound from lower to upeper
+
+int Room::clip(float n, float lower, float upper) { // clips a bound from lower to upeper
 	return std::max(lower, std::min(n, upper));
 }

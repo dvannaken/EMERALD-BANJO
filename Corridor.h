@@ -1,24 +1,39 @@
-#ifndef Corridor_hpp
-#define Corridor_hpp
-#include "RandomNum.h"
-#include "Room.h"
-enum Direction {
-   north,south,west,east
- };
+#ifndef Corridor_HPP
+#define Corridor_HPP
 
-class Corridor{
+
+#include "RandomNum.h"
+#include <algorithm>
+
+
+enum Direction {
+	north, south, west, east
+};
+class Room;
+class Corridor
+{
+	Room* r;
 public:
+
   int startX;
   int startY;
   int corridorLength;
+
   Direction direction;
-  int endX; //get idk
+
+  int facing;
+  int endX; 
   int endY;
   int getEndX() ;
   int getEndY();
 
+  Corridor();
   void setupCorridor(Room*, RandomNum*,RandomNum*,RandomNum*,int,int,bool);
+  int clip(float, float, float);
 
+private:
 
 };
+
+
 #endif
