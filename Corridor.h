@@ -7,7 +7,7 @@
 
 
 enum Direction {
-	north, south, west, east
+	north, west, south, east
 };
 class Room;
 class Corridor

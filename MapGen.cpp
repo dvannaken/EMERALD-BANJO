@@ -9,51 +9,83 @@ MapGen::MapGen() {
 	//instantiateOuterWalls();
 }
 
-	
+MapGen::MapGen(int column, int row) {
+
+	std::cout << "constructing MapGen" << std::endl;
+	columns = column;
+	rows = row;
+	setupTileArray();
+	createRoomAndCorridors();
+	setupTileValuesForRooms();
+	SetupTilesValuesForCorridors();
+
+}
 void MapGen::setupTileArray()
 {
-	tiles = new TileType[columns][];
+	//failed implementations to clean up later
+	/*tiles = new TileType[columns][];
 	int size = *(&tiles+ 1) - tiles;
 	for (int i = 0; i < size; i++)
 	{
 		tile[i] = new TileType[rows];
-	}
+	}*/
+
+
+	/*for (int i = 0; i < columns; i++)
+	{
+		
+		tileBoard.push_back(std::vector<TileType>());
+		for (int j = 0; j < rows; j++)
+		{
+			std::cout << "breaks here " << i<<  j << std::endl;
+			tileBoard.at(j).push_back(Wall);
+		}
+	}*/
+
+	tileBoard.resize(rows, std::vector<TileType>(columns, Wall));
+
 }
 
 void MapGen::createRoomAndCorridors() {
 	//create the rooms array with a random size.
 
 	 
-	rooms = new Room[numRooms->genRandom];
+	//rooms = new Room[numRooms->genRandom];
+	for (int i = 0; i < numRooms->genRandom(); i++)
+	{
+		rooms.push_back(new Room());
+	}
+	
 
 	// there should one less corridor than there are rooms;
-	int roomSize = *(&rooms + 1) - rooms;
 
-	corridors = new Corridor[roomSize - 1];
+	//corridors = new Corridor[roomSize - 1];
 
-	int corrSize = *(&corridors + 1) - corridors;
-	// create first room and corridor;
+	for (int i = 0; i < rooms.size()-1; i++)
+	{
+		corridors.push_back(new Corridor());
+	}
 
-	rooms[0] = new Room();
-	corridors[0] = new Corridor();
+	//rooms[0] = new Room();
+	//corridors[0] = new Corridor();
 
 	//setting up the first room
 	rooms[0]->setupRoom(roomWidth, roomHeight, columns, rows);
-	corridors[0]->setupCorridor(room[0], corridorLength, roomWidth, roomHeight, columns, rows, true);
 
-	for (int i = 1; i < roomSize; i++)
+	corridors[0]->setupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, columns, rows, true);
+
+	for (int i = 1; i < rooms.size(); i++)
 	{
-		rooms[i] = new Room();
 		// set up the room based n the previous corridor 
-		rooms[i].setupRoom(roomWidth, roomHeight, columns, rows, corridors[i - 1]);
+		rooms[i]->setupRoom(roomWidth, roomHeight, columns, rows, corridors[i - 1]);
 
-		if (i < corrSize )	
+		if (i < corridors.size() )	
 		{
-			corridors[i] = new Corridor();
+			//corridors[i] = new Corridor();
 			corridors[i]->setupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, columns, rows, false);
 		}
 
-		if (i == roomSize * .5) {
+		if (i == rooms.size() * .5) {
 			// todo place player at a position
 			//set player location at rooms[i]->xPos, rooms[i]->yPos
 		}
@@ -61,13 +93,50 @@ void MapGen::createRoomAndCorridors() {
 	}
 }
 
+void MapGen::debug()
+{
+	
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < columns; j++)
+		{
+			if (tileBoard[i][j] == Floor)
+			{
+				std::cout << "x";
+			}
+			else if(tileBoard[i][j] == Wall)
+			{
+				std::cout << " ";
+			}
+		}
+		std::cout << "" << std::endl;
+	}
+}
+
+TileType MapGen::getTile(int i, int j)
+{
+	return tileBoard[i][j];
+}
+
+MapGen::~MapGen()
+{
+	for (int i = 0; i < rooms.size(); i++)
+	{
+		delete rooms[i];
+	}
+	for (int i = 0; i < corridors.size(); i++)
+	{
+		delete corridors[i];
+	}
+}
+
 
 void MapGen::setupTileValuesForRooms()
 {
-	int roomSize = *(&rooms + 1) - rooms;
-	for (int  i = 0; i < length; i++)
+	//int roomSize = *(&rooms + 1) - rooms;
+	for (int  i = 0; i < rooms.size(); i++)
 	{
-		Room* currentRoom = room[i];
+		Room* currentRoom = rooms[i];
 
 		// and for each through its width.
 
@@ -82,7 +151,7 @@ void MapGen::setupTileValuesForRooms()
 
 				// the coordinates in the jagged array are based on the room's position and its width and height.
 
-				tiles[xCord][yCord] = Floor;
+				tileBoard[xCord][yCord] = Floor;
 			}
 		}
 	}
@@ -90,8 +159,8 @@ void MapGen::setupTileValuesForRooms()
 
 void MapGen::SetupTilesValuesForCorridors() {
 	// go through every corridor...
-	int corrSize = *(&corridors + 1) - corridors;
-	for (int i = 0; i < corrSize; i++)
+	//int corrSize = *(&corridors + 1) - corridors;
+	for (int i = 0; i < corridors.size(); i++)
 	{
 		Corridor* currentCorridor = corridors[i];
 
@@ -120,7 +189,7 @@ void MapGen::SetupTilesValuesForCorridors() {
 			default:
 				break;
 			}
-			tiles[xcord][ycord] = Floor;
+			tileBoard[xcord][ycord] = Floor;
 		}
 	}
 }

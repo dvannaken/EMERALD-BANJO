@@ -11,6 +11,10 @@
 #endif
 
 Board::Board() {
+	
+	//generatoring new map
+
+	
     float xinc = 0.04;
     float yinc = 0.04;
     float startx = -1;
@@ -44,6 +48,9 @@ Board::Board(int ii) {
 	float yinc = 0.04;
 	float startx = -1;
 	float starty = 1;
+
+	generator = new MapGen(ii, ii);
+	generator->debug();
 	for (int row = 0; row < size; row++)
 	{
 		gameboard.push_back(std::vector<Square*>());
@@ -53,6 +60,18 @@ Board::Board(int ii) {
 				gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, 0, 0, 0));
 			}
 			gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8));
+		}
+	}
+
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			if (generator->getTile(i,j) == Floor)
+			{
+				gameboard[i][j]->setTile(f);
+				gameboard[i][j]->setColor(0.9, 0.9, 0.9);
+			}
 		}
 	}
 	upToDate = true;
@@ -80,10 +99,13 @@ void Board::draw() {
     /*for (int i = 0; i < squares.size(); i++) {
         squares[i]->draw();
     }*/
+
+
 	for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 50; j++)
 		{
+
 			gameboard[i][j]->draw();
 		}
 	}

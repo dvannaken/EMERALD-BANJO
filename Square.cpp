@@ -13,19 +13,19 @@
 
 Square::Square() : Rect(){
     symbol = 0;
-    symbolName = N;
+    tile = wall;
 }
 Square::Square(float w) : Rect(0, 0, w, w){
     symbol = 0;
-    symbolName = N;
+    tile = wall;
 }
 Square::Square(float x , float y, float w) : Rect(x, y, w, w) {
     symbol = 0;
-    symbolName = N;
+	tile = wall;
 }
 Square::Square(float x, float y, float w, float r, float g, float b) : Rect(x, y, w, w, r, g, b) {
     symbol = 0;
-    symbolName = N;
+    tile = wall;
 }
 
 void Square::draw() const {
@@ -48,15 +48,27 @@ Shape* Square::getSymbol() const {
     return symbol;
 }
 
-ShapeName Square::getSymbolName() const{
-    return symbolName;
+tileType Square::getTile() const{
+    return tile;
 }
+
+void Square::setTile(tileType t) {
+	tile = t;
+}
+
+void Square::setColor(float red, float green, float blue)
+{
+	r = red;
+	g = green;
+	b = blue;
+}
+
 void Square::clear() {
     if (symbol != 0){
         delete symbol;
     }
     symbol = 0;
-    symbolName = N;
+    tile = wall;
 }
 
 Square::~Square(){

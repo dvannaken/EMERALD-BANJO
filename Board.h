@@ -2,8 +2,10 @@
 #define Board_h
 #include <vector>
 #include "Square.h"
+#include "MapGen.h"
 
 class Board {
+	MapGen* generator;
     std::vector<Square*> squares;
 	std::vector < std::vector<Square*> > gameboard; // 2d vector map
     float lx, ly, cx, cy, rx, ry;
