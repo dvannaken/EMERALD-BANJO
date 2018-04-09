@@ -1,4 +1,5 @@
 #include "Room.h"
+#include "Corridor.h"
 #include <cmath>
 
 Room::Room() {

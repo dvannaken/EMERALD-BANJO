@@ -1,7 +1,7 @@
 #ifndef MapGen_hpp
 #define MapGen_hpp
 #include <time.h>
-#include <cstlib>
+#include <cstdlib>
 #include "RandomNum.h"
 #include "Room.h"
 #include "Corridor.h"
