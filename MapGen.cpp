@@ -9,6 +9,7 @@ MapGen::MapGen() {
 	//instantiateOuterWalls();
 }
 
+	
 void MapGen::setupTileArray()
 {
 	tiles = new TileType[columns][];
@@ -22,6 +23,7 @@ void MapGen::setupTileArray()
 void MapGen::createRoomAndCorridors() {
 	//create the rooms array with a random size.
 
+	 
 	rooms = new Room[numRooms->genRandom];
 
 	// there should one less corridor than there are rooms;
