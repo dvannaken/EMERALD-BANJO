@@ -3,7 +3,11 @@
 #include <cmath>
 
 Room::Room() {
-	roomWidth = 0;
+	xPos = 1;
+	yPos = 1;
+	roomWidth = 4;
+	roomHeight = 4;
+	enteringCorridor = south;
 }
 void Room::setupRoom(RandomNum* widthRange, RandomNum* heightRange,int cols, int rows){
 	//  set a random width and height
@@ -22,7 +26,7 @@ enteringCorridor = corridor->direction;  // set the entering corridor directions
 
 roomWidth = widthRange->genRandom();
 roomHeight = heightRange->genRandom();
-
+std::cout << "room Direction " << corridor->direction << std::endl;
 switch(corridor->direction){
 	// if its going north
 	case north:
