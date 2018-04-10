@@ -1,9 +1,8 @@
 #ifndef RandomNum_HPP
 #define RandomNum_HPP
 
-
+#include <random>
 #include <cstdlib>
-#include <time.h>
 #include <cmath>
 
 class RandomNum{

@@ -10,12 +10,16 @@ RandomNum::RandomNum(int min, int max){
   srand(time(NULL));
 }
 int RandomNum::genRandom(){
-    
-    return rand() % (maxNum - minNum) + minNum; // generates a random num between min and max;
+	std::mt19937 g(std::random_device{}());
+	std::uniform_int_distribution<int> dist(minNum, maxNum);
+	return dist(g);  // generates a random num between min and max;
 }
 int RandomNum::genRandom(int minimum, int maximum){
-  return rand() % (maximum - minimum) + maximum ; //generates a random num between min and max;
+	std::mt19937 g(std::random_device{}());
+	std::uniform_int_distribution<int> dist(minimum, maximum);
+	return dist(g);  // generates a random num between min and max; //generates a random num between min and max;
 }
+
 
 int RandomNum::getMinNum()
 {
