@@ -7,7 +7,6 @@
 #endif
 
 #include <iostream>
-
 #include "Square.h"
 
 
