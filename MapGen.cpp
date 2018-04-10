@@ -22,18 +22,8 @@ MapGen::MapGen(int column, int row) {
 }
 void MapGen::setupTileArray()
 {
-	//failed implementations to clean up later
-	/*tiles = new TileType[columns][];
-	int size = *(&tiles+ 1) - tiles;
-	for (int i = 0; i < size; i++)
-	{
-		tile[i] = new TileType[rows];
-	}*/
-
-
 	/*for (int i = 0; i < columns; i++)
 	{
-		
 		tileBoard.push_back(std::vector<TileType>());
 		for (int j = 0; j < rows; j++)
 		{
@@ -48,8 +38,6 @@ void MapGen::setupTileArray()
 
 void MapGen::createRoomAndCorridors() {
 	//create the rooms array with a random size.
-
-	 
 	//rooms = new Room[numRooms->genRandom];
 	for (int i = 0; i < numRooms->genRandom(); i++)
 	{
@@ -58,7 +46,6 @@ void MapGen::createRoomAndCorridors() {
 	
 
 	// there should one less corridor than there are rooms;
-
 	//corridors = new Corridor[roomSize - 1];
 
 	for (int i = 0; i < rooms.size()-1; i++)
@@ -68,7 +55,6 @@ void MapGen::createRoomAndCorridors() {
 
 	//rooms[0] = new Room();
 	//corridors[0] = new Corridor();
-
 	//setting up the first room
 	rooms[0]->setupRoom(roomWidth, roomHeight, columns, rows);
 
@@ -136,18 +122,18 @@ void MapGen::setupTileValuesForRooms()
 	//int roomSize = *(&rooms + 1) - rooms;
 	for (int  i = 0; i < rooms.size(); i++)
 	{
-		Room* currentRoom = rooms[i];
+		//Room* currentRoom = rooms[i];
 
 		// and for each through its width.
 
-		for (int j = 0; j < currentRoom->roomWidth; j++)
+		for (int j = 0; j < rooms[i]->roomWidth; j++)
 		{
-			int xCord = currentRoom->xPos + j;
+			int xCord = rooms[i]->xPos + j;
 
 			//for each horizontal tile, go up veritcally through the room's height
-			for (int k = 0; k < currentRoom->roomHeight; k++)
+			for (int k = 0; k < rooms[i]->roomHeight; k++)
 			{
-				int yCord = currentRoom->yPos + k;
+				int yCord = rooms[i]->yPos + k;
 
 				// the coordinates in the jagged array are based on the room's position and its width and height.
 
@@ -162,23 +148,23 @@ void MapGen::SetupTilesValuesForCorridors() {
 	//int corrSize = *(&corridors + 1) - corridors;
 	for (int i = 0; i < corridors.size(); i++)
 	{
-		Corridor* currentCorridor = corridors[i];
+		//Corridor* corridors = corridors[i];
 
-		for (int j = 0; j < currentCorridor->corridorLength; j++)
+		for (int j = 0; j < corridors[i]->corridorLength; j++)
 		{
-			int xcord = currentCorridor->startX;
-			int ycord = currentCorridor->startY;
+			int xcord = corridors[i]->startX;
+			int ycord = corridors[i]->startY;
 
 			// depending on direction add or subtract from appropriate cords
 			// based on on how far through the length the loop is.
 
-			switch (currentCorridor->direction) 
+			switch (corridors[i]->direction) 
 				{
 			case north:
 				ycord += j;
 				break;
 			case east:
-				////xcord += j;
+				xcord += j;
 				break;
 			case south:
 				ycord -= j;
