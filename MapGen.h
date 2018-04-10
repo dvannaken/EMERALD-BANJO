@@ -23,10 +23,10 @@ public:
   int rows;
   int columns;
 
-  RandomNum* numRooms = new RandomNum(15,20); // generates num of rooms between 15, 20
-  RandomNum* roomWidth = new RandomNum(3,10);
-  RandomNum* roomHeight = new RandomNum(3,10);
-  RandomNum* corridorLength = new RandomNum(6,10); // how long the num of corridorLength will be
+  RandomNum* numRooms = new RandomNum(5,10); // generates num of rooms between 15, 20
+  RandomNum* roomWidth = new RandomNum(3,5);
+  RandomNum* roomHeight = new RandomNum(3,5);
+  RandomNum* corridorLength = new RandomNum(2,7); // how long the num of corridorLength will be
 
   MapGen(); //Constructor
   MapGen(int, int);

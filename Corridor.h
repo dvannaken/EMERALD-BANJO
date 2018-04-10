@@ -3,12 +3,10 @@
 
 
 #include "RandomNum.h"
+#include "Direction.h"
 #include <algorithm>
 
 
-enum Direction {
-	north, west, south, east
-};
 class Room;
 class Corridor
 {
