@@ -3,11 +3,6 @@
 #include <cmath>
 
 Room::Room() {
-	xPos = 1;
-	yPos = 1;
-	roomWidth = 4;
-	roomHeight = 4;
-	enteringCorridor = south;
 }
 void Room::setupRoom(RandomNum* widthRange, RandomNum* heightRange,int cols, int rows){
 	//  set a random width and height

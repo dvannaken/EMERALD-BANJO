@@ -1,9 +1,6 @@
 #include "Corridor.h"
 #include "Room.h"
 Corridor::Corridor() {
-	startX = 25;
-	startY = 25;
-	corridorLength = 4;
 }
 int Corridor::getEndX(){
   if (direction == north || direction == south){
