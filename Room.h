@@ -1,5 +1,6 @@
 #ifndef Room_HPP
 #define Room_HPP
+#include <iostream>
 #include "RandomNum.h"
 #include "Direction.h"
 #include <algorithm>
