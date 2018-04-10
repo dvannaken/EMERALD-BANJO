@@ -21,9 +21,9 @@ Board::Board() {
     float starty = 1;
     for (int row = 0; row < 50; row++) {
         for (int col = 0; col < 50; col++) {
-            if  (row == 0 || row == 49 || col == 0 || col == 49){
+           /* if  (row == 0 || row == 49 || col == 0 || col == 49){
                 squares.push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, 0, 0, 0));
-            }
+            }*/
             squares.push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8));
         }
         
