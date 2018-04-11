@@ -6,6 +6,7 @@
 
 class Board {
 	MapGen* generator;
+	//CaveGen* cave;
     std::vector<Square*> squares;
 	std::vector < std::vector<Square*> > gameboard; // 2d vector map
     float lx, ly, cx, cy, rx, ry;

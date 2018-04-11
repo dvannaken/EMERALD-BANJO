@@ -8,7 +8,7 @@
 #include <vector>
 #include <iostream>
 enum TileType { Wall, Floor};
-
+enum mapType {Rooms,Cave};
 class MapGen {
 
 //TileType** tiles;
@@ -23,20 +23,30 @@ public:
   int rows;
   int columns;
 
-  RandomNum* numRooms = new RandomNum(5,10); // generates num of rooms between 15, 20
-  RandomNum* roomWidth = new RandomNum(3,5);
-  RandomNum* roomHeight = new RandomNum(3,5);
-  RandomNum* corridorLength = new RandomNum(2,7); // how long the num of corridorLength will be
+  RandomNum* numRooms = new RandomNum(10,15); // generates num of rooms between 15, 20
+  RandomNum* roomWidth = new RandomNum(3,7);
+  RandomNum* roomHeight = new RandomNum(3,7);
+  RandomNum* corridorLength = new RandomNum(5,9); // how long the num of corridorLength will be
 
   MapGen(); //Constructor
-  MapGen(int, int);
+  MapGen(int, int, mapType);
   void setupTileArray();
 
   void setupTileValuesForRooms();
   void SetupTilesValuesForCorridors();
-
   void createRoomAndCorridors(); 
+
+
+  // cave gen stuff
+
+
+  int fillPercent;
+	void randomFillMap();
+	void smoothMap();
+	int  getSurroundingWallsCount(int gridX, int GridY);
   void debug();
+
+
   TileType getTile(int, int);
   /*void instantiateTiles();
   void instantiateOuterWalls();

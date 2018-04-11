@@ -9,8 +9,24 @@ MapGen::MapGen() {
 	//instantiateOuterWalls();
 }
 
-MapGen::MapGen(int column, int row) {
+MapGen::MapGen(int column, int row, mapType map) {
 
+if(map == Cave){
+	fillPercent = 50;
+	columns = column;
+	rows = row;
+	setupTileArray();
+	randomFillMap();
+
+	for (int i = 0; i < 3; i++)
+	{
+		smoothMap();
+	}
+	
+
+
+}
+else{
 	std::cout << "constructing MapGen" << std::endl;
 	columns = column;
 	rows = row;
@@ -20,19 +36,72 @@ MapGen::MapGen(int column, int row) {
 	SetupTilesValuesForCorridors();
 
 }
+	
+}
 void MapGen::setupTileArray()
 {
-	/*for (int i = 0; i < columns; i++)
-	{
-		tileBoard.push_back(std::vector<TileType>());
-		for (int j = 0; j < rows; j++)
-		{
-			std::cout << "breaks here " << i<<  j << std::endl;
-			tileBoard.at(j).push_back(Wall);
-		}
-	}*/
-
 	tileBoard.resize(rows, std::vector<TileType>(columns, Wall));
+
+}
+
+void MapGen::randomFillMap()
+{
+	RandomNum * rand = new RandomNum(0, 100);
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < columns; j++)
+		{
+			int num = rand->genRandom();
+			if (i == 0 || j == 0 || i == 49 || j == 49) {
+				tileBoard[i][j] == Wall;
+			}
+			else if (num < fillPercent)
+			{
+				tileBoard[i][j] = Floor;
+			}
+			else tileBoard[i][j] = Wall;
+		}
+	}
+	delete rand;
+}
+
+int MapGen::getSurroundingWallsCount(int gridX, int gridY) {
+	int wallCount = 0;
+	for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++) {
+
+		for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++) {
+
+			if (neighbourX >= 0 && neighbourX < rows && neighbourY >= 0 && neighbourY < columns) {
+				if (neighbourX != gridX || neighbourY != gridY) {
+
+					if (tileBoard[neighbourX][neighbourY] == Wall) {
+
+						wallCount++;
+					}
+
+				}
+			}
+			else {
+				wallCount++;
+			}
+		}
+	}
+	std::cout << wallCount << std::endl;
+	return wallCount;
+}
+
+void MapGen::smoothMap() {
+	for (int x = 0; x < rows; x++) {
+		for (int y = 0; y < columns; y++) {
+			int neighbourWallTiles = getSurroundingWallsCount(x, y);
+
+			if (neighbourWallTiles > 4)
+				tileBoard[x][y] = Wall;
+			else if (neighbourWallTiles < 4)
+				tileBoard[x][y] = Floor;
+
+		}
+	}
 
 }
 
@@ -106,6 +175,11 @@ TileType MapGen::getTile(int i, int j)
 
 MapGen::~MapGen()
 {
+	delete numRooms;
+	delete roomHeight;
+	delete roomWidth;
+	delete corridorLength;
+
 	for (int i = 0; i < rooms.size(); i++)
 	{
 		delete rooms[i];
@@ -157,7 +231,7 @@ void MapGen::SetupTilesValuesForCorridors() {
 
 			// depending on direction add or subtract from appropriate cords
 			// based on on how far through the length the loop is.
-
+			std::cout << "Corridor " << i << " " << corridors[i]->startX << " " <<  corridors[i]->startY << corridors[i]->getEndX() << " "<< corridors[i]->getEndY() << " " << corridors[i]->corridorLength << " "<< corridors[i]->direction << std::endl;
 			switch (corridors[i]->direction) 
 				{
 			case north:

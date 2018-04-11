@@ -49,16 +49,14 @@ Board::Board(int ii) {
 	float startx = -1;
 	float starty = 1;
 
-	generator = new MapGen(ii, ii);
+	generator = new MapGen(ii, ii, Cave);
 	generator->debug();
 	for (int row = 0; row < size; row++)
 	{
 		gameboard.push_back(std::vector<Square*>());
 		for (int col = 0; col < size; col++)
 		{
-			if (row == 0 || row == 49 || col == 0 || col == 49) {
-				gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, 0, 0, 0));
-			}
+			// walls
 			gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8));
 		}
 	}
