@@ -1,18 +1,15 @@
 #include "Corridor.h"
 #include "Room.h"
 Corridor::Corridor() {
-	startX = 25;
-	startY = 25;
-	corridorLength = 4;
 }
 int Corridor::getEndX(){
   if (direction == north || direction == south){
     return startX;
   }
   if (direction == east) {
-    return startX + corridorLength - 1;
+    return (startX + corridorLength - 1);
   }
-  return startX - corridorLength + 1;
+  return (startX - corridorLength + 1);
 }
 int Corridor::getEndY(){
   if (direction == east || direction == west){
@@ -27,7 +24,7 @@ void Corridor::setupCorridor(Room* room, RandomNum* length, RandomNum* roomWidth
    RandomNum* roomHeight,int columns, int rows, bool firstCorridor){
 
      // generate a random number 0,3 for the cardinal directions
-     direction = (Direction)length->genRandom(0,4);
+     direction = (Direction)length->genRandom(0,3);
 	 std::cout << "DEBUG Direction" << direction << std::endl;
 
      // Find the direction opposite to the one entering the room this corridor is leaving from.

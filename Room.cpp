@@ -3,11 +3,6 @@
 #include <cmath>
 
 Room::Room() {
-	xPos = 1;
-	yPos = 1;
-	roomWidth = 4;
-	roomHeight = 4;
-	enteringCorridor = south;
 }
 void Room::setupRoom(RandomNum* widthRange, RandomNum* heightRange,int cols, int rows){
 	//  set a random width and height
@@ -26,7 +21,7 @@ enteringCorridor = corridor->direction;  // set the entering corridor directions
 
 roomWidth = widthRange->genRandom();
 roomHeight = heightRange->genRandom();
-std::cout << "room Direction " << corridor->direction << std::endl;
+std::cout << "room Direction " << (Direction)corridor->direction << std::endl;
 switch(corridor->direction){
 	// if its going north
 	case north:
@@ -54,17 +49,17 @@ switch(corridor->direction){
 
 	case south:
 		roomHeight = clip(roomHeight, 1 , corridor->getEndY());
-		yPos = corridor->getEndY()- roomHeight + 1;
+		yPos = corridor->getEndY() - roomHeight + 1;
 
 		xPos = widthRange->genRandom(corridor->getEndX() - roomWidth + 1, corridor->getEndX());
 		xPos = clip(xPos,0,columns - roomWidth);
 		break;
 	case west:
 		roomWidth = clip(roomWidth, 1, corridor->getEndX());
-    xPos = corridor->getEndX() - roomWidth + 1;
+		xPos = corridor->getEndX() - roomWidth + 1;
 
-   	yPos = widthRange->genRandom(corridor->getEndY() - roomHeight + 1, corridor->getEndY());
-    yPos = clip(yPos, 0, rows - roomHeight);
+   		yPos = widthRange->genRandom(corridor->getEndY() - roomHeight + 1, corridor->getEndY());
+		yPos = clip(yPos, 0, rows - roomHeight);
     break;
 }
 
