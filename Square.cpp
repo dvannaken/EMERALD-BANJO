@@ -12,19 +12,19 @@
 
 Square::Square() : Rect(){
     symbol = 0;
-    tile = wall;
+	tile = Unused;
 }
 Square::Square(float w) : Rect(0, 0, w, w){
     symbol = 0;
-    tile = wall;
+	tile = Unused;
 }
 Square::Square(float x , float y, float w) : Rect(x, y, w, w) {
     symbol = 0;
-	tile = wall;
+	tile = Unused;
 }
 Square::Square(float x, float y, float w, float r, float g, float b) : Rect(x, y, w, w, r, g, b) {
     symbol = 0;
-    tile = wall;
+	tile = Unused;
 }
 
 void Square::draw() const {
@@ -67,7 +67,7 @@ void Square::clear() {
         delete symbol;
     }
     symbol = 0;
-    tile = wall;
+	tile = Unused;
 }
 
 Square::~Square(){
