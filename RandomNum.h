@@ -21,7 +21,6 @@ public:
   int randomInt(int); // exclusive
   int randomInt(int,int); //inclusive 
   bool randomBool();
-
 };
 
 #endif

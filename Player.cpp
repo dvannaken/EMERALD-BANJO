@@ -9,69 +9,134 @@
 #include <GL/freeglut.h>
 #endif
 
+Player::Player() : Entity(25, 25)
+{
+
+	stre = generateStats();
+	dex = generateStats();
+	con = generateStats();
+	intel = generateStats();
+	chari = generateStats();
+
+}
+
+Player::Player(int x, int y) : Entity(x, y)
+{
+	stre = generateStats();
+	dex = generateStats();
+	con = generateStats();
+	intel = generateStats();
+	chari = generateStats();
+
+
+}
+
+Player::~Player()
+{
+}
+
+int Player::generateStats()
+{
+	dice = new RandomNum();
+
+	int* rolls;
+	rolls = new int[4];
+	int total = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		rolls[i] = dice->randomInt(6);
+	}
+
+
+
+	for (int i = 0; i < 4; i++)
+	{
+		total += rolls[i];
+	}
+	total - smallest(rolls);
+
+
+
+
+	delete dice;
+	delete rolls;
+	return total;
+}
+int Player::smallest(int* rolls) {
+	int small = 7;
+	for (int i = 0; i < 4; i++)
+	{
+		if (rolls[i] < small) {
+			small = rolls[i];
+		}
+	}
+	return small;
+}
+
 //getters
 int Player::getCon() const {
-  return con;
+	return con;
 }
 
 int Player::getChari() const {
-  return chari;
+	return chari;
 }
 
 int Player::getWis() const {
-  return wis;
+	return wis;
 }
 
 int Player::getDex() const {
-  return dex;
+	return dex;
 }
 
 int Player::getIntel() const {
-  return intel;
+	return intel;
 }
 
 int Player::getStre() const {
-  return stre;
+	return stre;
 }
 
 //setters
 void Player::setCon(int con) {
-  this->con = con;
+	this->con = con;
 }
 
 void Player::setChari(int chari) {
-  this->chari = chari;
+	this->chari = chari;
 }
 
 void Player::setWis(int wis) {
-  this->wis = wis;
+	this->wis = wis;
 }
 
 void Player::setDex(int dex) {
-  this->dex = dex;
+	this->dex = dex;
 }
 
 void Player::setIntel(int intel) {
-  this->intel = intel;
+	this->intel = intel;
 }
 
 void Player::setStre(int stre) {
-  this->stre = stre;
+	this->stre = stre;
 }
 
 //we're gonna use 2d array, so like 2 for loops???
-void Player::moveUp(float x, float y) {
-
+void Player::moveUp() {
+	this->setY(this->getY() + 1);
 }
 
-void Player::moveDown(float x, float y) {
-
+void Player::moveDown() {
+	this->setY(this->getY() - 1);
 }
 
-void Player::moveLeft(float x, float y) {
-
+void Player::moveLeft() {
+	this->setX(this->getX() - 1);
 }
 
-void Player::moveRight(float x, float y) {
-
+void Player::moveRight() {
+	this->setX(this->getX() + 1);
 }

@@ -1,7 +1,7 @@
 #ifndef Square_h
 #define Square_h
-
 #include "Rect.h"
+
 enum tileType {
     Unused,
     Floor,

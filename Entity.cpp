@@ -8,6 +8,12 @@
 #include <GL/freeglut.h>
 #endif
 
+Entity::Entity(int x, int y)
+{
+	this->x = x;
+	this->y = y;
+}
+
 float Entity::getX() const {
   return x;
 }
@@ -16,10 +22,10 @@ float Entity::getY() const {
   return y;
 }
 
-void Entity::setX(float) {
+void Entity::setX(int) {
   this->x = x;
 }
 
-void Entity::setY(float) {
+void Entity::setY(int) {
   this->y = y;
 }
