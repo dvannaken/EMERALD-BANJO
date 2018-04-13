@@ -24,7 +24,7 @@ Board::Board() {
            /* if  (row == 0 || row == 49 || col == 0 || col == 49){
                 squares.push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, 0, 0, 0));
             }*/
-            squares.push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8));
+            squares.push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8)); //walls
         }
         
     }
@@ -49,31 +49,62 @@ Board::Board(int ii) {
 	float startx = -1;
 	float starty = 1;
 
-	generator = new MapGen(ii, ii);
-	generator->debug();
+	map = new MapGen(size,size);
+	map->generate(random->randomInt(35,50));
+	map->print();
 	for (int row = 0; row < size; row++)
 	{
 		gameboard.push_back(std::vector<Square*>());
 		for (int col = 0; col < size; col++)
 		{
-			if (row == 0 || row == 49 || col == 0 || col == 49) {
-				gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, 0, 0, 0));
-			}
+			// walls
 			gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8));
 		}
 	}
 
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
-			if (generator->getTile(i,j) == Floor)
+	for (int y = 0; y < size; ++y) {
+		for (int x = 0; x < size; ++x)
+			switch (map->getTile(x,y))
 			{
-				gameboard[i][j]->setTile(f);
-				gameboard[i][j]->setColor(0.9, 0.9, 0.9);
+			case MapGen::Unused:
+				gameboard[x][y]->setTile(Unused);
+				gameboard[x][y]->setColor(0, 0, 0);
+				break;
+			case MapGen::Floor:
+				gameboard[x][y]->setTile(Floor);
+				gameboard[x][y]->setColor(0.7, 0.7, 0.7);
+				break;
+			case MapGen::Corridor:
+				gameboard[x][y]->setTile(Corridor);
+				gameboard[x][y]->setColor(0.7, 0.7, 0.7);
+				break;
+			case MapGen::Wall:
+				gameboard[x][y]->setTile(Wall);
+				gameboard[x][y]->setColor(0.8, 0.8, 0.8);
+				break;
+			case MapGen::ClosedDoor:
+				gameboard[x][y]->setTile(ClosedDoor);
+				gameboard[x][y]->setColor(0.462, 0.423, 0.298);
+				break;
+			case MapGen::OpenDoor:
+				gameboard[x][y]->setTile(OpenDoor);
+				gameboard[x][y]->setColor(0.4, 0.4, 0.4);
+				break;
+			case MapGen::UpStairs:
+				gameboard[x][y]->setTile(Upstairs);
+				gameboard[x][y]->setColor(0.8, 0.1, 0.1);
+				break;
+			case MapGen::DownStairs:
+				gameboard[x][y]->setTile(Downstairs);
+				gameboard[x][y]->setColor(0.8, 0.0, 0.0);
+				break;
+			default:
+				break;
 			}
-		}
+
+
 	}
+
 	upToDate = true;
 	inProgress = false;
 
@@ -165,6 +196,7 @@ Board::~Board() {
    /* for (int i = 0; i < squares.size(); i++) {
         delete squares[i];
     }*/
+	delete map;
 	for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 50; j++)

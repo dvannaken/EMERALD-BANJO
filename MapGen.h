@@ -1,54 +1,62 @@
-#ifndef MapGen_hpp
-#define MapGen_hpp
-#include <time.h>
-#include <cstdlib>
-#include "RandomNum.h"
-#include "Room.h"
-#include "Corridor.h" 
+#ifndef MapGen_HPP
+#define MapGen_HPP
 #include <vector>
 #include <iostream>
-enum TileType { Wall, Floor};
+#include "RandomNum.h"
+#include <random>
+struct Rectangle{
+    int x,y;
+    int width, height;
+};
 
-class MapGen {
-
-//TileType** tiles;
-std::vector < std::vector<TileType> > tileBoard; // 2d vector 
-//Room* rooms;
-//Corridor* corridors;
-
-std::vector<Room*> rooms;
-std::vector<Corridor*> corridors;
-
+class MapGen{
 public:
-  int rows;
-  int columns;
+    enum Tile{
+		Unused		= ' ',
+		Floor		= '.',
+		Corridor	= ',',
+		Wall		= '#',
+		ClosedDoor	= '+',
+		OpenDoor	= '-',
+		UpStairs	= '<',
+		DownStairs	= '>',
+		TileCount
+    };
+    enum Direction{
+        North,
+        South,
+        West,
+        East,
+        DirectionCount
+    };
 
-  RandomNum* numRooms = new RandomNum(5,10); // generates num of rooms between 15, 20
-  RandomNum* roomWidth = new RandomNum(3,5);
-  RandomNum* roomHeight = new RandomNum(3,5);
-  RandomNum* corridorLength = new RandomNum(2,7); // how long the num of corridorLength will be
+    MapGen(int,int);
+    void generate(int);
+    void print();
+	char getTile(int, int) const;
+	~MapGen();
+private:
+    
+    RandomNum* rng = new RandomNum();
 
-  MapGen(); //Constructor
-  MapGen(int, int);
-  void setupTileArray();
+    int _width;
+    int _height;
 
-  void setupTileValuesForRooms();
-  void SetupTilesValuesForCorridors();
+    std::vector < std::vector<Tile> > tileBoard; // 2d vector 
+    std::vector<char> _tiles;
+    std::vector<Rectangle> _rooms;
+    std::vector<Rectangle> _exits;
 
-  void createRoomAndCorridors(); 
-  void debug();
-  TileType getTile(int, int);
-  /*void instantiateTiles();
-  void instantiateOuterWalls();
-  void instantiateVerticalOuterWall(float,float,float);
-  void instantiateHorizontalOuterwall(float,float,float);
-  void instantiateFromArray(float,float);*/
-
-  ~MapGen();
-	
-
-
+    void setTile(int, int, char);
+    bool createFeature();
+    bool createFeature(int, int, Direction);
+    bool makeRoom(int, int, Direction,bool);
+    bool makeCorridor(int,int, Direction);
+    bool placeRect(const Rectangle&, char);
+    bool placeObject(char);
+    
 
 };
+
 
 #endif

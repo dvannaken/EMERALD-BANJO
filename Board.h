@@ -5,9 +5,11 @@
 #include "MapGen.h"
 
 class Board {
-	MapGen* generator;
+	MapGen* map;
+	//CaveGen* cave;
     std::vector<Square*> squares;
 	std::vector < std::vector<Square*> > gameboard; // 2d vector map
+	RandomNum* random = new RandomNum();
     float lx, ly, cx, cy, rx, ry;
     bool upToDate;
     bool inProgress;

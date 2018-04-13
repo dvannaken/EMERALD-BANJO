@@ -2,7 +2,16 @@
 #define Square_h
 
 #include "Rect.h"
-enum tileType {wall, f, d}; // wall, floor, door
+enum tileType {
+    Unused,
+    Floor,
+    Corridor,
+    Wall,
+    ClosedDoor,
+    OpenDoor,
+    Upstairs,
+    Downstairs
+}; 
 
 class Square : public Rect {
     Shape* symbol;
@@ -23,7 +32,6 @@ public:
 
     void clear();
 
-    void handle(float x, float y);
 
     ~Square();
 };
