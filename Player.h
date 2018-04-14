@@ -5,7 +5,18 @@
 
 class Player : public Entity { //must have health element
 private:
+	enum HungerState
+	{
+		Oversatiated,
+		Satiated,
+		NotHungry,
+		Peckish,
+		Hungry,
+		Weak,
+		fainting,
+		Starved
 
+	};
 	RandomNum * dice;
 
 	int con; //this is the constitution/health

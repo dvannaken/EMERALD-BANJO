@@ -95,11 +95,16 @@ void Player::init()
 	exp = 0;
 	level = 1;
 	hp = 8 + conBonus;
-
+	hunger = 100;
 }
 void Player::levelUp()
 {
 	level++;
+	hp += dice->rollDie(1, 8) + conBonus;
+	calculateBonus();
+	calculateProfBonus();
+	calculateToHit();
+	calculateDamage();
 
 }
 int Player::smallest(int* rolls) {
