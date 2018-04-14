@@ -95,7 +95,7 @@ void Player::init()
 	exp = 0;
 	level = 1;
 	hp = 8 + conBonus;
-	hunger = 100;
+	hunger = Satiated;
 }
 void Player::levelUp()
 {

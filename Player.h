@@ -38,7 +38,7 @@ private:
 	int level;
 	int ac; // armorclass needs to roll higher to hit
 	int hp;
-	int hunger;
+	HungerState hunger;
 
 	int toHitBonus; 
 
