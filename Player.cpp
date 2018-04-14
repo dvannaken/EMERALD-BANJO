@@ -11,28 +11,17 @@
 
 Player::Player() : Entity(25, 25)
 {
-
-	stre = generateStats();
-	dex = generateStats();
-	con = generateStats();
-	intel = generateStats();
-	chari = generateStats();
-
+	init();
 }
 
 Player::Player(int x, int y) : Entity(x, y)
 {
-	stre = generateStats();
-	dex = generateStats();
-	con = generateStats();
-	intel = generateStats();
-	chari = generateStats();
-
-
+	init();
 }
 
 Player::~Player()
 {
+	delete dice;
 }
 
 int Player::generateStats()
@@ -56,12 +45,62 @@ int Player::generateStats()
 	}
 	total - smallest(rolls);
 
-
-
-
-	delete dice;
+	
 	delete rolls;
+
 	return total;
+}
+
+int Player::calculateProfBonus() {
+	int bonus = 2;
+
+	return bonus + (level / 4);
+}
+
+int Player::rollAttackDamage() {
+	//based on weapons; @todo
+	int damage = dice->rollDie(1, 8) + streBonus;
+	return damage;
+}
+
+void Player::calculateToHitBonus() {
+	tohit = profBonus + streBonus();
+}
+
+int Player::rollToHit()
+{
+	return dice->randomInt(20) + toHitBonus;
+}
+
+int Player::calculateBonus(int stat) // creates the bonus
+{
+	return((stat - 10) / 2);
+	
+}
+void Player::calculateBonus() { // generates all the bonuses
+	streBonus = calculateBonus(stre);
+	dexBonus = calculateBonus(dex);
+	conBonus = calculateBonus(con);
+	intelBonus = calculateBonus(intel);
+	wisBonus = calculateBonus(wis);
+	chariBonus = calculateBonus(chari);
+}
+void Player::init()
+
+{
+	calculateBonus();
+	calculateProfBonus();
+	calculateToHit();
+	calculateDamage();
+	exp = 0;
+	level = 1;
+	hp = 8 + conBonus;
+
+}
+void Player::levelUp()
+{
+	level++;
+
 }
 int Player::smallest(int* rolls) {
 	int small = 7;
