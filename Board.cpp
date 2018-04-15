@@ -31,12 +31,7 @@ Board::Board() {
     upToDate = true;
     inProgress = false;
     
-    lx = 0.0;
-    ly = 0.0;
-    cx = 0.0;
-    cy = 0.0;
-    rx = 0.0;
-    ry = 0.0;
+   
     
     
    // delay = 1000;
@@ -50,7 +45,7 @@ Board::Board(int ii) {
 	float starty = 1;
 
 	map = new MapGen(size,size);
-	map->generate(random->randomInt(35,50));
+	map->generate(rng->randomInt(35,50));
 	map->print();
 	for (int row = 0; row < size; row++)
 	{
@@ -93,6 +88,18 @@ Board::Board(int ii) {
 			case MapGen::UpStairs:
 				gameboard[x][y]->setTile(Upstairs);
 				gameboard[x][y]->setColor(0.8, 0.1, 0.1);
+
+				
+				if (canMove(x - 1, y)) {
+					player = new Player(x - 1, y); // spawns player left of upstairs
+					gameboard[x - 1][y]->setEntityType(entityType::player);
+				}
+				else if (canMove(x, y - 1)) {
+					player = new Player(x, y - 1); // spawns player right of upstairs
+					gameboard[x - 1][y]->setEntityType(entityType::player);
+				}
+					
+				
 				break;
 			case MapGen::DownStairs:
 				gameboard[x][y]->setTile(Downstairs);
@@ -106,14 +113,8 @@ Board::Board(int ii) {
 	}
 
 	upToDate = true;
-	inProgress = false;
+	//inProgress = false;
 
-	lx = 0.0;
-	ly = 0.0;
-	cx = 0.0;
-	cy = 0.0;
-	rx = 0.0;
-	ry = 0.0;
 }
 
 void Board::draw() {
@@ -124,6 +125,7 @@ void Board::draw() {
 		{
 
 			gameboard[i][j]->draw();
+
 		}
 	}
     catchUp();
@@ -131,34 +133,60 @@ void Board::draw() {
 
 
 void Board::handle(unsigned char key) {
-
+	
 	int playerX = player->getX();
-	int PlayerY = player->getY();
+	int playerY = player->getY();
 
-	if (key == 'r') {
-		reset();
-	}
+
 	if (key == 'w') {
-		if(canMove(playerX,playerY - 1))
-		player->moveUp();
+		if (canMove(playerX, playerY + 1)) {
+			std::cout << "moving up " << std::endl;
+			player->moveUp();
+			gameboard[playerX][playerY]->setEntityType(entityType::empty);
+			gameboard[playerX][playerY + 1]->setEntityType(entityType::player);
+			behind();
+		}
+
 	}
 	if (key == 'a') {
-		if (canMove(playerX-1, playerY))
-		player->moveLeft();
-	}
+		if (canMove(playerX - 1, playerY)) {
+			std::cout << "moving left" << std::endl;
+			player->moveLeft();
+			gameboard[playerX][playerY]->setEntityType(entityType::empty);
+			gameboard[playerX - 1][playerY]->setEntityType(entityType::player);
+			behind();
+		}
 	}
 	if (key == 's') {
-		if (canMove(playerX+1, playerY)
-		player->moveRight();
+		if (canMove(playerX, playerY - 1)) {
+			std::cout << "moving down" << std::endl;
+			player->moveRight();
+			gameboard[playerX][playerY]->setEntityType(entityType::empty);
+			gameboard[playerX + 1][playerY - 1]->setEntityType(entityType::player);
+			behind();
+		}
+
 	}
-	if (key == 'd'){
-		if (canMove(playerX, playerY + 1))
-		player->moveDown();
+	if (key == 'd') {
+		if (canMove(playerX + 1, playerY)) {
+			std::cout << "moving right " << std::endl;
+			player->moveDown();
+			gameboard[playerX][playerY]->setEntityType(entityType::empty);
+			gameboard[playerX + 1][playerY]->setEntityType(entityType::player);
+			behind();
+		}
 	}
 }
 
-void Board::check(){
 
+
+
+void Board::check(){
+	while (!gameover) {
+		// game mechanics go here
+
+	}
+	
 }
 
 void Board::reset(){
@@ -199,7 +227,9 @@ bool Board::canMove(int endX, int endY)
 
 
 Board::~Board() {
+	delete rng;
 	delete map;
+	delete player;
 	for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 50; j++)

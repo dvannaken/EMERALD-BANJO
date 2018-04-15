@@ -15,9 +15,11 @@ enum tileType {
 }; 
 
 enum entityType {
-	empty,
+	empty, // the palce is empty
 	player,
+	monster,
 	item,
+	items
 };
 
 
@@ -34,9 +36,10 @@ public:
     void draw() const;
 	
 
-    Shape* getEntityType() const;
+    Entity* getEntityType() const;
     tileType getTile() const;
 	void setTile(tileType);
+	void setEntityType(entityType);
 	void setColor(float, float, float);
 
     void clear();

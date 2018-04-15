@@ -64,7 +64,7 @@ int Player::rollAttackDamage() {
 }
 
 void Player::calculateToHitBonus() {
-	tohit = profBonus + streBonus();
+	toHitBonus = profBonus + streBonus;
 }
 
 int Player::rollToHit()
@@ -90,8 +90,7 @@ void Player::init()
 {
 	calculateBonus();
 	calculateProfBonus();
-	calculateToHit();
-	calculateDamage();
+	calculateToHitBonus();
 	exp = 0;
 	level = 1;
 	hp = 8 + conBonus;
@@ -103,8 +102,8 @@ void Player::levelUp()
 	hp += dice->rollDie(1, 8) + conBonus;
 	calculateBonus();
 	calculateProfBonus();
-	calculateToHit();
-	calculateDamage();
+	calculateToHitBonus();
+
 
 }
 int Player::smallest(int* rolls) {
