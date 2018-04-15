@@ -6,6 +6,7 @@
 
 class Board {
 	MapGen* map;
+	Player* player;
 	//CaveGen* cave;
     std::vector<Square*> squares;
 	std::vector < std::vector<Square*> > gameboard; // 2d vector map
@@ -32,6 +33,7 @@ public:
     void check();
     
     bool isUpToDate() const;
+	bool canMove(int,int,int,int);
     
     ~Board();
 };

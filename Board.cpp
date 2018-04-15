@@ -117,20 +117,6 @@ Board::Board(int ii) {
 }
 
 void Board::draw() {
-    if (1){
-        glLineWidth(4.0);
-        glBegin(GL_LINES);
-        
-        glVertex2f(lx, ly);
-        glVertex2f(cx, cy);
-        
-        glEnd();
-        glLineWidth(2.0);
-    }
-    /*for (int i = 0; i < squares.size(); i++) {
-        squares[i]->draw();
-    }*/
-
 
 	for (int i = 0; i < 50; i++)
 	{
@@ -145,19 +131,29 @@ void Board::draw() {
 
 
 void Board::handle(unsigned char key) {
+
+	int playerX = player->getX();
+	int PlayerY = player->getY();
+
 	if (key == 'r') {
 		reset();
 	}
 	if (key == 'w') {
-		//setCvC();
+		if(canMove(playerX,playerY - 1))
+		player->moveUp();
 	}
 	if (key == 'a') {
-		//setPvC();
+		if (canMove(playerX-1, playerY))
+		player->moveLeft();
+	}
 	}
 	if (key == 's') {
-		//setPvP();
+		if (canMove(playerX+1, playerY)
+		player->moveRight();
 	}
 	if (key == 'd'){
+		if (canMove(playerX, playerY + 1))
+		player->moveDown();
 	}
 }
 
@@ -191,11 +187,18 @@ bool Board::isUpToDate() const {
     return upToDate;
 }
 
+bool Board::canMove(int endX, int endY)
+{
+	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
 
 Board::~Board() {
-   /* for (int i = 0; i < squares.size(); i++) {
-        delete squares[i];
-    }*/
 	delete map;
 	for (int i = 0; i < 50; i++)
 	{

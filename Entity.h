@@ -16,6 +16,8 @@ public:
 
 	void setX(int);
 	void setY(int);
+	
+	virtual void draw() const {};
 
 };
 

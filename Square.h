@@ -1,6 +1,7 @@
 #ifndef Square_h
 #define Square_h
 #include "Rect.h"
+#include "Player.h"
 
 enum tileType {
     Unused,
@@ -13,9 +14,17 @@ enum tileType {
     Downstairs
 }; 
 
+enum entityType {
+	empty,
+	player,
+	item,
+};
+
+
 class Square : public Rect {
-    Shape* symbol;
+    Entity* entity;
     tileType tile;
+	entityType entityTile; // need better name
 public:
     Square();
     Square(float);
@@ -25,7 +34,7 @@ public:
     void draw() const;
 	
 
-    Shape* getSymbol() const;
+    Shape* getEntityType() const;
     tileType getTile() const;
 	void setTile(tileType);
 	void setColor(float, float, float);
