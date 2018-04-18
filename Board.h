@@ -33,7 +33,7 @@ public:
     void check();
     
     bool isUpToDate() const;
-	bool canMove(int,int,int,int);
+	bool canMove(int,int);
     
     ~Board();
 };

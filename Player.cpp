@@ -169,11 +169,11 @@ void Player::setStre(int stre) {
 
 //we're gonna use 2d array, so like 2 for loops???
 void Player::moveUp() {
-	this->setY(this->getY() + 1);
+	this->setY(this->getY() - 1);
 }
 
 void Player::moveDown() {
-	this->setY(this->getY() - 1);
+	this->setY(this->getY() + 1);
 }
 
 void Player::moveLeft() {

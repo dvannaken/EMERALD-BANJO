@@ -45,7 +45,7 @@ Board::Board(int ii) {
 	float starty = 1;
 
 	map = new MapGen(size,size);
-	map->generate(rng->randomInt(35,50));
+	map->generate(random->randomInt(35,50));
 	map->print();
 	for (int row = 0; row < size; row++)
 	{
@@ -90,14 +90,14 @@ Board::Board(int ii) {
 				gameboard[x][y]->setColor(0.8, 0.1, 0.1);
 
 				
-				if (canMove(x - 1, y)) {
-					player = new Player(x - 1, y); // spawns player left of upstairs
-					gameboard[x - 1][y]->setEntityType(entityType::player);
-				}
-				else if (canMove(x, y - 1)) {
-					player = new Player(x, y - 1); // spawns player right of upstairs
-					gameboard[x - 1][y]->setEntityType(entityType::player);
-				}
+			if (canMove(x - 1, y)) {
+				player = new Player(x - 1, y); // spawns player left of upstairs
+				gameboard[x - 1][y]->setEntityType(entityType::player);
+			}
+			else if (canMove(x, y - 1)) {
+				player = new Player(x, y - 1); // spawns player right of upstairs
+				gameboard[x - 1][y]->setEntityType(entityType::player);
+			}
 					
 				
 				break;
@@ -139,11 +139,12 @@ void Board::handle(unsigned char key) {
 
 
 	if (key == 'w') {
-		if (canMove(playerX, playerY + 1)) {
+		if (canMove(playerX, playerY - 1)) {
 			std::cout << "moving up " << std::endl;
+			std::cout << playerX << playerY << std::endl;
 			player->moveUp();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
-			gameboard[playerX][playerY + 1]->setEntityType(entityType::player);
+			gameboard[playerX][playerY - 1]->setEntityType(entityType::player);
 			behind();
 		}
 
@@ -158,11 +159,11 @@ void Board::handle(unsigned char key) {
 		}
 	}
 	if (key == 's') {
-		if (canMove(playerX, playerY - 1)) {
+		if (canMove(playerX, playerY + 1)) {
 			std::cout << "moving down" << std::endl;
 			player->moveRight();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
-			gameboard[playerX + 1][playerY - 1]->setEntityType(entityType::player);
+			gameboard[playerX][playerY + 1]->setEntityType(entityType::player);
 			behind();
 		}
 
@@ -182,10 +183,11 @@ void Board::handle(unsigned char key) {
 
 
 void Board::check(){
-	while (!gameover) {
-		// game mechanics go here
+	//while (!gameover) {
 
-	}
+	//	// game mechanics go here
+
+	//}
 	
 }
 
@@ -227,7 +229,7 @@ bool Board::canMove(int endX, int endY)
 
 
 Board::~Board() {
-	delete rng;
+	delete random;
 	delete map;
 	delete player;
 	for (int i = 0; i < 50; i++)
