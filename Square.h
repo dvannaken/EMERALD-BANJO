@@ -2,6 +2,7 @@
 #define Square_h
 #include "Rect.h"
 #include "Player.h"
+#include <algorithm>
 
 enum tileType {
     Unused,
@@ -21,12 +22,21 @@ enum entityType {
 	item,
 	items
 };
+enum visibility {
+	currentlyLit = 0,
+	recentlyLit = 1,
+	furtherLit = 20,
+	fartherLit = 30,
+	litLevels = 40,
+	unknown = 50,
+};
 
 
 class Square : public Rect {
     Entity* entity;
     tileType tile;
 	entityType entityTile; // need better name
+	visibility vis;
 	
 public:
     Square();
@@ -45,6 +55,8 @@ public:
     Entity* getEntityType() const;
     tileType getTile() const;
 	void setTile(tileType);
+	void setVis(visibility);
+	visibility getVis();
 	void setEntityType(entityType);
 	void setColor(float, float, float);
 

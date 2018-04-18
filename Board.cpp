@@ -2,6 +2,7 @@
 #include <thread>
 #include "Board.h"
 
+
 #if defined WIN32
 #include <freeglut.h>
 #elif defined __APPLE__
@@ -58,18 +59,20 @@ Board::Board(int ii) {
 		}
 	}
 
-	for (int y = 0; y < size; ++y) {
-		for (int x = 0; x < size; ++x) {
-			gameboard[x][y]->visible = false;
+	for (int y = 0; y < size; y++) {
+		
+		for (int x = 0; x < size; x++) {
+
+			gameboard[x][y]->setVis(unknown);
 			switch (map->getTile(x, y))
 			{
 			case MapGen::Unused:
 				gameboard[x][y]->setTile(Unused);
-				gameboard[x][y]->setColor(0, 0, 0);
+				gameboard[x][y]->setColor(.5, .5, .5);
 				break;
 			case MapGen::Floor:
 				gameboard[x][y]->setTile(Floor);
-				gameboard[x][y]->setColor(0.7, 0.7, 0.7);
+				gameboard[x][y]->setColor(0.5, 0.5, 0.5);
 				break;
 			case MapGen::Corridor:
 				gameboard[x][y]->setTile(Corridor);
@@ -96,13 +99,13 @@ Board::Board(int ii) {
 					player = new Player(x - 1, y); // spawns player left of upstairs
 					gameboard[x - 1][y]->setEntityType(entityType::player);
 
-					doFov(x,y);
+					doFov(x,y,8);
 				}
 				else if (canMove(x, y - 1)) {
 					player = new Player(x, y - 1); // spawns player right of upstairs
 					gameboard[x - 1][y]->setEntityType(entityType::player);
 
-					doFov(x,y);
+					doFov(x,y,8);
 				}
 
 
@@ -130,7 +133,10 @@ void Board::draw() {
 	{
 		for (int j = 0; j < 50; j++)
 		{
-
+			if (gameboard[i][j]->getVis() != currentlyLit && gameboard[i][j]->getVis() != unknown )
+			{
+				gameboard[i][j]->setVis(recentlyLit);
+			}
 			gameboard[i][j]->draw();
 
 		}
@@ -152,6 +158,7 @@ void Board::handle(unsigned char key) {
 			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			doFov(player->getX(), player->getY());
 			behind();
+			stepCounter++;
 		}
 
 	}
@@ -163,6 +170,7 @@ void Board::handle(unsigned char key) {
 			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			doFov(player->getX(), player->getY());
 			behind();
+			stepCounter++;
 		}
 	}
 	if (key == 'd') {
@@ -173,6 +181,7 @@ void Board::handle(unsigned char key) {
 			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			doFov(player->getX(), player->getY());
 			behind();
+			stepCounter++;
 		}
 
 	}
@@ -184,6 +193,7 @@ void Board::handle(unsigned char key) {
 			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			doFov(player->getX(), player->getY());
 			behind();
+			stepCounter++;
 		}
 	}
 
@@ -203,7 +213,7 @@ void Board::check() {
 }
 
 void Board::reset() {
-	counter = 0;
+	stepCounter = 0;
 	/*for (int i = 0; i < squares.size(); i++) {
 		squares[i]->clear();
 	}*/
@@ -222,20 +232,23 @@ void Board::behind() {
 
 void Board::setVisible(uint x, uint y, bool visible)
 {
-	gameboard[x][y]->visible = visible;
+	if (visible){
+		gameboard[x][y]->setVis(currentlyLit);
+	}
+	else
+		gameboard[x][y]->setVis(unknown);
+
+	
 }
 
 bool Board::isOpaque(uint x, uint y) const
 {
 	tileType checktile = gameboard[x][y]->getTile();
-	if (checktile == Wall || checktile == ClosedDoor || checktile == Unused ||checktile == Corridor)
-	{
-		return false;
-	}
-	else
+	if (checktile == Wall || checktile == ClosedDoor )
 	{
 		return true;
 	}
+	return false;
 	
 }
 
@@ -255,6 +268,7 @@ void Board::castLight(uint x, uint y, uint radius, uint row, float start_slope, 
 			if (start_slope < r_slope) {
 				continue;
 			}
+
 			else if (end_slope > l_slope) {
 				break;
 			}
@@ -267,7 +281,7 @@ void Board::castLight(uint x, uint y, uint radius, uint row, float start_slope, 
 			}
 			uint ax = x + sax;
 			uint ay = y + say;
-			if (ax >= 50 || ay >= 50) {
+			if (ax >= 49 || ay >= 49) {
 				continue;
 			}
 
@@ -299,13 +313,18 @@ void Board::castLight(uint x, uint y, uint radius, uint row, float start_slope, 
 	}
 }
 
-void Board::doFov(uint x, uint y)
-{
-	float radius = 3;
-	for (uint i = 0; i < 8; i++)
-	{
-		castLight(x, y, radius, 1, 1.0, 0.0, multipliers[0][i], multipliers[1][i],
-			multipliers[2][i], multipliers[3][i]);
+void Board::doFov(uint x, uint y, uint radius) {
+	for (uint i = 0; i < 8; i++) {
+		castLight(x, y, radius, 1, 1.0, 0.0, multipliers[0][i],
+			multipliers[1][i], multipliers[2][i], multipliers[3][i]);
+	}
+}
+
+void Board::doFov(uint x, uint y) {
+	uint radius = 8;
+	for (uint i = 0; i < 8; i++) {
+		castLight(x, y, radius, 1, 1.0, 0.0, multipliers[0][i],
+			multipliers[1][i], multipliers[2][i], multipliers[3][i]);
 	}
 }
 

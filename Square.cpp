@@ -50,13 +50,29 @@ void Square::draw() const {
 		glEnd();
 	}
 
-	if (visible)
+	if (vis < litLevels)
 	{
-		glColor3f(r, g, b);
+		float darkness;
+		switch (vis)
+		{
+		case currentlyLit:
+			darkness = 0.0;
+			break;
+		case recentlyLit:
+			darkness = 0.3;
+			break;
+		case furtherLit:
+			darkness = 0.2;
+			break;
+		case fartherLit:
+			darkness = 0.3;
+			break;
+		}
+		glColor3f(r - darkness, g - darkness, b - darkness);
 	}
 	else
 	{
-		glColor3f(0.89, 0.89, 0.89);
+		glColor3f(0, 0, 0);
 	}
     
 
@@ -84,6 +100,16 @@ tileType Square::getTile() const{
 
 void Square::setTile(tileType t) {
 	tile = t;
+}
+
+void Square::setVis(visibility vis)
+{
+	this->vis = vis;
+}
+
+visibility Square::getVis()
+{
+	return vis;
 }
 
 void Square::setEntityType(entityType tile)
