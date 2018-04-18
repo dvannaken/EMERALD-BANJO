@@ -138,8 +138,8 @@ void Board::handle(unsigned char key) {
 	int playerY = player->getY();
 
 	std::cout << playerX  << std::endl;
-	std::cout << playerY  << std::endl;		
-	if (key == 'w') {
+	std::cout << playerY  << std::endl;			
+	if (key == 'a') {
 		if (canMove(playerX, playerY - 1)) {
 			std::cout << "moving up " << std::endl;
 			std::cout << playerX << playerY << std::endl;
@@ -150,7 +150,7 @@ void Board::handle(unsigned char key) {
 		}
 
 	}
-	if (key == 'a') {
+	if (key == 'w') {
 		if (canMove(playerX - 1, playerY)) {
 			std::cout << "moving left" << std::endl;
 			player->moveLeft();
