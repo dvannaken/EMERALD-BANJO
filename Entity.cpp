@@ -14,11 +14,11 @@ Entity::Entity(int x, int y)
 	this->y = y;
 }
 
-float Entity::getX() const {
+float Entity::getX()  {
   return x;
 }
 
-float Entity::getY() const {
+float Entity::getY()  {
   return y;
 }
 

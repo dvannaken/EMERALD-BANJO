@@ -137,14 +137,15 @@ void Board::handle(unsigned char key) {
 	int playerX = player->getX();
 	int playerY = player->getY();
 
-
+	std::cout << playerX  << std::endl;
+	std::cout << playerY  << std::endl;		
 	if (key == 'w') {
 		if (canMove(playerX, playerY - 1)) {
 			std::cout << "moving up " << std::endl;
 			std::cout << playerX << playerY << std::endl;
 			player->moveUp();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
-			gameboard[playerX][playerY - 1]->setEntityType(entityType::player);
+			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			behind();
 		}
 
@@ -154,7 +155,7 @@ void Board::handle(unsigned char key) {
 			std::cout << "moving left" << std::endl;
 			player->moveLeft();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
-			gameboard[playerX - 1][playerY]->setEntityType(entityType::player);
+			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			behind();
 		}
 	}
@@ -163,7 +164,7 @@ void Board::handle(unsigned char key) {
 			std::cout << "moving down" << std::endl;
 			player->moveRight();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
-			gameboard[playerX][playerY + 1]->setEntityType(entityType::player);
+			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			behind();
 		}
 
@@ -173,7 +174,7 @@ void Board::handle(unsigned char key) {
 			std::cout << "moving right " << std::endl;
 			player->moveDown();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
-			gameboard[playerX + 1][playerY]->setEntityType(entityType::player);
+			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			behind();
 		}
 	}

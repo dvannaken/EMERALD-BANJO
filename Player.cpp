@@ -169,17 +169,17 @@ void Player::setStre(int stre) {
 
 //we're gonna use 2d array, so like 2 for loops???
 void Player::moveUp() {
-	this->setY(this->getY() - 1);
+	y -= 1;
 }
 
 void Player::moveDown() {
-	this->setY(this->getY() + 1);
+	y += 1;
 }
 
 void Player::moveLeft() {
-	this->setX(this->getX() - 1);
+	x -=1 ;
 }
 
 void Player::moveRight() {
-	this->setX(this->getX() + 1);
+	x +=1 ;
 }

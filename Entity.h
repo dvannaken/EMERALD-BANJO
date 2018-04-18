@@ -4,15 +4,15 @@
 
 class Entity {
 private:
-	int x;
-	int y;
+
 
 public:
-
+	int x;
+	int y;
 	Entity(int x, int y);
 
-	float getX() const;
-	float getY() const;
+	float getX();
+	float getY();
 
 	void setX(int);
 	void setY(int);
