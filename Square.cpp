@@ -42,21 +42,30 @@ void Square::draw() const {
 		glColor3f(0.294, 0.466, 0.745);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(x, y);
-		glVertex2f(x + w, y);
-		glVertex2f(x + w, y - h);
-		glVertex2f(x, y - h);
+		glVertex2f(-y, -x);
+		glVertex2f(-y, -(x + w));
+		glVertex2f(-( y - h),-(x + w));
+		glVertex2f(-(y - h),-x);
 
 		glEnd();
 	}
-    glColor3f(r, g, b);
+
+	if (visible)
+	{
+		glColor3f(r, g, b);
+	}
+	else
+	{
+		glColor3f(0.89, 0.89, 0.89);
+	}
+    
 
     glBegin(GL_POLYGON);
+	glVertex2f(-y, -x);
+	glVertex2f(-y, -(x + w));
+	glVertex2f(-( y - h),-(x + w));
+	glVertex2f(-(y - h),-x);
 
-    glVertex2f(x, y);
-    glVertex2f(x + w, y);
-    glVertex2f(x + w, y - h);
-    glVertex2f(x, y - h);
 
     glEnd();
 

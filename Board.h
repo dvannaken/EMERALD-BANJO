@@ -4,6 +4,15 @@
 #include "Square.h"
 #include "MapGen.h"
 
+typedef unsigned int uint;
+
+static int multipliers[4][8] = {
+	{ 1, 0, 0, -1, -1, 0, 0, 1 },
+	{ 0, 1, -1, 0, 0, -1, 1, 0 },
+	{ 0, 1, 1, 0, 0, -1, -1, 0 },
+	{ 1, 0, 0, 1, -1, 0, 0, -1 }
+	};
+
 class Board {
 	MapGen* map;
 	Player* player;
@@ -11,7 +20,6 @@ class Board {
     std::vector<Square*> squares;
 	std::vector < std::vector<Square*> > gameboard; // 2d vector map
 	RandomNum* random = new RandomNum();
-    float lx, ly, cx, cy, rx, ry;
     bool upToDate;
     bool inProgress;
     int counter;
@@ -22,7 +30,14 @@ class Board {
     
     void catchUp();
     void behind();
-    
+
+	//C++ shadowcasting implementation 
+	//with code from http://www.roguebasin.com/index.php?title=C%2B%2B_shadowcasting_implementation
+
+	void setVisible(uint x, uint y, bool visible); //sets the visibility of the cell at the given position.
+	bool isOpaque(uint x, uint y) const; //retruns whether the given position holds an opaque cell
+	void castLight(uint x, uint y, uint radius, uint row, float startSlope, float endSlope, uint xx, uint xY, uint yx, uint yy);
+    void doFov(uint x, uint y);
 public:
     Board();
 	Board(int);
@@ -34,7 +49,6 @@ public:
     
     bool isUpToDate() const;
 	bool canMove(int,int);
-    
     ~Board();
 };
 

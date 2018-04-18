@@ -101,6 +101,7 @@ bool MapGen::createFeature(int x, int y, Direction dir)
 		{
 			if (makeRoom(x, y, dir,false))
 			{
+
 				setTile(x, y, ClosedDoor);
  
 				return true;
@@ -111,8 +112,17 @@ bool MapGen::createFeature(int x, int y, Direction dir)
 		{
 			if (makeCorridor(x, y, dir))
 			{
-				if (getTile(x + dx, y + dy) == Floor)
-					setTile(x, y, ClosedDoor);
+				if (getTile(x + dx, y + dy) == Floor) {
+					if (rng->randomBool())
+					{
+					setTile(x, y, OpenDoor);
+					}
+					else {
+					setTile(x, y, Floor);
+					}
+					
+				}
+					
 				else // don't place a door between corridors
 					setTile(x, y, Corridor);
  
