@@ -31,12 +31,7 @@ Board::Board() {
     upToDate = true;
     inProgress = false;
     
-    lx = 0.0;
-    ly = 0.0;
-    cx = 0.0;
-    cy = 0.0;
-    rx = 0.0;
-    ry = 0.0;
+   
     
     
    // delay = 1000;
@@ -93,6 +88,18 @@ Board::Board(int ii) {
 			case MapGen::UpStairs:
 				gameboard[x][y]->setTile(Upstairs);
 				gameboard[x][y]->setColor(0.8, 0.1, 0.1);
+
+				
+			if (canMove(x - 1, y)) {
+				player = new Player(x - 1, y); // spawns player left of upstairs
+				gameboard[x - 1][y]->setEntityType(entityType::player);
+			}
+			else if (canMove(x, y - 1)) {
+				player = new Player(x, y - 1); // spawns player right of upstairs
+				gameboard[x - 1][y]->setEntityType(entityType::player);
+			}
+					
+				
 				break;
 			case MapGen::DownStairs:
 				gameboard[x][y]->setTile(Downstairs);
@@ -106,31 +113,11 @@ Board::Board(int ii) {
 	}
 
 	upToDate = true;
-	inProgress = false;
+	//inProgress = false;
 
-	lx = 0.0;
-	ly = 0.0;
-	cx = 0.0;
-	cy = 0.0;
-	rx = 0.0;
-	ry = 0.0;
 }
 
 void Board::draw() {
-    if (1){
-        glLineWidth(4.0);
-        glBegin(GL_LINES);
-        
-        glVertex2f(lx, ly);
-        glVertex2f(cx, cy);
-        
-        glEnd();
-        glLineWidth(2.0);
-    }
-    /*for (int i = 0; i < squares.size(); i++) {
-        squares[i]->draw();
-    }*/
-
 
 	for (int i = 0; i < 50; i++)
 	{
@@ -138,6 +125,7 @@ void Board::draw() {
 		{
 
 			gameboard[i][j]->draw();
+
 		}
 	}
     catchUp();
@@ -145,24 +133,63 @@ void Board::draw() {
 
 
 void Board::handle(unsigned char key) {
-	if (key == 'r') {
-		reset();
+	
+	int playerX = player->getX();
+	int playerY = player->getY();
+
+	std::cout << playerX  << std::endl;
+	std::cout << playerY  << std::endl;			
+	if (key == 'a') {
+		if (canMove(playerX, playerY - 1)) {
+			std::cout << "moving up " << std::endl;
+			std::cout << playerX << playerY << std::endl;
+			player->moveUp();
+			gameboard[playerX][playerY]->setEntityType(entityType::empty);
+			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
+			behind();
+		}
+
 	}
 	if (key == 'w') {
-		//setCvC();
-	}
-	if (key == 'a') {
-		//setPvC();
+		if (canMove(playerX - 1, playerY)) {
+			std::cout << "moving left" << std::endl;
+			player->moveLeft();
+			gameboard[playerX][playerY]->setEntityType(entityType::empty);
+			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
+			behind();
+		}
 	}
 	if (key == 's') {
-		//setPvP();
+		if (canMove(playerX + 1, playerY)) {
+			std::cout << "moving down" << std::endl;
+			player->moveRight();
+			gameboard[playerX][playerY]->setEntityType(entityType::empty);
+			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
+			behind();
+		}
+
 	}
-	if (key == 'd'){
+	if (key == 'd') {
+		if (canMove(playerX, playerY + 1)) {
+			std::cout << "moving right " << std::endl;
+			player->moveDown();
+			gameboard[playerX][playerY]->setEntityType(entityType::empty);
+			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
+			behind();
+		}
 	}
 }
 
-void Board::check(){
 
+
+
+void Board::check(){
+	//while (!gameover) {
+
+	//	// game mechanics go here
+
+	//}
+	
 }
 
 void Board::reset(){
@@ -191,12 +218,21 @@ bool Board::isUpToDate() const {
     return upToDate;
 }
 
+bool Board::canMove(int endX, int endY)
+{
+	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
 
 Board::~Board() {
-   /* for (int i = 0; i < squares.size(); i++) {
-        delete squares[i];
-    }*/
+	delete random;
 	delete map;
+	delete player;
 	for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 50; j++)

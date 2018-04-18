@@ -8,18 +8,24 @@
 #include <GL/freeglut.h>
 #endif
 
-float Entity::getX() const {
+Entity::Entity(int x, int y)
+{
+	this->x = x;
+	this->y = y;
+}
+
+float Entity::getX()  {
   return x;
 }
 
-float Entity::getY() const {
+float Entity::getY()  {
   return y;
 }
 
-void Entity::setX(float) {
+void Entity::setX(int) {
   this->x = x;
 }
 
-void Entity::setY(float) {
+void Entity::setY(int) {
   this->y = y;
 }

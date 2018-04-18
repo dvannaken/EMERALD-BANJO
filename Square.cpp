@@ -11,25 +11,44 @@
 
 
 Square::Square() : Rect(){
-    symbol = 0;
+
 	tile = Unused;
+	entityTile = empty;
 }
 Square::Square(float w) : Rect(0, 0, w, w){
-    symbol = 0;
+
 	tile = Unused;
+	entityTile = empty;
 }
 Square::Square(float x , float y, float w) : Rect(x, y, w, w) {
-    symbol = 0;
+
 	tile = Unused;
+	entityTile = empty;
 }
 Square::Square(float x, float y, float w, float r, float g, float b) : Rect(x, y, w, w, r, g, b) {
-    symbol = 0;
 	tile = Unused;
+	entityTile = empty;
 }
 
 void Square::draw() const {
 
+	/*if (entityTile != empty) {
+		entity->draw();
+	}*/
 
+	if (entityTile == player)
+	{
+		std::cout << "Drawing Player" << std::endl;
+		glColor3f(0.294, 0.466, 0.745);
+
+		glBegin(GL_POLYGON);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h);
+
+		glEnd();
+	}
     glColor3f(r, g, b);
 
     glBegin(GL_POLYGON);
@@ -40,11 +59,14 @@ void Square::draw() const {
     glVertex2f(x, y - h);
 
     glEnd();
+
+	
+
 }
 
 
-Shape* Square::getSymbol() const {
-    return symbol;
+Entity* Square::getEntityType() const {
+    return entity;
 }
 
 tileType Square::getTile() const{
@@ -55,6 +77,11 @@ void Square::setTile(tileType t) {
 	tile = t;
 }
 
+void Square::setEntityType(entityType tile)
+{
+	entityTile = tile;
+}
+
 void Square::setColor(float red, float green, float blue)
 {
 	r = red;
@@ -63,15 +90,15 @@ void Square::setColor(float red, float green, float blue)
 }
 
 void Square::clear() {
-    if (symbol != 0){
-        delete symbol;
+    if (entity != 0){
+        delete entity;
     }
-    symbol = 0;
+    entity = 0;
 	tile = Unused;
 }
 
 Square::~Square(){
-    if (symbol != 0){
-        delete symbol;
+    if (entity != 0){
+        delete entity;
     }
 }

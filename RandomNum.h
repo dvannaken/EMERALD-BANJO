@@ -21,7 +21,7 @@ public:
   int randomInt(int); // exclusive
   int randomInt(int,int); //inclusive 
   bool randomBool();
-
+  int rollDie(int, int); // roll dice in the format of number of dice, sides of die
 };
 
 #endif
