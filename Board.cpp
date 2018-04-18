@@ -160,7 +160,7 @@ void Board::handle(unsigned char key) {
 		}
 	}
 	if (key == 's') {
-		if (canMove(playerX, playerY + 1)) {
+		if (canMove(playerX + 1, playerY)) {
 			std::cout << "moving down" << std::endl;
 			player->moveRight();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
@@ -170,7 +170,7 @@ void Board::handle(unsigned char key) {
 
 	}
 	if (key == 'd') {
-		if (canMove(playerX + 1, playerY)) {
+		if (canMove(playerX, playerY + 1)) {
 			std::cout << "moving right " << std::endl;
 			player->moveDown();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
