@@ -27,11 +27,17 @@ class Square : public Rect {
     Entity* entity;
     tileType tile;
 	entityType entityTile; // need better name
+	
 public:
     Square();
     Square(float);
     Square(float, float, float);
     Square(float, float, float, float, float, float);
+
+	bool visible;
+	bool opaque;
+	
+
 
     void draw() const;
 	

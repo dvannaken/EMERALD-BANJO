@@ -49,7 +49,16 @@ void Square::draw() const {
 
 		glEnd();
 	}
-    glColor3f(r, g, b);
+
+	if (visible)
+	{
+		glColor3f(r, g, b);
+	}
+	else
+	{
+		glColor3f(0.89, 0.89, 0.89);
+	}
+    
 
     glBegin(GL_POLYGON);
 	glVertex2f(-y, -x);
