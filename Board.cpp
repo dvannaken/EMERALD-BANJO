@@ -98,14 +98,14 @@ Board::Board(int ii)
 					player = new Player(x - 1, y); // spawns player left of upstairs
 					gameboard[x - 1][y]->setEntityType(entityType::player);
 
-					lightPlayer(x, y);
+					doFov(x, y,3,lightlevel_3);
 				}
 				else if (canMove(x, y - 1))
 				{
 					player = new Player(x, y - 1); // spawns player right of upstairs
 					gameboard[x - 1][y]->setEntityType(entityType::player);
 
-					lightPlayer(x, y);
+					doFov(x, y,3,lightlevel_3);
 				}
 
 				break;
@@ -119,6 +119,7 @@ Board::Board(int ii)
 		}
 	}
 	upToDate = true;
+	stepCounter = 0;
 	//inProgress = false;
 }
 
@@ -248,7 +249,8 @@ bool Board::isOpaque(uint x, uint y) const
 
 void Board::lightPlayer(int x, int y)
 {
-	for (int i = 0; i < 50; i++)
+	if(stepCounter > 2){
+		for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 50; j++)
 		{
@@ -258,6 +260,8 @@ void Board::lightPlayer(int x, int y)
 			}
 		}
 	}
+	}
+	
 	doFov(x, y);
 	doFov(x, y, 6, lightLevel_2);
 	doFov(x, y, 2, lightLevel_1);
