@@ -32,8 +32,10 @@ class Board {
     void catchUp();
     void behind();
 
-	//C++ shadowcasting implementation - Björn Bergström [bjorn.bergstrom@roguelikedevelopment.org]
+	//C++ shadowcasting implementation - Bjï¿½rn Bergstrï¿½m [bjorn.bergstrom@roguelikedevelopment.org]
 	//with code from http://www.roguebasin.com/index.php?title=C%2B%2B_shadowcasting_implementation
+
+	void setVisited(uint,uint,bool);
 
 	void setVisible(uint x, uint y, bool visible); //sets the visibility of the cell at the given position.
 	bool isOpaque(uint x, uint y) const; //retruns whether the given position holds an opaque cell

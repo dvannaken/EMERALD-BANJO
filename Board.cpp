@@ -63,7 +63,7 @@ Board::Board(int ii) {
 		
 		for (int x = 0; x < size; x++) {
 
-			gameboard[x][y]->setVis(unknown);
+			gameboard[x][y]->setVis(unknownLit);
 			switch (map->getTile(x, y))
 			{
 			case MapGen::Unused:
@@ -133,10 +133,7 @@ void Board::draw() {
 	{
 		for (int j = 0; j < 50; j++)
 		{
-			if (gameboard[i][j]->getVis() != currentlyLit && gameboard[i][j]->getVis() != unknown )
-			{
-				gameboard[i][j]->setVis(recentlyLit);
-			}
+
 			gameboard[i][j]->draw();
 
 		}
@@ -230,16 +227,20 @@ void Board::behind() {
 	upToDate = false;
 }
 
+void Board::setVisited(uint x, uint y, bool visited){
+	gameboard[x][y]->_visited(visited);
+}
+
 void Board::setVisible(uint x, uint y, bool visible)
 {
 	if (visible){
 		gameboard[x][y]->setVis(currentlyLit);
 	}
 	else
-		gameboard[x][y]->setVis(unknown);
-
+		gameboard[x][y]->setVis(unknownLit);
 	
 }
+
 
 bool Board::isOpaque(uint x, uint y) const
 {
@@ -288,6 +289,7 @@ void Board::castLight(uint x, uint y, uint radius, uint row, float start_slope, 
 			uint radius2 = radius * radius;
 			if ((uint)(dx * dx + dy * dy) < radius2) {
 				setVisible(ax, ay, true);
+				setVisited(ax,ay,true);
 			}
 
 			if (blocked) {
@@ -322,6 +324,17 @@ void Board::doFov(uint x, uint y, uint radius) {
 
 void Board::doFov(uint x, uint y) {
 	uint radius = 8;
+
+	for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			if (gameboard[i][j]->getVisited() == true)
+			{
+				gameboard[i][j]->setVis(recentlyLit);
+			}
+		}
+	}
 	for (uint i = 0; i < 8; i++) {
 		castLight(x, y, radius, 1, 1.0, 0.0, multipliers[0][i],
 			multipliers[1][i], multipliers[2][i], multipliers[3][i]);

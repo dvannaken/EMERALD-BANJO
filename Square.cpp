@@ -56,19 +56,15 @@ void Square::draw() const {
 		switch (vis)
 		{
 		case currentlyLit:
-			darkness = 0.0;
+			darkness = -0.04;
+			glColor3f(r - (darkness * 2), g - darkness * 2, b + (darkness));
 			break;
 		case recentlyLit:
 			darkness = 0.3;
-			break;
-		case furtherLit:
-			darkness = 0.2;
-			break;
-		case fartherLit:
-			darkness = 0.3;
+			glColor3f(r - darkness, g - darkness, b - darkness);
 			break;
 		}
-		glColor3f(r - darkness, g - darkness, b - darkness);
+		
 	}
 	else
 	{
@@ -105,6 +101,14 @@ void Square::setTile(tileType t) {
 void Square::setVis(visibility vis)
 {
 	this->vis = vis;
+}
+
+bool Square::getVisited() const{
+	return visited;
+}
+
+void Square::_visited(bool visit){
+	this->visited = visit;
 }
 
 visibility Square::getVis()

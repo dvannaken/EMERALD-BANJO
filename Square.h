@@ -23,12 +23,10 @@ enum entityType {
 	items
 };
 enum visibility {
-	currentlyLit = 0,
-	recentlyLit = 1,
-	furtherLit = 20,
-	fartherLit = 30,
-	litLevels = 40,
-	unknown = 50,
+	currentlyLit,
+	recentlyLit,
+	litLevels,
+	unknownLit,
 };
 
 
@@ -37,6 +35,7 @@ class Square : public Rect {
     tileType tile;
 	entityType entityTile; // need better name
 	visibility vis;
+	bool visited;
 	
 public:
     Square();
@@ -44,13 +43,15 @@ public:
     Square(float, float, float);
     Square(float, float, float, float, float, float);
 
-	bool visible;
+	
 	bool opaque;
 	
 
 
     void draw() const;
 	
+	void _visited(bool);
+	bool getVisited() const;
 
     Entity* getEntityType() const;
     tileType getTile() const;
