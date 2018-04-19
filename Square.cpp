@@ -55,12 +55,20 @@ void Square::draw() const {
 		float darkness;
 		switch (vis)
 		{
-		case currentlyLit:
-			darkness = -0.04;
-			glColor3f(r - (darkness * 2), g - darkness * 2, b + (darkness));
+		case lightLevel_1:
+			darkness = -0.15;
+			glColor3f(r, g , b + (darkness));
+			break;
+		case lightLevel_2:
+			darkness = -0.2;
+			glColor3f(r, g , b + (darkness));
+			break;
+		case lightlevel_3:
+			darkness = -0.3;
+			glColor3f(r, g , b + (darkness));
 			break;
 		case recentlyLit:
-			darkness = 0.3;
+			darkness = 0.4;
 			glColor3f(r - darkness, g - darkness, b - darkness);
 			break;
 		}

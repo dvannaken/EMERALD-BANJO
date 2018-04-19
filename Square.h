@@ -23,7 +23,9 @@ enum entityType {
 	items
 };
 enum visibility {
-	currentlyLit,
+	lightLevel_1,
+	lightLevel_2,
+	lightlevel_3,
 	recentlyLit,
 	litLevels,
 	unknownLit,

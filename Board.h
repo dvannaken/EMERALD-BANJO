@@ -32,16 +32,18 @@ class Board {
     void catchUp();
     void behind();
 
+	void lightPlayer(int,int); // lights player on pos x,y
+
 	//C++ shadowcasting implementation - Bj�rn Bergstr�m [bjorn.bergstrom@roguelikedevelopment.org]
 	//with code from http://www.roguebasin.com/index.php?title=C%2B%2B_shadowcasting_implementation
 
 	void setVisited(uint,uint,bool);
 
-	void setVisible(uint x, uint y, bool visible); //sets the visibility of the cell at the given position.
+	void setVisible(uint x, uint y, visibility); //sets the visibility of the cell at the given position.
 	bool isOpaque(uint x, uint y) const; //retruns whether the given position holds an opaque cell
-	void castLight(uint x, uint y, uint radius, uint row, float startSlope, float endSlope, uint xx, uint xY, uint yx, uint yy);
+	void castLight(uint x, uint y, uint radius, uint row, float startSlope, float endSlope, uint xx, uint xY, uint yx, uint yy,visibility vis);
     void doFov(uint x, uint y);
-	void doFov(uint x, uint y,uint radius);
+	void doFov(uint x, uint y,uint radius,visibility vis);
 public:
     Board();
 	Board(int);
