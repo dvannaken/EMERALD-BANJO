@@ -80,7 +80,7 @@ bool MapGen::createFeature() {
 }
 bool MapGen::createFeature(int x, int y, Direction dir)
 	{
-		static const int roomChance = 40; // corridorChance = 100 - roomChance
+		static const int roomChance = 35; // corridorChance = 100 - roomChance
  
 		int dx = 0;
 		int dy = 0;
@@ -102,7 +102,14 @@ bool MapGen::createFeature(int x, int y, Direction dir)
 			if (makeRoom(x, y, dir,false))
 			{
 
-				setTile(x, y, ClosedDoor);
+				if (rng->randomInt(10) > 3)
+				{
+					setTile(x, y, OpenDoor);
+				}
+				else {
+					setTile(x, y, Floor);
+				}
+
  
 				return true;
 			}
