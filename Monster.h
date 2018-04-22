@@ -2,6 +2,7 @@
 #define Monster_HPP
 #include "Entity.h"
 #include "RandomNum.h"
+#include <string>
 
 class Monster: public Entity
 {
@@ -19,6 +20,18 @@ enum drops
         armor,
         weapon
     };
+
+    //Monster movement, to be used in movement Algorithm
+    virtual void moveUp();
+    virtual void moveDown();
+    virtual void moveLeft();
+    virtual void moveRight();
+    virtual void moveUpLeft();
+    virtual void moveUpRight();
+    virtual void moveDownLeft();
+    virtual void moveDownRight();
+
+    
 
 public:
     Monster(); // constructor
@@ -38,6 +51,7 @@ public:
     int getToHit() const; // gets hitBonus for monster;
     int getExp() const; // exp given by monster when killed
     int getAttacks() const; //  how many attacks per attack attack zone. 
+    int getMovementPerRound() const;
     classType getMonsterType() const;
 
    
@@ -47,27 +61,24 @@ public:
     void setToHit(int);
     void setExp(int);
     void setAttacks(int);
-    
-    virtual void moveUp();
-    virtual void moveDown();
-    virtual void moveLeft();
-    virtual void moveRight();
-    virtual void moveUpLeft();
-    virtual void moveUpRight();
-    virtual void moveDownLeft();
-    virtual void moveDownRight();
+    void setMovementPerRound(int);
 
+	RandomNum numGenerator;
+    
+    
 
 
 protected:
 
-    int level;
-    int ac;
-    int hp;
-    int toHit;
+    int level; // monsters level, Higher level -> stronger monsters;
+    int ac; // armor class, used to see what hits it or not.
+    int hp; // health based on monster size and level
+    int toHit; // bonuses when hiting              
     int exp;
     int attacks;
-
+    int movementPerRound;
+    int detectionRadius; 
+	std::string attackMessage;
     classType monsterSize;
 
 
@@ -76,3 +87,7 @@ protected:
 
 
 #endif // Monster
+
+//more monsters should extend from this. 
+
+
