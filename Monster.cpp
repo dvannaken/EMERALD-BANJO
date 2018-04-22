@@ -1,10 +1,8 @@
 #include "Monster.h"
 
-
-
 Monster::Monster():Entity(3,3) //constructor
 {
-	numGenerator = new numGenerator();
+	numGenerator = new RandomNum()
 }
 
 Monster::~Monster()
@@ -14,7 +12,7 @@ Monster::~Monster()
 
 Monster::Monster(int, int) :Entity(x,y)
 {
-	numGenerator = new numGenerator()
+	numGenerator = new RandomNum()
 }
 
 
@@ -139,4 +137,9 @@ void Monster::setAttacks(int numAttacks)
 void Monster::setMovementPerRound(int movement) 
 {
 	this->getMovementPerRound = movement;
+}
+
+void Monster::setMonsterType(classType size )
+{
+	monsterSize = size;
 }

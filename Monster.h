@@ -9,9 +9,9 @@ class Monster: public Entity
 enum classType // three basic times of enemy  for damage
     {
         giant = 12,  
-        heavy = 8,
+        large = 8,
         medium = 6,
-        light =  4
+        small =  4
 
     };
 enum drops
@@ -62,8 +62,9 @@ public:
     void setExp(int);
     void setAttacks(int);
     void setMovementPerRound(int);
+	void setMonsterType(classType);
 
-	RandomNum numGenerator;
+	RandomNum* numGenerator;
     
     
 
@@ -80,6 +81,7 @@ protected:
     int detectionRadius; 
 	std::string attackMessage;
     classType monsterSize;
+
 
 
     
