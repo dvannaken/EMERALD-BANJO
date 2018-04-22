@@ -2,7 +2,7 @@
 
 Monster::Monster():Entity(3,3) //constructor
 {
-	numGenerator = new RandomNum()
+	numGenerator = new RandomNum();
 }
 
 Monster::~Monster()
@@ -12,7 +12,7 @@ Monster::~Monster()
 
 Monster::Monster(int, int) :Entity(x,y)
 {
-	numGenerator = new RandomNum()
+	numGenerator = new RandomNum();
 }
 
 
@@ -71,7 +71,7 @@ int Monster::getLevel() const
 
 int Monster::getAc() const
 {
-	return Ac;
+	return ac;
 }
 
 int Monster::getHp() const
@@ -99,10 +99,6 @@ int Monster::getMovementPerRound() const
 	return movementPerRound;
 }
 
-classType Monster::getMonsterType() const
-{
-	return classType();
-}
 
 void Monster::setLevel(int level)
 {
@@ -136,10 +132,10 @@ void Monster::setAttacks(int numAttacks)
 
 void Monster::setMovementPerRound(int movement) 
 {
-	this->getMovementPerRound = movement;
+	this->movementPerRound = movement;
 }
 
-void Monster::setMonsterType(classType size )
+void Monster::setMonsterType(weaponType size )
 {
-	monsterSize = size;
+	weaponSize = size;
 }

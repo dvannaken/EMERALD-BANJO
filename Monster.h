@@ -6,14 +6,8 @@
 
 class Monster: public Entity
 {
-enum classType // three basic times of enemy  for damage
-    {
-        giant = 12,  
-        large = 8,
-        medium = 6,
-        small =  4
 
-    };
+
 enum drops
     {
         gold,
@@ -34,6 +28,14 @@ enum drops
     
 
 public:
+	enum weaponType // three basic times of enemy  for damage
+	{
+		giant = 12,
+		large = 8,
+		medium = 6,
+		small = 4
+	};
+
     Monster(); // constructor
     Monster(Monster &&) = default; 
     Monster(const Monster &) = default;
@@ -52,7 +54,8 @@ public:
     int getExp() const; // exp given by monster when killed
     int getAttacks() const; //  how many attacks per attack attack zone. 
     int getMovementPerRound() const;
-    classType getMonsterType() const;
+	weaponType getWeaponType() const;
+    
 
    
     void setLevel(int);
@@ -62,7 +65,7 @@ public:
     void setExp(int);
     void setAttacks(int);
     void setMovementPerRound(int);
-	void setMonsterType(classType);
+	void setMonsterType(weaponType);
 
 	RandomNum* numGenerator;
     
@@ -80,7 +83,7 @@ protected:
     int movementPerRound;
     int detectionRadius; 
 	std::string attackMessage;
-    classType monsterSize;
+    weaponType weaponSize;
 
 
 

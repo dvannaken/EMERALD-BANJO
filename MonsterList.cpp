@@ -8,7 +8,7 @@ Goblin::Goblin(int x, int y): Monster(x,y)
 	//Basing the monsters will be pulled from the DND MONSTER MANUAL, or some other reference guide.
 
 	setLevel(1); // baisc goblin so level 1
-	setAc(numGenerator->randomInt(13,15); // Armor class randomizer
+	setAc(numGenerator->randomInt(13,15)); // Armor class randomizer
 	setHp(numGenerator->rollDie(2, 6)); // Health randomizer
 	setToHit(4); // the bonus to attack 
 	setExp(50); // numberr of exp that is given on combat.
@@ -22,7 +22,7 @@ GoblinLord::GoblinLord(int x, int y) :Monster(x, y)
 {
 	// a stronger goblin for later stages
 	setLevel(4);
-	setAc(numGenerator->randomInt(15, 17);
+	setAc(numGenerator->randomInt(15, 17));
 	setHp(numGenerator->rollDie(6, 6));
 	setToHit(4);
 	setExp(200);
