@@ -99,6 +99,11 @@ int Monster::getMovementPerRound() const
 	return movementPerRound;
 }
 
+int Monster::getWeaponType() const
+{
+	return weaponType();
+}
+
 
 void Monster::setLevel(int level)
 {

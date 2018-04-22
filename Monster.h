@@ -54,7 +54,7 @@ public:
     int getExp() const; // exp given by monster when killed
     int getAttacks() const; //  how many attacks per attack attack zone. 
     int getMovementPerRound() const;
-	weaponType getWeaponType() const;
+	int getWeaponType() const;
     
 
    
