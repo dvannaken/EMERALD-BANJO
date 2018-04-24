@@ -15,7 +15,7 @@ Goblin::Goblin(int x, int y): Monster(x,y)
 	setAttacks(1); // number of attacks per action
 	setMovementPerRound(1); // 1 tiles per round, each round.
 	setMonsterType(small); //for basic damage;
-	
+	setInitiativeBonus(2);
 }
 
 GoblinLord::GoblinLord(int x, int y) :Monster(x, y)
@@ -29,5 +29,6 @@ GoblinLord::GoblinLord(int x, int y) :Monster(x, y)
 	setAttacks(2);
 	setMovementPerRound(1);
 	setMonsterType(medium);
+	setInitiativeBonus(2);
 
 }
