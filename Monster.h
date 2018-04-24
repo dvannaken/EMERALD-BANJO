@@ -55,7 +55,10 @@ public:
     int getAttacks() const; //  how many attacks per attack attack zone. 
     int getMovementPerRound() const;
 	int getWeaponType() const;
-    
+	int getInitiativeBonus()const;
+
+    int rollToHIt();
+
 
    
     void setLevel(int);
@@ -66,8 +69,9 @@ public:
     void setAttacks(int);
     void setMovementPerRound(int);
 	void setMonsterType(weaponType);
+	void setInitiativeBonus(int);
 
-	RandomNum* numGenerator;
+	
     
     
 
@@ -82,8 +86,10 @@ protected:
     int attacks;
     int movementPerRound;
     int detectionRadius; 
+	int initiativeBonus;
 	std::string attackMessage;
     weaponType weaponSize;
+	RandomNum* numGenerator;
 
 
 

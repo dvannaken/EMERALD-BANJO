@@ -72,6 +72,16 @@ int Player::rollToHit()
 	return dice->randomInt(20) + toHitBonus;
 }
 
+void Player::levelHandler()
+{
+	if (this->exp > expThreshold[level])
+	{
+		//player has leveled up;
+		levelUp();
+	}
+
+}
+
 int Player::calculateBonus(int stat) // creates the bonus
 {
 	return((stat - 10) / 2);
@@ -95,6 +105,12 @@ void Player::init()
 	level = 1;
 	hp = 8 + conBonus;
 	hunger = Satiated;
+	numAttacks = 1;
+	expBoundries = level_1;
+	initBonus = dexBonus + profBonus;
+
+	expThreshold = {level_1, level_2,level_3,level_4,level_5,level_6,level_7,level_8,level_9,level_10};
+
 }
 void Player::levelUp()
 {
@@ -142,6 +158,26 @@ int Player::getStre() const {
 	return stre;
 }
 
+int Player::getNumAttacks() const
+{
+	return numAttacks;
+}
+
+int Player::getHp() const
+{
+	return hp;
+}
+
+int Player::getInitBonus() const
+{
+	return initBonus;
+}
+
+int Player::getAC() const
+{
+	return ac;
+}
+
 //setters
 void Player::setCon(int con) {
 	this->con = con;
@@ -165,6 +201,26 @@ void Player::setIntel(int intel) {
 
 void Player::setStre(int stre) {
 	this->stre = stre;
+}
+
+void Player::setNumAttacks(int attacks)
+{
+	this->numAttacks = attacks;
+}
+
+void Player::setInitBonus(int bonus)
+{
+	
+}
+
+void Player::grantExp(int exp)
+{
+	this->exp += exp;
+}
+
+void Player::takesDamage(int damage)
+{
+	hp -= damage;
 }
 
 //we're gonna use 2d array, so like 2 for loops???

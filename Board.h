@@ -3,6 +3,7 @@
 #include <vector>
 #include "Square.h"
 #include "MapGen.h"
+#include "MonsterList.h"
 #include <cmath>
 
 typedef unsigned int uint;
@@ -34,6 +35,7 @@ class Board {
 
 	void lightPlayer(int,int); // lights player on pos x,y
 
+
 	//C++ shadowcasting implementation - Bj�rn Bergstr�m [bjorn.bergstrom@roguelikedevelopment.org]
 	//with code from http://www.roguebasin.com/index.php?title=C%2B%2B_shadowcasting_implementation
 
@@ -44,6 +46,10 @@ class Board {
 	void castLight(uint x, uint y, uint radius, uint row, float startSlope, float endSlope, uint xx, uint xY, uint yx, uint yy,visibility vis);
     void doFov(uint x, uint y);
 	void doFov(uint x, uint y,uint radius,visibility vis);
+
+	void combat(Monster* m,bool); //bool if player is attacking
+
+
 public:
     Board();
 	Board(int);
