@@ -349,6 +349,19 @@ void Board::doFov(uint x, uint y, uint radius, visibility vis)
 	}
 }
 
+void Board::combat( Monster * m) {
+
+	int numAttacks = p->getNumAttacks();
+	while (numAttacks > 0)
+	{
+		if (p->rollToHit > )
+		{
+
+		}
+	}
+	
+}
+
 void Board::doFov(uint x, uint y)
 {
 	uint radius = 8;

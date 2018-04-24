@@ -95,6 +95,7 @@ void Player::init()
 	level = 1;
 	hp = 8 + conBonus;
 	hunger = Satiated;
+	numAttacks = 1;
 }
 void Player::levelUp()
 {
@@ -142,6 +143,16 @@ int Player::getStre() const {
 	return stre;
 }
 
+int Player::getNumAttacks() const
+{
+	return numAttacks;
+}
+
+int Player::getHp() const
+{
+	return hp;
+}
+
 //setters
 void Player::setCon(int con) {
 	this->con = con;
@@ -165,6 +176,11 @@ void Player::setIntel(int intel) {
 
 void Player::setStre(int stre) {
 	this->stre = stre;
+}
+
+void Player::setNumAttacks(int attacks)
+{
+	this->numAttacks = attacks;
 }
 
 //we're gonna use 2d array, so like 2 for loops???

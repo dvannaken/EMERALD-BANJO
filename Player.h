@@ -39,6 +39,7 @@ private:
 	int ac; // armorclass needs to roll higher to hit
 	int hp;
 	HungerState hunger;
+	int numAttacks;
 
 	int toHitBonus; 
 
@@ -49,9 +50,9 @@ private:
 	int calculateBonus(int);
 	void calculateBonus();
 	
-	int rollAttackDamage();
+	
 	void calculateToHitBonus();
-	int rollToHit();
+	
 
 	void init();
 	void levelUp(); // levels up character.
@@ -69,6 +70,8 @@ public:
 	int getDex() const;
 	int getIntel() const;
 	int getStre() const;
+	int getNumAttacks() const;
+	int getHp() const;
 
 	void setCon(int);
 	void setChari(int);
@@ -76,6 +79,7 @@ public:
 	void setDex(int);
 	void setIntel(int);
 	void setStre(int);
+	void setNumAttacks(int);
 
 	//(virtual) add functions for movement: up, down, left and right
 	virtual void moveUp();
@@ -83,6 +87,8 @@ public:
 	virtual void moveLeft();
 	virtual void moveRight();
 
+	int rollAttackDamage();
+	int rollToHit();
 };
 
 

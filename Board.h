@@ -3,6 +3,7 @@
 #include <vector>
 #include "Square.h"
 #include "MapGen.h"
+#include "MonsterList.h"
 #include <cmath>
 
 typedef unsigned int uint;
@@ -44,6 +45,10 @@ class Board {
 	void castLight(uint x, uint y, uint radius, uint row, float startSlope, float endSlope, uint xx, uint xY, uint yx, uint yy,visibility vis);
     void doFov(uint x, uint y);
 	void doFov(uint x, uint y,uint radius,visibility vis);
+
+	void combat(Player* p, Monster* m);
+
+
 public:
     Board();
 	Board(int);
