@@ -104,16 +104,6 @@ int Monster::getWeaponType() const
 	return weaponType();
 }
 
-int Monster::getInitiativeBonus() const
-{
-	return initiativeBonus;
-}
-
-int Monster::rollToHIt()
-{
-	numGenerator->randomInt(20) + toHit;
-
-}
 
 void Monster::setLevel(int level)
 {
@@ -154,10 +144,3 @@ void Monster::setMonsterType(weaponType size )
 {
 	weaponSize = size;
 }
-
-void Monster::setInitiativeBonus(int bonus)
-{
-	this->initiativeBonus = bonus;
-}
-
-

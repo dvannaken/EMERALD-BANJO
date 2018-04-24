@@ -349,66 +349,18 @@ void Board::doFov(uint x, uint y, uint radius, visibility vis)
 	}
 }
 
-void Board::combat(Monster* m, bool attacking) {
+void Board::combat( Monster * m) {
 
-	int numPlayerAttacks = player->getNumAttacks();
-	int numMonsterAttacks = m->getAttacks();
-	int playerinit = random->randomInt(20) + player->getInitBonus();
-	int monsterinit = random->randomInt(20) + m->getInitiativeBonus();
-	if (attacking) {
-
-
-		if (playerinit > monsterinit) {
-			while (numPlayerAttacks > 0)
-			{
-				if (m->getHp() > 0) {
-					if (player->rollToHit() >= m->getAc())
-					{
-						m->setHp(m->getHp() - player->rollAttackDamage());
-
-					}
-				}
-				else {
-					player->grantExp(m->getExp());
-					player->levelHandler();
-				}
-				numPlayerAttacks--;
-			}
-			while (numMonsterAttacks > 0) {
-				if (player->getHp() > 0) {
-					if (m->rollToHIt() >= player->getAC()) {
-						player->takesDamage(random->rollDie(1, m->getWeaponType()));
-					}
-				}
-				else {
-					// player dies @todo
-				}
-				numMonsterAttacks--;
-			}
-		}
-
-
-	}
-	else
+	int numAttacks = p->getNumAttacks();
+	while (numAttacks > 0)
 	{
-		// player is not attacking, monsters attacking on its side. 
-		while (numMonsterAttacks > 0) {
-			if (player->getHp() > 0) {
-				if (m->rollToHIt() >= player->getAC()) {
-					player->takesDamage(random->rollDie(1, m->getWeaponType()));
-					//needs to output damage to console as temp thing.
-				}
-			}
-			else {
-				// player dies @todo
-			}
-			numMonsterAttacks--;
+		if (p->rollToHit > )
+		{
+
 		}
 	}
+	
 }
-	
-	
-
 
 void Board::doFov(uint x, uint y)
 {
