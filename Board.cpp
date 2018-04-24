@@ -434,8 +434,12 @@ bool Board::isUpToDate() const
 
 bool Board::canMove(int endX, int endY)
 {
-	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor)
+	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster)
 	{
+		if (gameboard[endX][endY]->getEntityType() == monster) {
+			Monster* attackedMoster = monsterAt(x, y);
+			combat(attackedMoster, true);
+		}
 		return false;
 	}
 	else
