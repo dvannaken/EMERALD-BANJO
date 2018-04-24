@@ -50,8 +50,8 @@ class Board {
 	void combat(Monster* m,bool); //bool if player is attacking
 
 	Monster* monsterAt(int, int);
-
-
+	void spawnMonster();
+	bool currentlyViewed(int, int);
 
 
 
@@ -66,6 +66,7 @@ public:
     
     bool isUpToDate() const;
 	bool canMove(int,int);
+	bool canMove(int, int, bool);
     ~Board();
 };
 

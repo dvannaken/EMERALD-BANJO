@@ -147,7 +147,7 @@ void Board::handle(unsigned char key)
 
 	if (key == 'w')
 	{
-		if (canMove(playerX, playerY - 1))
+		if (canMove(playerX, playerY - 1,true))
 		{
 			std::cout << "moving up " << std::endl;
 			player->moveUp();
@@ -160,7 +160,7 @@ void Board::handle(unsigned char key)
 	}
 	if (key == 'a')
 	{
-		if (canMove(playerX - 1, playerY))
+		if (canMove(playerX - 1, playerY,true))
 		{
 			std::cout << "moving left" << std::endl;
 			player->moveLeft();
@@ -173,7 +173,7 @@ void Board::handle(unsigned char key)
 	}
 	if (key == 'd')
 	{
-		if (canMove(playerX + 1, playerY))
+		if (canMove(playerX + 1, playerY,true))
 		{
 			std::cout << "moving right" << std::endl;
 			player->moveRight();
@@ -186,7 +186,7 @@ void Board::handle(unsigned char key)
 	}
 	if (key == 's')
 	{
-		if (canMove(playerX, playerY + 1))
+		if (canMove(playerX, playerY + 1,true))
 		{
 			std::cout << "moving down " << std::endl;
 			player->moveDown();
@@ -422,6 +422,43 @@ Monster* Board::monsterAt(int x, int y)
 		}
 	}
 }
+
+void Board::spawnMonster()
+{
+	int tries = 50; // number of tries before giving up
+	int numMonsters = 0; // number of monsters created
+	int rX, rY; // random x random y
+	do
+	{
+		rX = random->randomInt(50);
+		rY = random->randomInt(50);
+		if (canMove(rX, rY) && currentlyViewed(rX,rY))
+		{
+			monsterList.push_back(new Goblin(rX, rY));
+			gameboard[rX][rY]->setEntityType(monster);
+			numMonsters++;
+		}
+		tries++;
+	} while (tries > 0 || numMonsters > 4);
+}
+
+bool Board::currentlyViewed(int x, int y)
+{
+	switch (gameboard[x][y]->getVis())
+	{
+	case lightLevel_1:
+		return true;
+	case lightLevel_2:
+		return true;
+		break;
+	case lightlevel_3:
+		return true;
+		break;
+	default:
+		return false;
+		break;
+	}
+}
 	
 	
 
@@ -450,10 +487,20 @@ bool Board::isUpToDate() const
 
 bool Board::canMove(int endX, int endY)
 {
+	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor)
+	{
+		return false;
+	}
+	else
+		return true;
+}
+
+bool Board::canMove(int endX, int endY, bool player)
+{
 	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster)
 	{
 		if (gameboard[endX][endY]->getEntityType() == monster) {
-			Monster* attackedMoster = monsterAt(endX,endY);
+			Monster* attackedMoster = monsterAt(endX, endY);
 			combat(attackedMoster, true);
 		}
 		return false;
@@ -461,7 +508,6 @@ bool Board::canMove(int endX, int endY)
 	else
 		return true;
 }
-
 Board::~Board()
 {
 	delete random;
