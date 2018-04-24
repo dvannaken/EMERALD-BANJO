@@ -118,6 +118,8 @@ Board::Board(int ii)
 			}
 		}
 	}
+
+
 	upToDate = true;
 	stepCounter = 0;
 	//inProgress = false;
@@ -406,6 +408,20 @@ void Board::combat(Monster* m, bool attacking) {
 		}
 	}
 }
+
+Monster* Board::monsterAt(int x, int y)
+{
+	for (int i = 0; i < monsterList.size(); i++)
+	{
+		if (monsterList[i]->getX() == x && monsterList[i]->getY() == y)
+		{
+			return monsterList[i];
+		}
+		else {
+			return nullptr;
+		}
+	}
+}
 	
 	
 
@@ -437,7 +453,7 @@ bool Board::canMove(int endX, int endY)
 	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster)
 	{
 		if (gameboard[endX][endY]->getEntityType() == monster) {
-			Monster* attackedMoster = monsterAt(x, y);
+			Monster* attackedMoster = monsterAt(endX,endY);
 			combat(attackedMoster, true);
 		}
 		return false;
@@ -451,6 +467,10 @@ Board::~Board()
 	delete random;
 	delete map;
 	delete player;
+	for (int i = 0; i < monsterList.size(); i++)
+	{
+		delete monsterList[i];
+	}
 	for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 50; j++)

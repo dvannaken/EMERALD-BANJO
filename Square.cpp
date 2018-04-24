@@ -94,8 +94,8 @@ void Square::draw() const {
 }
 
 
-Entity* Square::getEntityType() const {
-    return entity;
+entityType Square::getEntityType() const {
+    return entityTile;
 }
 
 tileType Square::getTile() const{

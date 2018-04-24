@@ -21,6 +21,7 @@ class Board {
 	//CaveGen* cave;
     std::vector<Square*> squares;
 	std::vector < std::vector<Square*> > gameboard; // 2d vector map
+	std::vector < Monster* > monsterList; // differnt entity li
 	RandomNum* random = new RandomNum();
     bool upToDate;
     bool inProgress;
@@ -35,7 +36,6 @@ class Board {
 
 	void lightPlayer(int,int); // lights player on pos x,y
 
-
 	//C++ shadowcasting implementation - Bj�rn Bergstr�m [bjorn.bergstrom@roguelikedevelopment.org]
 	//with code from http://www.roguebasin.com/index.php?title=C%2B%2B_shadowcasting_implementation
 
@@ -48,6 +48,11 @@ class Board {
 	void doFov(uint x, uint y,uint radius,visibility vis);
 
 	void combat(Monster* m,bool); //bool if player is attacking
+
+	Monster* monsterAt(int, int);
+
+
+
 
 
 public:

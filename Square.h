@@ -55,7 +55,7 @@ public:
 	void _visited(bool);
 	bool getVisited() const;
 
-    Entity* getEntityType() const;
+    entityType getEntityType() const;
     tileType getTile() const;
 	void setTile(tileType);
 	void setVis(visibility);
