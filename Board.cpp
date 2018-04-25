@@ -434,7 +434,9 @@ void Board::spawnMonster()
 		rY = random->randomInt(50);
 		if (canMove(rX, rY) && currentlyViewed(rX,rY))
 		{
-			monsterList.push_back(new Goblin(rX, rY));
+			monsterList.push_back(new Goblin(rX, rY)); //only one monster, plan to spawn different ones;
+
+
 			gameboard[rX][rY]->setEntityType(monster);
 			numMonsters++;
 		}

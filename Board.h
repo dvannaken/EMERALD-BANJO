@@ -46,12 +46,12 @@ class Board {
 	void castLight(uint x, uint y, uint radius, uint row, float startSlope, float endSlope, uint xx, uint xY, uint yx, uint yy,visibility vis);
     void doFov(uint x, uint y);
 	void doFov(uint x, uint y,uint radius,visibility vis);
+	bool currentlyViewed(int, int);
 
 	void combat(Monster* m,bool); //bool if player is attacking
 
 	Monster* monsterAt(int, int);
 	void spawnMonster();
-	bool currentlyViewed(int, int);
 
 
 
