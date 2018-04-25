@@ -44,7 +44,7 @@ public:
   int getDamage();
 };
 
-class Elixr : pubic Item {
+class Elixr : public Item {
 protected:
   int heal; //or a function that heals character to max
 public:
