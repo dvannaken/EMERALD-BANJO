@@ -49,6 +49,19 @@ void Square::draw() const {
 
 		glEnd();
 	}
+	if (entityTile == monster)
+	{
+		std::cout << "Drawing Monster" << std::endl;
+		glColor3f(0.420, 0.557, 0.137);
+
+		glBegin(GL_POLYGON);
+		glVertex2f(-y, -x);
+		glVertex2f(-y, -(x + w));
+		glVertex2f(-(y - h), -(x + w));
+		glVertex2f(-(y - h), -x);
+
+		glEnd();
+	}
 
 	if (vis < litLevels)
 	{
@@ -94,8 +107,8 @@ void Square::draw() const {
 }
 
 
-Entity* Square::getEntityType() const {
-    return entity;
+entityType Square::getEntityType() const {
+    return entityTile;
 }
 
 tileType Square::getTile() const{
