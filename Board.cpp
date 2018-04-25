@@ -435,28 +435,29 @@ int Board::monsterAt(int x, int y)
 
 void Board::spawnMonster()
 {
-	int tries = 50; // number of tries before giving up
+	int tries = 30; // number of tries before giving up
 	int numMonsters = 0; // number of monsters created
 	int rX, rY; // random x random y
 	do
 	{
 		
-		rX = random->randomInt(50);
-		rY = random->randomInt(50);
-		if (canMove(rX, rY) && currentlyViewed(rX,rY))
+		rX = random->randomInt(49);
+		rY = random->randomInt(49);
+		if (canMove(rX, rY) && !currentlyViewed(rX,rY))
 		{
 			monsterList.push_back(new Goblin(rX, rY)); //only one monster, plan to spawn different ones;
+
 			gameboard[rX][rY]->setEntityType(monster);
-			numMonsters++;
-			std::cout << "spawned monster" << std::endl;
+			//numMonsters++;
+			std::cout << "spawned monster " << numMonsters << std::endl;
 		}
 		tries--;
-	} while (tries > 0 || numMonsters < 2);
+	} while (tries > 0 || numMonsters < 1);
 }
 
 void Board::spawnHandler()
 {
-	if (stepCounter % 2 == random->randomInt(10) && monsterList.size() < 10 ){ // something to randomly spawn monster
+	if (stepCounter % 30 == random->randomInt(50) && monsterList.size() < 10 ){ // something to randomly spawn monster
 		spawnMonster();
 	}
 }
