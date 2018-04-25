@@ -37,10 +37,7 @@ public:
 	};
 
     Monster(); // constructor
-    Monster(Monster &&) = default; 
-    Monster(const Monster &) = default;
-    Monster &operator=(Monster &&) = default;
-    Monster &operator=(const Monster &) = default;
+    Monster(const Monster&); 
     ~Monster();
 
     Monster(int,int); // constructor with spawning location
@@ -56,6 +53,7 @@ public:
     int getMovementPerRound() const;
 	int getWeaponType() const;
 	int getInitiativeBonus()const;
+std::string getName()const;
 
     int rollToHIt();
 
@@ -70,6 +68,7 @@ public:
     void setMovementPerRound(int);
 	void setMonsterType(weaponType);
 	void setInitiativeBonus(int);
+	void setName(std::string);
 
 	
     
@@ -88,6 +87,7 @@ protected:
     int detectionRadius; 
 	int initiativeBonus;
 	std::string attackMessage;
+	std::string name;
     weaponType weaponSize;
 	RandomNum* numGenerator;
 

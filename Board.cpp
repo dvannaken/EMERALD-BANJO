@@ -355,39 +355,48 @@ void Board::doFov(uint x, uint y, uint radius, visibility vis)
 	}
 }
 
-void Board::combat(Monster* m, bool attacking) {
+void Board::combat(int m, bool attacking) {
 
 	int numPlayerAttacks = player->getNumAttacks();
-	int numMonsterAttacks = m->getAttacks();
+	int numMonsterAttacks = monsterList[m]->getAttacks();
 	int playerinit = random->randomInt(20) + player->getInitBonus();
-	int monsterinit = random->randomInt(20) + m->getInitiativeBonus();
+	int monsterinit = random->randomInt(20) + monsterList[m]->getInitiativeBonus();
 	if (attacking) {
 
 
 		if (playerinit > monsterinit) {
+			std::cout << playerinit<< " vs " << monsterinit << std::endl;
 			while (numPlayerAttacks > 0)
 			{
-				if (m->getHp() > 0) {
-					if (player->rollToHit() >= m->getAc())
+				if (monsterList[m]->getHp() > 0) {
+					if (player->rollToHit() >= monsterList[m]->getAc())
 					{
-						m->setHp(m->getHp() - player->rollAttackDamage());
-
+						int damage = player->rollAttackDamage();
+						std::cout << "You do " << damage << " to "  << monsterList[m]->getName() << std::endl;
+						monsterList[m]->setHp(monsterList[m]->getHp() - damage);
+						
 					}
 				}
 				else {
-					player->grantExp(m->getExp());
+					std::cout << "You KILL the monster" << std::endl;
+					player->grantExp(monsterList[m]->getExp());
 					player->levelHandler();
+					gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(empty);
+					monsterList.erase(monsterList.begin() + m);
+
+
 				}
 				numPlayerAttacks--;
 			}
 			while (numMonsterAttacks > 0) {
 				if (player->getHp() > 0) {
-					if (m->rollToHIt() >= player->getAC()) {
-						player->takesDamage(random->rollDie(1, m->getWeaponType()));
+					if (monsterList[m]->rollToHIt() >= player->getAC()) {
+						player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
 					}
 				}
 				else {
 					// player dies @todo
+					std::cout << "You DIE" << std::endl;
 				}
 				numMonsterAttacks--;
 			}
@@ -400,8 +409,8 @@ void Board::combat(Monster* m, bool attacking) {
 		// player is not attacking, monsters attacking on its side. 
 		while (numMonsterAttacks > 0) {
 			if (player->getHp() > 0) {
-				if (m->rollToHIt() >= player->getAC()) {
-					player->takesDamage(random->rollDie(1, m->getWeaponType()));
+				if (monsterList[m]->rollToHIt() >= player->getAC()) {
+					player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
 					//needs to output damage to console as temp thing.
 				}
 			}
@@ -413,16 +422,13 @@ void Board::combat(Monster* m, bool attacking) {
 	}
 }
 
-Monster* Board::monsterAt(int x, int y)
+int Board::monsterAt(int x, int y)
 {
 	for (int i = 0; i < monsterList.size(); i++)
 	{
 		if (monsterList[i]->getX() == x && monsterList[i]->getY() == y)
 		{
-			return monsterList[i];
-		}
-		else {
-			return nullptr;
+			return i;
 		}
 	}
 }
@@ -450,7 +456,7 @@ void Board::spawnMonster()
 
 void Board::spawnHandler()
 {
-	if (stepCounter % 10 == random->randomInt(10) && monsterList.size() < 25 ){ // something to randomly spawn monster
+	if (stepCounter % 2 == random->randomInt(10) && monsterList.size() < 10 ){ // something to randomly spawn monster
 		spawnMonster();
 	}
 }
@@ -513,8 +519,9 @@ bool Board::canMove(int endX, int endY, bool player)
 	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster)
 	{
 		if (gameboard[endX][endY]->getEntityType() == monster) {
-			Monster* attackedMoster = monsterAt(endX, endY);
-			combat(attackedMoster, true);
+			//Monster* attackedMoster = monsterAt(endX, endY);
+			int attackedMonster = monsterAt(endX, endY);
+			combat(attackedMonster, true);
 		}
 		return false;
 	}

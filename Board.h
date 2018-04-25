@@ -48,9 +48,9 @@ class Board {
 	void doFov(uint x, uint y,uint radius,visibility vis);
 	bool currentlyViewed(int, int);
 
-	void combat(Monster* m,bool); //bool if player is attacking
+	void combat(int,bool); //bool if player is attacking
 
-	Monster* monsterAt(int, int);
+	int monsterAt(int, int);
 	void spawnMonster();
 	void spawnHandler(); //uses step handler to spawn items.
 

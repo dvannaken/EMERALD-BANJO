@@ -15,6 +15,17 @@ Monster::Monster(int, int) :Entity(x,y)
 	numGenerator = new RandomNum();
 }
 
+Monster::Monster(const Monster & m2):Entity(m2.x,m2.y) {
+	level = m2.level;
+	ac = m2.ac;
+	hp = m2.hp;
+	toHit = m2.toHit;
+	exp = m2.exp;
+	attacks = m2.attacks;
+	movementPerRound = m2.movementPerRound;
+	detectionRadius = m2.detectionRadius;
+	weaponSize = m2.weaponSize;
+}
 
 void Monster::moveUp()
 {
@@ -109,6 +120,11 @@ int Monster::getInitiativeBonus() const
 	return initiativeBonus;
 }
 
+std::string Monster::getName() const
+{
+	return name;
+}
+
 int Monster::rollToHIt()
 {
 	numGenerator->randomInt(20) + toHit;
@@ -158,6 +174,11 @@ void Monster::setMonsterType(weaponType size )
 void Monster::setInitiativeBonus(int bonus)
 {
 	this->initiativeBonus = bonus;
+}
+
+void Monster::setName(std::string name)
+{
+	this->name = name;
 }
 
 
