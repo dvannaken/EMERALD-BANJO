@@ -112,6 +112,7 @@ Board::Board(int ii)
 			case MapGen::DownStairs:
 				gameboard[x][y]->setTile(Downstairs);
 				gameboard[x][y]->setColor(0.8, 0.0, 0.0);
+
 				break;
 			default:
 				break;
@@ -123,6 +124,7 @@ Board::Board(int ii)
 	upToDate = true;
 	stepCounter = 0;
 	//inProgress = false;
+	
 }
 
 void Board::draw()
@@ -141,7 +143,6 @@ void Board::draw()
 
 void Board::handle(unsigned char key)
 {
-
 	int playerX = player->getX();
 	int playerY = player->getY();
 
@@ -197,6 +198,9 @@ void Board::handle(unsigned char key)
 			stepCounter++;
 		}
 	}
+
+	spawnHandler();
+
 }
 
 void Board::check()
@@ -430,18 +434,25 @@ void Board::spawnMonster()
 	int rX, rY; // random x random y
 	do
 	{
+		
 		rX = random->randomInt(50);
 		rY = random->randomInt(50);
 		if (canMove(rX, rY) && currentlyViewed(rX,rY))
 		{
 			monsterList.push_back(new Goblin(rX, rY)); //only one monster, plan to spawn different ones;
-
-
 			gameboard[rX][rY]->setEntityType(monster);
 			numMonsters++;
+			std::cout << "spawned monster" << std::endl;
 		}
-		tries++;
-	} while (tries > 0 || numMonsters > 4);
+		tries--;
+	} while (tries > 0 || numMonsters < 2);
+}
+
+void Board::spawnHandler()
+{
+	if (stepCounter % 10 == random->randomInt(10) && monsterList.size() < 25 ){ // something to randomly spawn monster
+		spawnMonster();
+	}
 }
 
 bool Board::currentlyViewed(int x, int y)

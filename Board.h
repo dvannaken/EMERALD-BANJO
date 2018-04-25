@@ -52,6 +52,7 @@ class Board {
 
 	Monster* monsterAt(int, int);
 	void spawnMonster();
+	void spawnHandler(); //uses step handler to spawn items.
 
 
 
