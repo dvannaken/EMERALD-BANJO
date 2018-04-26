@@ -381,14 +381,14 @@ void Board::monsterDebug(int m)
 {
 
 	int hp = monsterList[m]->getHp();
-	std::cout << m << " " << monsterList[m]->getX() << " " << monsterList[m]->getY() << std::endl;
+	std::cout << m << " with "<< hp <<" at " << monsterList[m]->getX() << " " << monsterList[m]->getY() << std::endl;
 	if (hp < 0)
 	{
 		std::cout << "monster is dead " << std::endl;
 	}
 	else
 	{
-		std::cout << "monster is dead " << std::endl;
+		std::cout << "monster is alive " << std::endl;
 	}
 }
 
@@ -451,7 +451,10 @@ void Board::combat(int m, bool attacking) {
 
 		monsterDebug(m);
 
-		if (monsterList[m]->getHp() < 0)
+		
+
+
+		if (monsterList[m]->getHp() <= 0)
 		{
 			std::cout << "Deleting Monster "  << m << std::endl;
 			std::cout << monsterList[m]->getX() << std::endl;
@@ -479,7 +482,10 @@ void Board::combat(int m, bool attacking) {
 			numMonsterAttacks--;
 		}
 	}
-	std::cout << "it gets here" << std::endl;
+	for (int i = 0; i < monsterList.size(); i++)
+	{
+		std::cout << i << " " << monsterList[i]->getX() << " " << monsterList[i]->getY() << std::endl;
+	}
 }
 
 int Board::monsterAt(int x, int y)
@@ -515,8 +521,9 @@ void Board::spawnMonster(int tries, int num)
 			monsterList.push_back(new Goblin(rX, rY)); //only one monster, plan to spawn different ones;
 
 			gameboard[rX][rY]->setEntityType(monster);
-			numMonsters++;
+			
 			std::cout << "spawned monster " << numMonsters <<  " at " << monsterList[monsterAt(rX,rY)]->getX() << " " << monsterList[monsterAt(rX, rY)]->getY() <<  std::endl;
+			numMonsters++;
 		}
 
 	}

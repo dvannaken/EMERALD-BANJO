@@ -38,7 +38,7 @@ void Square::draw() const {
 
 	if (entityTile == player)
 	{
-		std::cout << "Drawing Player" << std::endl;
+		//std::cout << "Drawing Player" << std::endl;
 		glColor3f(0.294, 0.466, 0.745);
 
 		glBegin(GL_POLYGON);
@@ -52,7 +52,7 @@ void Square::draw() const {
 	
 	if (entityTile == monster && (vis == lightLevel_1 || vis == lightLevel_2 || vis == lightlevel_3))
 	{
-		std::cout << "Drawing Monster" << std::endl;
+		//std::cout << "Drawing Monster" << std::endl;
 		glColor3f(0.420, 0.557, 0.137);
 
 		glBegin(GL_POLYGON);
