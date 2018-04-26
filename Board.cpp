@@ -124,7 +124,7 @@ Board::Board(int ii)
 	upToDate = true;
 	stepCounter = 0;
 	//inProgress = false;
-	spawnMonster(50,10);
+	
 }
 
 void Board::draw()
@@ -374,8 +374,6 @@ void Board::debug() {
 	std::cout << "INT " << player->getIntel()<< std::endl;
 	std::cout << "CHAR " << player->getChari()<< std::endl;
 	
-	std::cout  << "ROLL TO HIT "<< player->rollToHit()<< std::endl;
-	std::cout  << "Roll Damage " << player->rollAttackDamage() << std::endl;
 
 }
 
@@ -410,15 +408,13 @@ void Board::combat(int m, bool attacking) {
 				std::cout << "You KILL the " << monsterList[m]->getName() << std::endl;
 				player->grantExp(monsterList[m]->getExp());
 				player->levelHandler();
-				gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(empty);
-				delete monsterList[m];
-				monsterList.erase(monsterList.begin() + m);
-
+				
+				break;
 
 			}
 			numPlayerAttacks--;
 		}
-		while (numMonsterAttacks > 0) {
+		while (numMonsterAttacks > 0 && monsterList[m]->getHp() > 0) {
 			std::cout << "player hp " << player->getHp() << std::endl;
 			if (player->getHp() > 0) {
 				if (monsterList[m]->rollToHIt() >= player->getAC()) {
@@ -432,6 +428,13 @@ void Board::combat(int m, bool attacking) {
 			numMonsterAttacks--;
 		}
 
+		if (monsterList[m]->getHp() < 0)
+		{
+
+			gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(empty);
+			delete monsterList[m];
+			monsterList.erase(monsterList.begin() + m);
+		}
 		
 	}
 	else
@@ -478,7 +481,7 @@ void Board::spawnMonster(int tries,int num)
 
 		rX = random->randomInt(49);
 		rY = random->randomInt(49);
-		if (canMove(rX, rY) && !currentlyViewed(rX,rY))
+		if (canMove(rX, rY) && !currentlyViewed(rX,rY) && gameboard[rX][rY]->getTile() == Unused)
 		{
 			monsterList.push_back(new Goblin(rX, rY)); //only one monster, plan to spawn different ones;
 
@@ -493,6 +496,10 @@ void Board::spawnMonster(int tries,int num)
 
 void Board::spawnHandler()
 {
+	if (stepCounter == 1)
+	{
+		spawnMonster(1000, 10);
+	}
 	if (stepCounter % 100 == random->randomInt(50) && monsterList.size() <= 10 ){ // something to randomly spawn monster
 		spawnMonster(25,1);
 	}
@@ -543,7 +550,7 @@ bool Board::isUpToDate() const
 
 bool Board::canMove(int endX, int endY)
 {
-	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster )
+	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster || gameboard[endX][endY]->getTile() == Floor)
 	{
 		if (gameboard[endX][endY]->getTile() == Floor || gameboard[endX][endY]->getTile() == Corridor)
 		{
