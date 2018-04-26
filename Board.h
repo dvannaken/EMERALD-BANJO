@@ -70,6 +70,7 @@ public:
 	bool canMove(int, int, bool);
 	
 	void debug();
+	void monsterDebug(int);
     ~Board();
 };
 

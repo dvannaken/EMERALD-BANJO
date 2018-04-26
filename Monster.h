@@ -55,7 +55,7 @@ public:
 	int getInitiativeBonus()const;
 	std::string getName()const;
 
-    int rollToHIt();
+    virtual int rollToHIt();
 
 
    
@@ -69,6 +69,8 @@ public:
 	void setMonsterType(weaponType);
 	void setInitiativeBonus(int);
 	void setName(std::string);
+
+	int rollDamage();
 
 	
     

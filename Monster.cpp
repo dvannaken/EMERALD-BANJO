@@ -9,7 +9,7 @@ Monster::~Monster()
 	delete numGenerator;
 }
 
-Monster::Monster(int, int) :Entity(x,y)
+Monster::Monster(int x, int y) :Entity(x,y)
 {
 }
 
@@ -177,6 +177,9 @@ void Monster::setInitiativeBonus(int bonus)
 void Monster::setName(std::string name)
 {
 	this->name = name;
+}
+int Monster::rollDamage() {
+	return numGenerator->rollDie(1, weaponSize);
 }
 
 
