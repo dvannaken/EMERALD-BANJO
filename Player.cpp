@@ -96,8 +96,13 @@ void Player::calculateBonus() { // generates all the bonuses
 	chariBonus = calculateBonus(chari);
 }
 void Player::init()
-
-{
+{	
+	setStre(generateStats());
+	setDex(generateStats());
+	setCon(generateStats());
+	setWis(generateStats());
+	setIntel(generateStats());
+	setChari(generateStats());
 	calculateBonus();
 	calculateProfBonus();
 	calculateToHitBonus();

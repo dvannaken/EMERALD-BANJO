@@ -2,7 +2,6 @@
 
 Monster::Monster():Entity(3,3) //constructor
 {
-	numGenerator = new RandomNum();
 }
 
 Monster::~Monster()
@@ -12,7 +11,6 @@ Monster::~Monster()
 
 Monster::Monster(int, int) :Entity(x,y)
 {
-	numGenerator = new RandomNum();
 }
 
 Monster::Monster(const Monster & m2):Entity(m2.x,m2.y) {

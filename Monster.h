@@ -53,7 +53,7 @@ public:
     int getMovementPerRound() const;
 	int getWeaponType() const;
 	int getInitiativeBonus()const;
-std::string getName()const;
+	std::string getName()const;
 
     int rollToHIt();
 
@@ -89,7 +89,7 @@ protected:
 	std::string attackMessage;
 	std::string name;
     weaponType weaponSize;
-	RandomNum* numGenerator;
+	RandomNum* numGenerator = new RandomNum();
 
 
 

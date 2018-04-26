@@ -51,7 +51,7 @@ class Board {
 	void combat(int,bool); //bool if player is attacking
 
 	int monsterAt(int, int);
-	void spawnMonster();
+	void spawnMonster(int,int);
 	void spawnHandler(); //uses step handler to spawn items.
 
 
@@ -68,6 +68,8 @@ public:
     bool isUpToDate() const;
 	bool canMove(int,int);
 	bool canMove(int, int, bool);
+	
+	void debug();
     ~Board();
 };
 
