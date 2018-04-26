@@ -379,7 +379,17 @@ void Board::debug() {
 
 void Board::monsterDebug(int m)
 {
-	std::cout << monsterList[m]->getHp() << std::endl;
+
+	int hp = monsterList[m]->getHp();
+	std::cout << m << " " << monsterList[m]->getX() << " " << monsterList[m]->getY() << std::endl;
+	if (hp < 0)
+	{
+		std::cout << "monster is dead " << std::endl;
+	}
+	else
+	{
+		std::cout << "monster is dead " << std::endl;
+	}
 }
 
 
@@ -419,6 +429,7 @@ void Board::combat(int m, bool attacking) {
 			}
 			numPlayerAttacks--;
 		}
+
 		monsterDebug(m);
 		for (int i = 0; i < numMonsterAttacks; i++)
 		{
@@ -439,21 +450,18 @@ void Board::combat(int m, bool attacking) {
 		}
 
 		monsterDebug(m);
-		debug();
 
 		if (monsterList[m]->getHp() < 0)
 		{
-			std::cout << "Delete Monster" << std::endl;
+			std::cout << "Deleting Monster "  << m << std::endl;
 			std::cout << monsterList[m]->getX() << std::endl;
 			std::cout << monsterList[m]->getY() << std::endl;
-			gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(empty);
-
-			std::cout << "Delete Monster" << std::endl;
+			int x = monsterList[m]->getX();
+			int y = monsterList[m]->getY();
 			delete monsterList[m];
-			std::cout << "Delete Monster" << std::endl;
 			monsterList.erase(monsterList.begin() + m);
+			gameboard[x][y]->setEntityType(empty);
 		}
-		std::cout << "it gets here 2" << std::endl;
 	}
 	else
 	{
