@@ -96,11 +96,20 @@ void Player::calculateBonus() { // generates all the bonuses
 	chariBonus = calculateBonus(chari);
 }
 void Player::init()
-
-{
-	calculateBonus();
-	calculateProfBonus();
-	calculateToHitBonus();
+{	
+	ac = 14;
+	do
+	{
+		setStre(generateStats());
+		setDex(generateStats());
+		setCon(generateStats());
+		setWis(generateStats());
+		setIntel(generateStats());
+		setChari(generateStats());
+		calculateBonus();
+		calculateProfBonus();
+		calculateToHitBonus();
+	} while ((stre + dex + con + intel + wis + chari) < 65);
 	exp = 0;
 	level = 1;
 	hp = 8 + conBonus;

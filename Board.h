@@ -48,10 +48,10 @@ class Board {
 	void doFov(uint x, uint y,uint radius,visibility vis);
 	bool currentlyViewed(int, int);
 
-	void combat(Monster* m,bool); //bool if player is attacking
+	void combat(int,bool); //bool if player is attacking
 
-	Monster* monsterAt(int, int);
-	void spawnMonster();
+	int monsterAt(int, int);
+	void spawnMonster(int,int);
 	void spawnHandler(); //uses step handler to spawn items.
 
 
@@ -68,6 +68,9 @@ public:
     bool isUpToDate() const;
 	bool canMove(int,int);
 	bool canMove(int, int, bool);
+	
+	void debug();
+	void monsterDebug(int);
     ~Board();
 };
 

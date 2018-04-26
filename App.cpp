@@ -41,13 +41,13 @@ void App::mouseDrag(float x, float y){
 }
 
 void App::keyPress(unsigned char key) {
-	std::cout << "inputing" << key <<std::endl;
+	//std::cout << "inputing" << key <<std::endl;
     if (key == 27){
         delete gameBoard;
         exit(0);
     }
     else {
-		std::cout << "inputing" << key <<std::endl;
+		//std::cout << "inputing" << key <<std::endl;
         gameBoard->handle(key);
     }
     redraw();
