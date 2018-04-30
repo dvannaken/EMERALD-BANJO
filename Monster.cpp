@@ -1,7 +1,10 @@
 #include "Monster.h"
 
+
+
 Monster::Monster():Entity(3,3) //constructor
 {
+	awake = false;
 	numGenerator = new RandomNum();
 }
 
@@ -64,6 +67,8 @@ void Monster::moveDownRight()
 
 
 
+
+
 int Monster::getLevel() const
 {
 	return level;
@@ -109,6 +114,10 @@ int Monster::getInitiativeBonus() const
 	return initiativeBonus;
 }
 
+bool Monster::isAwake() const{
+	return awake;
+}
+
 int Monster::rollToHIt()
 {
 	numGenerator->randomInt(20) + toHit;
@@ -145,7 +154,7 @@ void Monster::setAttacks(int numAttacks)
 	this->attacks = numAttacks;
 }
 
-void Monster::setMovementPerRound(int movement) 
+void Monster::setMovementPerRound(int movement)
 {
 	this->movementPerRound = movement;
 }
@@ -160,4 +169,6 @@ void Monster::setInitiativeBonus(int bonus)
 	this->initiativeBonus = bonus;
 }
 
-
+void Monster::setAwake(bool ){
+	this->awake = awake;
+}
