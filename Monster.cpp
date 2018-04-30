@@ -184,8 +184,11 @@ void Monster::setInitiativeBonus(int bonus)
 	this->initiativeBonus = bonus;
 }
 
-void Monster::setAwake(bool ){
-	this->awake = awake;
+void Monster::awaken(){
+	awake = true;
+}
+void Monster::sleep(){
+	awake = false;
 }
 void Monster::setName(std::string name)
 {

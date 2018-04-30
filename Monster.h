@@ -25,7 +25,7 @@ public:
 	};
 
     Monster(); // constructor
-    Monster(const Monster&); 
+    Monster(const Monster&);
     ~Monster();
 
     Monster(int,int); // constructor with spawning location
@@ -57,14 +57,16 @@ public:
     void setMovementPerRound(int);
 	void setMonsterType(weaponType);
 	void setInitiativeBonus(int);
-    void setAwake(bool);
+    void awaken();
+    void sleep();
+
 	void setName(std::string);
 
 	int rollDamage();
 
-	
-    
-    
+
+
+
 
     //Monster movement, to be used in movement Algorithm
     virtual void moveUp();
@@ -94,7 +96,7 @@ protected:
 	std::string name;
     weaponType weaponSize;
 	RandomNum* numGenerator = new RandomNum();
-    bool awake;
+    bool awake = false;
 
 
 
