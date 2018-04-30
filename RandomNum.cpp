@@ -62,7 +62,7 @@ int RandomNum::rollDie(int num, int die) {
 
 	for (int i = 0; i < num; i++)
 	{
-		total += randomInt(1,die);
+		total += randomInt(die);
 	}
 	return total;
 
