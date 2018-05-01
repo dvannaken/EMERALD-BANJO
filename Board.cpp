@@ -43,7 +43,6 @@ Board::Board(int ii)
 	float startx = -1;
 	float starty = 1;
 
-
 	map = new MapGen(size, size);
 	map->generate(random->randomInt(35, 50));
 	map->print();
@@ -99,33 +98,29 @@ Board::Board(int ii)
 					player = new Player(x - 1, y); // spawns player left of upstairs
 					gameboard[x - 1][y]->setEntityType(entityType::player);
 
-					doFov(x, y, 2, lightlevel_3);
+					doFov(x, y,3,lightlevel_3);
 				}
 				else if (canMove(x, y - 1))
 				{
 					player = new Player(x, y - 1); // spawns player right of upstairs
 					gameboard[x - 1][y]->setEntityType(entityType::player);
 
-					doFov(x, y, 2, lightlevel_3);
+					doFov(x, y,3,lightlevel_3);
 				}
 
 				break;
 			case MapGen::DownStairs:
 				gameboard[x][y]->setTile(Downstairs);
 				gameboard[x][y]->setColor(0.8, 0.0, 0.0);
-
 				break;
 			default:
 				break;
 			}
 		}
 	}
-
-
 	upToDate = true;
 	stepCounter = 0;
 	//inProgress = false;
-
 }
 
 void Board::draw()
@@ -144,88 +139,72 @@ void Board::draw()
 
 void Board::handle(unsigned char key)
 {
+
 	int playerX = player->getX();
 	int playerY = player->getY();
 
 	if (key == 'w')
 	{
-		if (canMove(playerX, playerY - 1, true))
+		if (canMove(playerX, playerY - 1))
 		{
-			//std::cout << "moving up " << std::endl;
+			std::cout << "moving up " << std::endl;
 			player->moveUp();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
 			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			lightPlayer(player->getX(), player->getY());
 			behind();
 			stepCounter++;
-			spawnHandler();
 		}
-		stepCounter++;
-		monsterHandler();
-		behind();
 	}
 	if (key == 'a')
 	{
-		if (canMove(playerX - 1, playerY, true))
+		if (canMove(playerX - 1, playerY))
 		{
-			//std::cout << "moving left" << std::endl;
+			std::cout << "moving left" << std::endl;
 			player->moveLeft();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
 			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			lightPlayer(player->getX(), player->getY());
 			behind();
 			stepCounter++;
-			spawnHandler();
 		}
-		stepCounter++;
-		monsterHandler();
-		behind();
 	}
 	if (key == 'd')
 	{
-		if (canMove(playerX + 1, playerY, true))
+		if (canMove(playerX + 1, playerY))
 		{
-			//std::cout << "moving right" << std::endl;
+			std::cout << "moving right" << std::endl;
 			player->moveRight();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
 			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			lightPlayer(player->getX(), player->getY());
 			behind();
 			stepCounter++;
-			spawnHandler();
 		}
-		stepCounter++;
-		monsterHandler();
-		behind();
 	}
 	if (key == 's')
 	{
-		if (canMove(playerX, playerY + 1, true))
+		if (canMove(playerX, playerY + 1))
 		{
-			//std::cout << "moving down " << std::endl;
+			std::cout << "moving down " << std::endl;
 			player->moveDown();
 			gameboard[playerX][playerY]->setEntityType(entityType::empty);
 			gameboard[player->getX()][player->getY()]->setEntityType(entityType::player);
 			lightPlayer(player->getX(), player->getY());
 			behind();
 			stepCounter++;
-			spawnHandler();
 		}
-		stepCounter++;
-		monsterHandler();
-		behind();
 	}
-
-
-
 }
 
 void Board::check()
 {
+	//while (!gameover) {
 
+	//	// game mechanics go here
+
+	//}
 }
-
-
 
 void Board::reset()
 {
@@ -270,21 +249,21 @@ bool Board::isOpaque(uint x, uint y) const
 
 void Board::lightPlayer(int x, int y)
 {
-	if (stepCounter > 2) {
+	if(stepCounter > 2){
 		for (int i = 0; i < 50; i++)
+	{
+		for (int j = 0; j < 50; j++)
 		{
-			for (int j = 0; j < 50; j++)
+			if (gameboard[i][j]->getVisited() == true)
 			{
-				if (gameboard[i][j]->getVisited() == true)
-				{
-					gameboard[i][j]->setVis(recentlyLit);
-				}
+				gameboard[i][j]->setVis(recentlyLit);
 			}
 		}
 	}
-
+	}
+	
 	doFov(x, y);
-	doFov(x, y, 3, lightLevel_2);
+	doFov(x, y, 6, lightLevel_2);
 	doFov(x, y, 2, lightLevel_1);
 }
 
@@ -351,80 +330,7 @@ void Board::castLight(uint x, uint y, uint radius, uint row, float start_slope, 
 				blocked = true;
 				next_start_slope = r_slope;
 				castLight(x, y, radius, i + 1, start_slope, l_slope, xx,
-					xy, yx, yy, visState);
-			}
-		}
-		if (blocked)
-		{
-			break;
-		}
-	}
-}
-void Board::monsterView(uint x, uint y, uint radius, uint row, float start_slope, float end_slope, uint xx, uint xy, uint yx, uint yy,int m)
-{
-	if (start_slope < end_slope)
-	{
-		return;
-	}
-	float next_start_slope = start_slope;
-	for (uint i = row; i <= radius; i++)
-	{
-		bool blocked = false;
-		for (int dx = -i, dy = -i; dx <= 0; dx++)
-		{
-			float l_slope = (dx - 0.5) / (dy + 0.5);
-			float r_slope = (dx + 0.5) / (dy - 0.5);
-			if (start_slope < r_slope)
-			{
-				continue;
-			}
-
-			else if (end_slope > l_slope)
-			{
-				break;
-			}
-
-			int sax = dx * xx + dy * xy;
-			int say = dx * yx + dy * yy;
-			if ((sax < 0 && (uint)std::abs(sax) > x) ||
-				(say < 0 && (uint)std::abs(say) > y))
-			{
-				continue;
-			}
-			uint ax = x + sax;
-			uint ay = y + say;
-			if (ax >= 49 || ay >= 49)
-			{
-				continue;
-			}
-
-			uint radius2 = radius * radius;
-			if ((uint)(dx * dx + dy * dy) < radius2)
-			{
-				if (ax == player->getX() && ay == player->getY()) {
-					monsterList[m]->awaken();
-				}
-			}
-
-			if (blocked)
-			{
-				if (isOpaque(ax, ay))
-				{
-					next_start_slope = r_slope;
-					continue;
-				}
-				else
-				{
-					blocked = false;
-					start_slope = next_start_slope;
-				}
-			}
-			else if (isOpaque(ax, ay))
-			{
-				blocked = true;
-				next_start_slope = r_slope;
-				monsterView(x, y, radius, i + 1, start_slope, l_slope, xx,
-						  xy, yx, yy, m);
+						  xy, yx, yy, visState);
 			}
 		}
 		if (blocked)
@@ -439,145 +345,57 @@ void Board::doFov(uint x, uint y, uint radius, visibility vis)
 	for (uint i = 0; i < 8; i++)
 	{
 		castLight(x, y, radius, 1, 1.0, 0.0, multipliers[0][i],
-			multipliers[1][i], multipliers[2][i], multipliers[3][i], vis);
-	}
-}
-
-//This starts the combat functions within the game.
-void Board::doFov(uint x, uint y)
-{
-	uint radius = 6;
-
-	for (uint i = 0; i < 8; i++)
-	{
-		visibility vis = lightlevel_3;
-		castLight(x, y, radius, 1, 1.0, 0.0, multipliers[0][i],
 				  multipliers[1][i], multipliers[2][i], multipliers[3][i], vis);
 	}
 }
 
+void Board::combat(Monster* m, bool attacking) {
 
-void Board::doMonsterFov(uint x,uint y,int m){
-	uint radius = 3;
-	for (uint i = 0; i < 8; i++)
-	{
-		monsterView(x, y, radius, 1, 1.0, 0.0, multipliers[0][i],
-				  multipliers[1][i], multipliers[2][i], multipliers[3][i],m);
-	}
-}
-
-
-
-void Board::debug() {
-	std::cout << "AC " << player->getAC() << std::endl;
-	std::cout << "HP " << player->getHp() << std::endl;
-	std::cout << "Init Bonus " << player->getInitBonus() << std::endl;
-	std::cout << "Num Attacks " << player->getNumAttacks() << std::endl;
-	std::cout << "STR " << player->getStre() << std::endl;
-	std::cout << "DEX " << player->getDex() << std::endl;
-	std::cout << "CON " << player->getCon() << std::endl;
-	std::cout << "WIS " << player->getWis() << std::endl;
-	std::cout << "INT " << player->getIntel() << std::endl;
-	std::cout << "CHAR " << player->getChari() << std::endl;
-
-}
-
-void Board::monsterDebug(int m)
-{
-
-	int hp = monsterList[m]->getHp();
-	std::cout << m << " with "<< hp <<" at " << monsterList[m]->getX() << " " << monsterList[m]->getY() << std::endl;
-	if (hp < 0)
-	{
-		std::cout << "monster is dead " << std::endl;
-	}
-	else
-	{
-		std::cout << "monster is alive " << std::endl;
-	}
-}
-
-
-void Board::combat(int m, bool attacking) {
-	debug();
 	int numPlayerAttacks = player->getNumAttacks();
-	int numMonsterAttacks = monsterList[m]->getAttacks();
-	//int playerinit = random->randomInt(20) + player->getInitBonus();
-	//int monsterinit = random->randomInt(20) + monsterList[m]->getInitiativeBonus();
-
+	int numMonsterAttacks = m->getAttacks();
+	int playerinit = random->randomInt(20) + player->getInitBonus();
+	int monsterinit = random->randomInt(20) + m->getInitiativeBonus();
 	if (attacking) {
 
-		//std::cout << playerinit << " vs " << monsterinit << std::endl;
 
-		while (numPlayerAttacks > 0)
-		{
-			if (monsterList[m]->getHp() > 0) {
-				int playerAttack = player->rollToHit();
-				int monsterAC = monsterList[m]->getAc();
+		if (playerinit > monsterinit) {
+			while (numPlayerAttacks > 0)
+			{
+				if (m->getHp() > 0) {
+					if (player->rollToHit() >= m->getAc())
+					{
+						m->setHp(m->getHp() - player->rollAttackDamage());
 
-				if (playerAttack >= monsterAC)
-				{
-					int damage = player->rollAttackDamage();
-					std::cout << "You do " << damage << " to " << monsterList[m]->getName() << std::endl;
-					monsterList[m]->setHp(monsterList[m]->getHp() - damage);
-
+					}
 				}
-			}
-			if (monsterList[m]->getHp() < 0) {
-
-				std::cout << "You KILL the " << monsterList[m]->getName() << std::endl;
-				player->grantExp(monsterList[m]->getExp());
-				player->levelHandler();
-
-				break;
-
-			}
-			numPlayerAttacks--;
-		}
-
-		monsterDebug(m);
-		for (int i = 0; i < numMonsterAttacks; i++)
-		{
-			if (monsterList[m]->getHp() < 0) {
-				break;
-			}
-			std::cout << "player hp " << player->getHp() << std::endl;
-			if (player->getHp() > 0) {
-				if (monsterList[m]->rollToHIt() >= player->getAC()) {
-					//player->takesDamage(monsterList[m]->rollDamage());
-					//player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
+				else {
+					player->grantExp(m->getExp());
+					player->levelHandler();
 				}
+				numPlayerAttacks--;
 			}
-			else {
-				// player dies @todo
-				std::cout << "You DIE" << std::endl;
+			while (numMonsterAttacks > 0) {
+				if (player->getHp() > 0) {
+					if (m->rollToHIt() >= player->getAC()) {
+						player->takesDamage(random->rollDie(1, m->getWeaponType()));
+					}
+				}
+				else {
+					// player dies @todo
+				}
+				numMonsterAttacks--;
 			}
 		}
 
-		monsterDebug(m);
 
-
-
-
-		if (monsterList[m]->getHp() <= 0)
-		{
-			std::cout << "Deleting Monster "  << m << std::endl;
-			std::cout << monsterList[m]->getX() << std::endl;
-			std::cout << monsterList[m]->getY() << std::endl;
-			int x = monsterList[m]->getX();
-			int y = monsterList[m]->getY();
-			delete monsterList[m];
-			monsterList.erase(monsterList.begin() + m);
-			gameboard[x][y]->setEntityType(empty);
-		}
 	}
 	else
 	{
-		// player is not attacking, monsters attacking on its side.
+		// player is not attacking, monsters attacking on its side. 
 		while (numMonsterAttacks > 0) {
 			if (player->getHp() > 0) {
-				if (monsterList[m]->rollToHIt() >= player->getAC()) {
-					player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
+				if (m->rollToHIt() >= player->getAC()) {
+					player->takesDamage(random->rollDie(1, m->getWeaponType()));
 					//needs to output damage to console as temp thing.
 				}
 			}
@@ -587,84 +405,22 @@ void Board::combat(int m, bool attacking) {
 			numMonsterAttacks--;
 		}
 	}
-	for (int i = 0; i < monsterList.size(); i++)
-	{
-		std::cout << i << " " << monsterList[i]->getX() << " " << monsterList[i]->getY() << std::endl;
-	}
 }
+	
+	
 
-int Board::monsterAt(int x, int y)
+
+void Board::doFov(uint x, uint y)
 {
-	for (int i = 0; i < monsterList.size(); i++)
+	uint radius = 8;
+
+	for (uint i = 0; i < 8; i++)
 	{
-		if (monsterList[i]->getX() == x && monsterList[i]->getY() == y)
-		{
-			return i;
-		}
+		visibility vis = lightlevel_3;
+		castLight(x, y, radius, 1, 1.0, 0.0, multipliers[0][i],
+				  multipliers[1][i], multipliers[2][i], multipliers[3][i], vis);
 	}
 }
-
-void Board::spawnMonster(int tries, int num)
-{
-	int numMonsters = 0;
-	std::cout << "spawned monster called " << std::endl;
-	int rX, rY; // random x random y
-
-	for (int i = 0; i < tries; i++)
-	{
-		if (numMonsters > num - 1)
-		{
-			break;
-		}
-
-		rX = random->randomInt(49);
-		rY = random->randomInt(49);
-
-		if (canMove(rX, rY) && !currentlyViewed(rX, rY) && gameboard[rX][rY]->getTile() == Unused)
-		{
-			std::cout << rX << " " << rY << std::endl;
-			monsterList.push_back(new Goblin(rX, rY)); //only one monster, plan to spawn different ones;
-
-			gameboard[rX][rY]->setEntityType(monster);
-
-			std::cout << "spawned monster " << numMonsters <<  " at " << monsterList[monsterAt(rX,rY)]->getX() << " " << monsterList[monsterAt(rX, rY)]->getY() <<  std::endl;
-			numMonsters++;
-		}
-
-	}
-
-}
-
-void Board::spawnHandler()
-{
-	if (stepCounter == 1)
-	{
-		spawnMonster(1000, 10);
-	}
-	if (stepCounter % 100 == random->randomInt(50) && monsterList.size() <= 25) { // something to randomly spawn monster
-		spawnMonster(30, 1);
-	}
-}
-
-bool Board::currentlyViewed(int x, int y)
-{
-	switch (gameboard[x][y]->getVis())
-	{
-	case lightLevel_1:
-		return true;
-	case lightLevel_2:
-		return true;
-		break;
-	case lightlevel_3:
-		return true;
-		break;
-	default:
-		return false;
-		break;
-	}
-}
-
-
 
 void Board::catchUp()
 {
@@ -678,185 +434,19 @@ bool Board::isUpToDate() const
 
 bool Board::canMove(int endX, int endY)
 {
-	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster || gameboard[endX][endY]->getTile() == Floor)
+	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor)
 	{
-		if (gameboard[endX][endY]->getTile() == Floor || gameboard[endX][endY]->getTile() == Corridor)
-		{
-			return true;
-		}
 		return false;
 	}
 	else
 		return true;
 }
-
-bool Board::canMove(int endX, int endY, bool player)
-{
-	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster || gameboard[endX][endY]->getEntityType() == player)
-	{
-		if (gameboard[endX][endY]->getEntityType() == monster) {
-			std::cout << "Starting Combat" << std::endl;
-			int attackedMonster = monsterAt(endX, endY);
-			combat(attackedMonster, true);
-
-			stepCounter++;
-			behind();
-			//check();
-		}
-
-		return false;
-	}
-	else
-		return true;
-}
-
-
-void Board::MonsterAi(int m){
-	std::cout << "Monster " << m << " " << monsterList[m]->isAwake()  << " "<< monsterList[m]->getX() << " " << monsterList[m]->getY() << '\n';
-	if (monsterList[m]->isAwake()){
-		//do shit
-		//std::cout << "Monster " << m << " is awake " << monsterList[m]->getX() << " " << monsterList[m]->getY() << '\n';
-		int monsterX = monsterList[m]->getX();
-		int monsterY = monsterList[m]->getY();
-		if (monsterY = ) {
-			/* code */
-		}
-	}
-	else if(stepCounter > 4 && !monsterList[m]->isAwake()){
-		std::cout << "Monster " << m << " is not awake " << monsterList[m]->getX() << " " << monsterList[m]->getY() << '\n';
-		MonsterIdle(m); // randomly walk around untill it sees the player
-		doMonsterFov(monsterList[m]->getX(),monsterList[m]->getY(),m);
-	}
-}
-
-void Board::MonsterIdle(int m){
-	int monsterX = monsterList[m]->getX();
-	int monsterY = monsterList[m]->getY();
-	int direction = random->randomInt(numDirections);
-
-	switch (direction) {
-
-		case upLeft:
-			if (canMove(monsterList[m]->getX()-1,monsterList[m]->getY()-1)) {
-				monsterList[m]->moveUpLeft();
-				gameboard[monsterX][monsterY]->setEntityType(entityType::empty);
-				gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(entityType::monster);
-
-			}
-			else{
-				MonsterIdle(m);
-			}
-			break;
-		case up:
-			if (canMove(monsterList[m]->getX(),monsterList[m]->getY()-1)) {
-				monsterList[m]->moveUp();
-				gameboard[monsterX][monsterY]->setEntityType(entityType::empty);
-				gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(entityType::monster);
-
-			}
-			else{
-				MonsterIdle(m);
-			}
-			break;
-		case upRight:
-			if (canMove(monsterList[m]->getX()+1,monsterList[m]->getY()-1)) {
-				monsterList[m]->moveUpRight();
-				gameboard[monsterX][monsterY]->setEntityType(entityType::empty);
-				gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(entityType::monster);
-
-			}
-			else{
-				MonsterIdle(m);
-			}
-
-			break;
-
-		case left:
-			if (canMove(monsterList[m]->getX()-1,monsterList[m]->getY())) {
-				monsterList[m]->moveLeft();
-				gameboard[monsterX][monsterY]->setEntityType(entityType::empty);
-				gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(entityType::monster);
-
-			}
-			else{
-				MonsterIdle(m);
-			}
-
-			break;
-		case right:
-			if (canMove(monsterList[m]->getX()+1,monsterList[m]->getY())) {
-				monsterList[m]->moveRight();
-				gameboard[monsterX][monsterY]->setEntityType(entityType::empty);
-				gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(entityType::monster);
-
-			}
-			else{
-				MonsterIdle(m);
-			}
-
-			break;
-
-		case downLeft:
-
-			if (canMove(monsterList[m]->getX()-1,monsterList[m]->getY()+1)) {
-				monsterList[m]->moveDownLeft();
-				gameboard[monsterX][monsterY]->setEntityType(entityType::empty);
-				gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(entityType::monster);
-
-			}
-			else{
-				MonsterIdle(m);
-			}
-
-			break;
-		case downRight:
-
-			if (canMove(monsterList[m]->getX()+1,monsterList[m]->getY()+1)) {
-				monsterList[m]->moveDownRight();
-				gameboard[monsterX][monsterY]->setEntityType(entityType::empty);
-				gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(entityType::monster);
-
-			}
-			else{
-				MonsterIdle(m);
-			}
-
-			break;
-		case down:
-
-			if (canMove(monsterList[m]->getX(),monsterList[m]->getY()+1)) {
-				monsterList[m]->moveDown();
-				gameboard[monsterX][monsterY]->setEntityType(entityType::empty);
-				gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(entityType::monster);
-
-			}
-			else{
-				MonsterIdle(m);
-			}
-
-			break;
-		default:
-			break;
-	}
-
-}
-
-void Board::monsterHandler(){
-	for (int i = 0; i < monsterList.size(); i++) {
-		MonsterAi(i);
-	}
-}
-
 
 Board::~Board()
 {
 	delete random;
 	delete map;
 	delete player;
-	for (int i = 0; i < monsterList.size(); i++)
-	{
-		delete monsterList[i];
-	}
 	for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 50; j++)
