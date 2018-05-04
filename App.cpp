@@ -69,7 +69,7 @@ void App::keyPress(unsigned char key) {
         gameBoard->handle(key);
         
     }
-    
+    redraw();
     
 }
 
@@ -93,7 +93,6 @@ void App::menuScreen() {
     
     glFlush();
     glutSwapBuffers();
-    
     
     
     
