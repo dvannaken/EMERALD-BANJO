@@ -1,4 +1,5 @@
 #include "App.h"
+using namespace std;
 
 App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w, h){
     // Initialize state variables
@@ -16,13 +17,15 @@ void App::draw() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
+    
+    ///////////////////////////////////
     if(!game.getGameStartStatus()) {
         menuScreen();
     }
     else {
         gameScreen();
     }
-    
+    ///////////////////////////////////
     
     glFlush();
     glutSwapBuffers();
@@ -52,10 +55,18 @@ void App::keyPress(unsigned char key) {
         delete gameBoard;
         exit(0);
     }
+    if(!game.getGameStartStatus()) {
+        if((key == 'p') || (key == 'P')){
+            game.setGameStart();
+        }
+    }
+    /*
     else {
 		std::cout << "inputing" << key <<std::endl;
         gameBoard->handle(key);
     }
+    */
+    
     redraw();
 }
 
@@ -70,10 +81,34 @@ void App::idle() {
     
 }
 
+////////////////////////////
 void App::menuScreen() {
     //TODO
+    
+    // Set up the transformations stack
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    //Menu Options
+    glRasterPos2f(-0.85f, 0.1f);
+    glColor3f(1.0f, 1.0f, 1.0f);
+    string firstLine  = "Welcome";
+    string seconfLine = "To play, press 'P' or 'p' ";
+
+    
+    for(int i = 0; i < firstLine.length(); ++i)
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, firstLine[i]);
+    
+    glRasterPos2f(-0.25f, -0.05f);
+    for(int i = 0; i < seconfLine.length(); ++i)
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, seconfLine[i]);
+    
+    glFlush();
+    glutSwapBuffers();
+
 }
 
 void App::gameScreen() {
     gameBoard->draw();
 }
+////////////////////////////

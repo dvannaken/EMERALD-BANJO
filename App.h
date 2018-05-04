@@ -13,10 +13,11 @@ class App: public GlutApp {
     float my;
     Board* gameBoard;
     
+    ////////////////////////////
     Board game;
     void menuScreen();
     void gameScreen();
-    
+    ////////////////////////////
     
 public:
     // Constructor, to initialize state

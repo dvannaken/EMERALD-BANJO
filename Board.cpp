@@ -14,7 +14,12 @@ Board::Board()
 {
 
 	//generatoring new map
-
+    
+    /////////////////////
+    gameStart = false;
+    gameEnd = false;
+    /////////////////////
+    
 	float xinc = 0.04;
 	float yinc = 0.04;
 	float startx = -1;
@@ -34,6 +39,25 @@ Board::Board()
 
 	// delay = 1000;
 }
+
+
+//////////////////////////////////////////
+
+void Board::setGameStart() {
+    gameStart = !gameStart;
+}
+
+//getters
+bool Board::getGameStartStatus() {
+    return gameStart;
+}
+
+bool Board::getGameEndStatus() {
+    return gameEnd;
+}
+
+
+//////////////////////////////////////////
 
 Board::Board(int ii)
 {

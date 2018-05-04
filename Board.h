@@ -50,9 +50,11 @@ private:
 
 	void combat(Monster* m,bool); //bool if player is attacking
     
+    
+    ////////////////////////////game state variables
     bool gameStart;
     bool gameEnd;
-
+    ////////////////////////////
 
 public:
     Board();
@@ -67,11 +69,13 @@ public:
 	bool canMove(int,int);
     ~Board();
     
+    ////////////////////////////
     void setGameStart(); // called when play has been selected
-    
-    //getters
+
+        //getters
     bool getGameStartStatus();
     bool getGameEndStatus();
+    ////////////////////////////
 };
 
 #endif
