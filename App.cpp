@@ -77,7 +77,7 @@ void App::keyPress(unsigned char key) {
 void App::menuScreen() {
     //TODO
     
-    /*
+    
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
@@ -93,7 +93,7 @@ void App::menuScreen() {
     
     glFlush();
     glutSwapBuffers();
-    */
+    
     
     
     
