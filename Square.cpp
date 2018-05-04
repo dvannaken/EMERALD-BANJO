@@ -8,69 +8,6 @@
 
 #include <iostream>
 #include "Square.h"
-//#include "TexRect.h"
-
-
-//for the graphics
-static Square* singleton;
-void square_timer(int value) {
-	if(singleton->game_over) {
-		singleton->gameOver->advance(); //prints game over
-	}
-
-	if(singleton->moving) {
-		singleton->playerOne->jump();
-		float bx = singleton->playerOne->x + singleton->playerOne->w/2;
-		float by = singleton->playerOne->y - singleton->playerOne->h + 0.1;
-		if(singleton->platform->contains(bx, by)) {
-			singleton->playerOne->rising = true;
-			singleton->playerOne->yinc += 0.001;
-			singleton->playerOne->xinc = singleton->playerOne->yinc;
-			if(singleton->playerOne->yinc > 0.05) {
-				singleton->playerOne->yinc = 0.05;
-			}
-		}
-		if(singleton->playerOne->y - singleton->playerOne-> h < -0.99) {
-			singleton->moving = false;
-			singleton->game_over = true;
-			singleton->gameOver->animate();
-		}
-	}
-	if(singleton->up) {
-		singleton->platform->moveUp(0.01);
-	}
-	if(singleton->down) {
-		singleton->platform->moveDown(0.01);
-	}
-	if(singleton->left) {
-		singleton->platform->moveLeft(0.01);
-	}
-	if(singleton->right) {
-		singleton->platform->moveRight(0.01);
-	}
-	if(singleton->game_over) {
-		singleton->redraw();
-		glutTimerFunc(100, square_timer, value);
-	}
-	else {
-		if(singleton->up || singleton->down || singleton->left || singleton->right || singleton->moving && !singleton->game_over) {
-			singleton->redraw();
-			glutTimerFunc(16, square_timer, value);
-		}
-	}
-}
-
-//graphics
-Square::Square(const char* label, int x, int y, int w, int h) {
-	singleton = this;
-	mx = 0.0;
-	my = 0.0;
-
-//	platform = new TexRect("images/", -1, 1, 2, 2);
-	playerOne = new TexRect("images/link.png", 0, 0.67, 0.2, 0.2);
-
-}
-
 
 
 Square::Square() : Rect(){
@@ -135,13 +72,13 @@ void Square::draw() const {
 			glColor3f(r - darkness, g - darkness, b - darkness);
 			break;
 		}
-
+		
 	}
 	else
 	{
 		glColor3f(0, 0, 0);
 	}
-
+    
 
     glBegin(GL_POLYGON);
 	glVertex2f(-y, -x);
@@ -152,7 +89,7 @@ void Square::draw() const {
 
     glEnd();
 
-
+	
 
 }
 

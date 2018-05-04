@@ -29,6 +29,7 @@ void App::draw() {
     
     glFlush();
     glutSwapBuffers();
+    
 }
 
 void App::mouseDown(float x, float y){
@@ -51,24 +52,58 @@ void App::mouseDrag(float x, float y){
 
 void App::keyPress(unsigned char key) {
 	std::cout << "inputing" << key <<std::endl;
+    
     if (key == 27){
         delete gameBoard;
         exit(0);
     }
+    
     if(!game.getGameStartStatus()) {
         if((key == 'p') || (key == 'P')){
             game.setGameStart();
         }
     }
-    /*
+    
     else {
 		std::cout << "inputing" << key <<std::endl;
         gameBoard->handle(key);
+        
     }
+    
+    
+}
+
+////////////////////////////
+void App::menuScreen() {
+    //TODO
+    
+    /*
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    //Menu Options
+    glRasterPos2f(-0.25f, -0.05f);
+    glColor3f(1.0f, 1.0f, 1.0f);
+    
+    string message = "To play, press 'P' or 'p' ";
+    
+    for(int i = 0; i < message.length(); ++i)
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, message[i]);
+    
+    
+    glFlush();
+    glutSwapBuffers();
     */
     
-    redraw();
+    
+    
 }
+
+void App::gameScreen() {
+    gameBoard->draw();
+}
+////////////////////////////
+
 
 void App::idle() {
     if (!gameBoard->isUpToDate()){
@@ -80,35 +115,6 @@ void App::idle() {
     }
     
 }
+ 
+ 
 
-////////////////////////////
-void App::menuScreen() {
-    //TODO
-    
-    // Set up the transformations stack
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    
-    //Menu Options
-    glRasterPos2f(-0.85f, 0.1f);
-    glColor3f(1.0f, 1.0f, 1.0f);
-    string firstLine  = "Welcome";
-    string seconfLine = "To play, press 'P' or 'p' ";
-
-    
-    for(int i = 0; i < firstLine.length(); ++i)
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, firstLine[i]);
-    
-    glRasterPos2f(-0.25f, -0.05f);
-    for(int i = 0; i < seconfLine.length(); ++i)
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, seconfLine[i]);
-    
-    glFlush();
-    glutSwapBuffers();
-
-}
-
-void App::gameScreen() {
-    gameBoard->draw();
-}
-////////////////////////////

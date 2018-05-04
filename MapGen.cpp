@@ -139,6 +139,7 @@ bool MapGen::createFeature(int x, int y, Direction dir)
  
 		return false;
 	}
+
 bool MapGen::makeRoom(int x, int y, Direction dir, bool firstRoom = false){
         static const int minRoomSize = 4;
 		static const int maxRoomSize = 7;

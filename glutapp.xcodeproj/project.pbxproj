@@ -7,11 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1735A360209A331C003EA6E1 /* libSOIL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1735A35F209A331C003EA6E1 /* libSOIL.a */; };
+		1735A362209A3369003EA6E1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1735A361209A3369003EA6E1 /* CoreFoundation.framework */; };
 		173FEF0C1AA63AC4006CCB85 /* app_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 173FEF0B1AA63AC4006CCB85 /* app_main.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		173FEF161AA63B1B006CCB85 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 173FEF151AA63B1B006CCB85 /* OpenGL.framework */; };
 		173FEF181AA63B22006CCB85 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 173FEF171AA63B22006CCB85 /* GLUT.framework */; };
 		1799B7E51E5E3A83006D7CBD /* GlutApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1799B7E31E5E3A83006D7CBD /* GlutApp.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		1799B7E81E5ECD67006D7CBD /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1799B7E61E5ECD67006D7CBD /* App.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		A56BED4E20993CA90090E692 /* Board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED2A20993CA90090E692 /* Board.cpp */; };
+		A56BED5020993CA90090E692 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED2F20993CA90090E692 /* Entity.cpp */; };
+		A56BED5120993CA90090E692 /* makefile in Sources */ = {isa = PBXBuildFile; fileRef = A56BED3420993CA90090E692 /* makefile */; };
+		A56BED5220993CA90090E692 /* MapGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED3520993CA90090E692 /* MapGen.cpp */; };
+		A56BED5320993CA90090E692 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED3720993CA90090E692 /* Monster.cpp */; };
+		A56BED5420993CA90090E692 /* MonsterList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED3920993CA90090E692 /* MonsterList.cpp */; };
+		A56BED5520993CA90090E692 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED3B20993CA90090E692 /* Player.cpp */; };
+		A56BED5620993CA90090E692 /* RandomNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED3D20993CA90090E692 /* RandomNum.cpp */; };
+		A56BED5720993CA90090E692 /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED3F20993CA90090E692 /* Rect.cpp */; };
+		A56BED5820993CA90090E692 /* RgbImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED4120993CA90090E692 /* RgbImage.cpp */; };
+		A56BED5A20993CA90090E692 /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED4520993CA90090E692 /* Shape.cpp */; };
+		A56BED5B20993CA90090E692 /* Square.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED4920993CA90090E692 /* Square.cpp */; };
+		A56BED64209C52A40090E692 /* AnimatedRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED5F209C52A40090E692 /* AnimatedRect.cpp */; };
+		A56BED65209C52A40090E692 /* TexRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A56BED62209C52A40090E692 /* TexRect.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +43,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1735A35F209A331C003EA6E1 /* libSOIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSOIL.a; path = SOIL/lib/macOS/libSOIL.a; sourceTree = "<group>"; };
+		1735A361209A3369003EA6E1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		173FEF011AA63A07006CCB85 /* glutapp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = glutapp; sourceTree = BUILT_PRODUCTS_DIR; };
 		173FEF0B1AA63AC4006CCB85 /* app_main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = app_main.cpp; sourceTree = "<group>"; };
 		173FEF151AA63B1B006CCB85 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -35,6 +53,39 @@
 		1799B7E41E5E3A83006D7CBD /* GlutApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlutApp.h; sourceTree = "<group>"; };
 		1799B7E61E5ECD67006D7CBD /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
 		1799B7E71E5ECD67006D7CBD /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
+		A56BED2A20993CA90090E692 /* Board.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Board.cpp; sourceTree = "<group>"; };
+		A56BED2B20993CA90090E692 /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
+		A56BED2E20993CA90090E692 /* Direction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Direction.h; sourceTree = "<group>"; };
+		A56BED2F20993CA90090E692 /* Entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
+		A56BED3020993CA90090E692 /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
+		A56BED3120993CA90090E692 /* freeglut */ = {isa = PBXFileReference; lastKnownFileType = folder; path = freeglut; sourceTree = "<group>"; };
+		A56BED3220993CA90090E692 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		A56BED3320993CA90090E692 /* Items.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Items.h; sourceTree = "<group>"; };
+		A56BED3420993CA90090E692 /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = makefile; sourceTree = "<group>"; };
+		A56BED3520993CA90090E692 /* MapGen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapGen.cpp; sourceTree = "<group>"; };
+		A56BED3620993CA90090E692 /* MapGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapGen.h; sourceTree = "<group>"; };
+		A56BED3720993CA90090E692 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
+		A56BED3820993CA90090E692 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monster.h; sourceTree = "<group>"; };
+		A56BED3920993CA90090E692 /* MonsterList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MonsterList.cpp; sourceTree = "<group>"; };
+		A56BED3A20993CA90090E692 /* MonsterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterList.h; sourceTree = "<group>"; };
+		A56BED3B20993CA90090E692 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		A56BED3C20993CA90090E692 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		A56BED3D20993CA90090E692 /* RandomNum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RandomNum.cpp; sourceTree = "<group>"; };
+		A56BED3E20993CA90090E692 /* RandomNum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomNum.h; sourceTree = "<group>"; };
+		A56BED3F20993CA90090E692 /* Rect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rect.cpp; sourceTree = "<group>"; };
+		A56BED4020993CA90090E692 /* Rect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rect.h; sourceTree = "<group>"; };
+		A56BED4120993CA90090E692 /* RgbImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RgbImage.cpp; sourceTree = "<group>"; };
+		A56BED4220993CA90090E692 /* RgbImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RgbImage.h; sourceTree = "<group>"; };
+		A56BED4520993CA90090E692 /* Shape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shape.cpp; sourceTree = "<group>"; };
+		A56BED4620993CA90090E692 /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
+		A56BED4720993CA90090E692 /* SOIL */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SOIL; sourceTree = "<group>"; };
+		A56BED4920993CA90090E692 /* Square.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Square.cpp; sourceTree = "<group>"; };
+		A56BED4A20993CA90090E692 /* Square.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Square.h; sourceTree = "<group>"; };
+		A56BED5F209C52A40090E692 /* AnimatedRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedRect.cpp; sourceTree = "<group>"; };
+		A56BED60209C52A40090E692 /* AnimatedRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedRect.h; sourceTree = "<group>"; };
+		A56BED61209C52A40090E692 /* SOIL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOIL.h; sourceTree = "<group>"; };
+		A56BED62209C52A40090E692 /* TexRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TexRect.cpp; sourceTree = "<group>"; };
+		A56BED63209C52A40090E692 /* TexRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexRect.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +93,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1735A362209A3369003EA6E1 /* CoreFoundation.framework in Frameworks */,
+				1735A360209A331C003EA6E1 /* libSOIL.a in Frameworks */,
 				173FEF181AA63B22006CCB85 /* GLUT.framework in Frameworks */,
 				173FEF161AA63B1B006CCB85 /* OpenGL.framework in Frameworks */,
 			);
@@ -50,6 +103,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1735A35E209A331C003EA6E1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1735A361209A3369003EA6E1 /* CoreFoundation.framework */,
+				1735A35F209A331C003EA6E1 /* libSOIL.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		173FEEF81AA63A07006CCB85 = {
 			isa = PBXGroup;
 			children = (
@@ -59,8 +121,42 @@
 				1799B7E71E5ECD67006D7CBD /* App.h */,
 				1799B7E31E5E3A83006D7CBD /* GlutApp.cpp */,
 				1799B7E41E5E3A83006D7CBD /* GlutApp.h */,
+				A56BED2A20993CA90090E692 /* Board.cpp */,
+				A56BED2B20993CA90090E692 /* Board.h */,
+				A56BED2E20993CA90090E692 /* Direction.h */,
+				A56BED2F20993CA90090E692 /* Entity.cpp */,
+				A56BED3020993CA90090E692 /* Entity.h */,
+				A56BED3120993CA90090E692 /* freeglut */,
+				A56BED3220993CA90090E692 /* images */,
+				A56BED3320993CA90090E692 /* Items.h */,
+				A56BED3420993CA90090E692 /* makefile */,
+				A56BED3520993CA90090E692 /* MapGen.cpp */,
+				A56BED3620993CA90090E692 /* MapGen.h */,
+				A56BED3720993CA90090E692 /* Monster.cpp */,
+				A56BED3820993CA90090E692 /* Monster.h */,
+				A56BED3920993CA90090E692 /* MonsterList.cpp */,
+				A56BED3A20993CA90090E692 /* MonsterList.h */,
+				A56BED3B20993CA90090E692 /* Player.cpp */,
+				A56BED3C20993CA90090E692 /* Player.h */,
+				A56BED3D20993CA90090E692 /* RandomNum.cpp */,
+				A56BED3E20993CA90090E692 /* RandomNum.h */,
+				A56BED5F209C52A40090E692 /* AnimatedRect.cpp */,
+				A56BED60209C52A40090E692 /* AnimatedRect.h */,
+				A56BED61209C52A40090E692 /* SOIL.h */,
+				A56BED62209C52A40090E692 /* TexRect.cpp */,
+				A56BED63209C52A40090E692 /* TexRect.h */,
+				A56BED3F20993CA90090E692 /* Rect.cpp */,
+				A56BED4020993CA90090E692 /* Rect.h */,
+				A56BED4120993CA90090E692 /* RgbImage.cpp */,
+				A56BED4220993CA90090E692 /* RgbImage.h */,
+				A56BED4520993CA90090E692 /* Shape.cpp */,
+				A56BED4620993CA90090E692 /* Shape.h */,
+				A56BED4720993CA90090E692 /* SOIL */,
+				A56BED4920993CA90090E692 /* Square.cpp */,
+				A56BED4A20993CA90090E692 /* Square.h */,
 				173FEF0B1AA63AC4006CCB85 /* app_main.cpp */,
 				173FEF021AA63A07006CCB85 /* Products */,
+				1735A35E209A331C003EA6E1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +226,20 @@
 			files = (
 				1799B7E81E5ECD67006D7CBD /* App.cpp in Sources */,
 				173FEF0C1AA63AC4006CCB85 /* app_main.cpp in Sources */,
+				A56BED64209C52A40090E692 /* AnimatedRect.cpp in Sources */,
+				A56BED5320993CA90090E692 /* Monster.cpp in Sources */,
+				A56BED5020993CA90090E692 /* Entity.cpp in Sources */,
+				A56BED5A20993CA90090E692 /* Shape.cpp in Sources */,
+				A56BED5720993CA90090E692 /* Rect.cpp in Sources */,
+				A56BED5420993CA90090E692 /* MonsterList.cpp in Sources */,
+				A56BED5B20993CA90090E692 /* Square.cpp in Sources */,
+				A56BED65209C52A40090E692 /* TexRect.cpp in Sources */,
+				A56BED4E20993CA90090E692 /* Board.cpp in Sources */,
+				A56BED5520993CA90090E692 /* Player.cpp in Sources */,
+				A56BED5620993CA90090E692 /* RandomNum.cpp in Sources */,
+				A56BED5820993CA90090E692 /* RgbImage.cpp in Sources */,
+				A56BED5220993CA90090E692 /* MapGen.cpp in Sources */,
+				A56BED5120993CA90090E692 /* makefile in Sources */,
 				1799B7E51E5E3A83006D7CBD /* GlutApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,6 +331,11 @@
 		173FEF091AA63A07006CCB85 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/SOIL/includes";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SOIL/lib/macOS",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -230,6 +345,11 @@
 		173FEF0A1AA63A07006CCB85 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/SOIL/includes";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SOIL/lib/macOS",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
