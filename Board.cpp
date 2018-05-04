@@ -442,6 +442,8 @@ bool Board::canMove(int endX, int endY)
 		return true;
 }
 
+
+
 Board::~Board()
 {
 	delete random;

@@ -16,7 +16,13 @@ void App::draw() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    gameBoard->draw();
+    if(!game.getGameStartStatus()) {
+        menuScreen();
+    }
+    else {
+        gameScreen();
+    }
+    
     
     glFlush();
     glutSwapBuffers();
@@ -62,4 +68,12 @@ void App::idle() {
         gameBoard->check();
     }
     
+}
+
+void App::menuScreen() {
+    //TODO
+}
+
+void App::gameScreen() {
+    gameBoard->draw();
 }

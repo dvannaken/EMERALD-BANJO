@@ -12,6 +12,12 @@ class App: public GlutApp {
     float mx;
     float my;
     Board* gameBoard;
+    
+    Board game;
+    void menuScreen();
+    void gameScreen();
+    
+    
 public:
     // Constructor, to initialize state
     App(const char* label, int x, int y, int w, int h);
