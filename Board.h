@@ -72,7 +72,7 @@ class Board {
 	void MonsterIdle(int);
 	void MonsterAi(int); // takes an integer for the index of monsterList
 	void monsterHandler();
-
+	bool monsterMoveHandler(int m, direction going,int tries = 0);
 public:
     Board();
 	Board(int);
@@ -84,11 +84,14 @@ public:
 
     bool isUpToDate() const;
 	bool canMove(int,int);
-	bool canMove(int, int, bool);
+	bool canMove(int endX, int endY, bool player,int m = -1); // end X ,end Y, int m, bool player
 	
 	void debug();
 	void monsterDebug(int);
-    ~Board();
+	
+	~Board();
 };
 
 #endif
+
+
