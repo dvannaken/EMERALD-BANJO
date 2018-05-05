@@ -758,7 +758,7 @@ void Board::MonsterAi(int m){
 		
 	}
 	else if(stepCounter > 4 && !monsterList[m]->isAwake()){
-		std::cout << "Monster " << m << " is not awake " << monsterList[m]->getX() << " " << monsterList[m]->getY() << '\n';
+		//std::cout << "Monster " << m << " is not awake " << monsterList[m]->getX() << " " << monsterList[m]->getY() << '\n';
 		MonsterIdle(m); // randomly walk around untill it sees the player
 		doMonsterFov(monsterList[m]->getX(),monsterList[m]->getY(),m);
 	}
