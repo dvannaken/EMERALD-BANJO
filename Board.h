@@ -62,6 +62,9 @@ class Board {
 	void doMonsterFov(uint x, uint y,int m);
 	bool currentlyViewed(int, int);
 
+
+	// Combat for players and monsters
+
 	void combat(int,bool); //bool if player is attacking
 
 	int monsterAt(int, int);
@@ -69,10 +72,13 @@ class Board {
 	void spawnHandler(); //uses step handler to spawn items.
 
 	// Monster Ai Logic
-	void MonsterIdle(int);
+	void MonsterIdle(int,int tires = 0); //monster idle movement 
 	void MonsterAi(int); // takes an integer for the index of monsterList
 	void monsterHandler();
-	bool monsterMoveHandler(int m, direction going,int tries = 0);
+	bool monsterMoveHandler(int m, direction going,int = 0);
+
+
+
 public:
     Board();
 	Board(int);
@@ -88,7 +94,7 @@ public:
 	
 	void debug();
 	void monsterDebug(int);
-	
+	 
 	~Board();
 };
 

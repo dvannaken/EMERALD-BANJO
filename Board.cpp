@@ -764,10 +764,12 @@ void Board::MonsterAi(int m){
 	}
 }
 
-void Board::MonsterIdle(int m){
+void Board::MonsterIdle(int m,int t){
 	
-	if (!monsterMoveHandler(m, (direction)random->randomInt(numDirections))) {
-		MonsterIdle(m);
+	int tries = t;
+	if (!monsterMoveHandler(m, (direction)random->randomInt(numDirections)) && tries < 5) {
+		tries++;
+		MonsterIdle(m,tries);
 	}
 
 	
@@ -799,7 +801,7 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 		if (random->randomBool())
 		{
 			tries++;
-			if (monsterMoveHandler(m, up))
+			if (monsterMoveHandler(m, up,tries))
 				return true;
 			else if (monsterMoveHandler(m, left,tries))
 			{
@@ -826,6 +828,7 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 			gameboard[monsterList[m]->getX()][monsterList[m]->getY()]->setEntityType(entityType::monster);
 			return true;
 		}
+		tries++;
 		break;
 	case upRight:
 		if (canMove(monsterList[m]->getX() + 1, monsterList[m]->getY() - 1, false, m)) {
@@ -845,7 +848,7 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 			{
 				tries++;
 				if (monsterMoveHandler(m, right, tries))  return true;
-				else if (monsterMoveHandler(m, up)) return true;
+				else if (monsterMoveHandler(m, up,tries)) return true;
 			}
 			
 		}
@@ -928,14 +931,11 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 			return true;
 		}
 		tries++;
-
-
 		break;
 	default:
 		break;
 	}
-	std::cout  << m << " tries " << tries << std::endl;
-	monsterDebug(m);
+	tries++;
 	return false;
 }
 Board::~Board()

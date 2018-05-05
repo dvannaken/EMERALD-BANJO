@@ -49,8 +49,8 @@ void Square::draw() const {
 
 		glEnd();
 	}
-	//(vis == lightLevel_1 || vis == lightLevel_2 || vis == lightlevel_3)
-	if (entityTile == monster && true)
+
+	if (entityTile == monster && (vis == lightLevel_1 || vis == lightLevel_2 || vis == lightlevel_3))
 	{
 		//std::cout << "Drawing Monster" << std::endl;
 		glColor3f(0.420, 0.557, 0.137);
