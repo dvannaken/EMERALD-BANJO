@@ -49,7 +49,7 @@ void Square::draw() const {
 
 		glEnd();
 	}
-	
+
 	if (entityTile == monster && (vis == lightLevel_1 || vis == lightLevel_2 || vis == lightlevel_3))
 	{
 		//std::cout << "Drawing Monster" << std::endl;
