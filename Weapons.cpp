@@ -51,3 +51,38 @@ int Weapons::calculateDamage()
 {
 	return dice->rollDie(numOfDamageDie, damageDie) + bonusModifer;
 }
+
+bool Weapons::isOneHanded()
+{
+	return oneHanded;
+} 
+
+void Weapons::setBonusModifier(int mod)
+{
+	this->bonusModifer = mod;
+}
+
+void Weapons::switchDamage() {
+	if (oneHanded)
+	{
+		this->oneHanded = false;
+		this->damageDie = 10;
+	}
+	else
+	{
+		this->oneHanded = true;
+		this->damageDie = 8;
+	}
+}
+BattleAxe::BattleAxe()
+{
+	this->damageDie = 8;
+	this->numOfDamageDie = 1;
+	this->name = "Battleaxe";
+	this->oneHanded = true;
+}
+
+
+BattleAxe::~BattleAxe()
+{
+}
