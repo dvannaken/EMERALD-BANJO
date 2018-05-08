@@ -18,6 +18,9 @@ Goblin::Goblin(int x, int y): Monster(x,y)
 	setInitiativeBonus(2);
 	setName("Goblin");
 }
+Goblin::~Goblin() {
+
+}
 
 GoblinLord::GoblinLord(int x, int y) :Monster(x, y)
 {
@@ -33,4 +36,8 @@ GoblinLord::GoblinLord(int x, int y) :Monster(x, y)
 	setInitiativeBonus(2);
 	setName("Goblin_Lord");
 
+}
+
+GoblinLord::~GoblinLord()
+{
 }
