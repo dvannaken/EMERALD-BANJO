@@ -11,12 +11,12 @@
 
 
 Square::Square() : Rect(){
-
+	lootable = _Empty;
 	tile = Unused;
 	entityTile = empty;
 }
 Square::Square(float w) : Rect(0, 0, w, w){
-
+	lootable = _Empty;
 	tile = Unused;
 	entityTile = empty;
 }
@@ -64,9 +64,9 @@ void Square::draw() {
 		glEnd();
 	}
 
-	if (lootable == _Weapons)
+	if (lootable == _Weapons && inVision())
 	{
-		glColor3f(0.647, 0.576, 0.070);
+		glColor3f(0.882, 0.545, 0.972);
 
 		glBegin(GL_POLYGON);
 		glVertex2f(-y, -x);
@@ -77,9 +77,9 @@ void Square::draw() {
 		glEnd();
 	}
 
-	if (lootable == _Armors)
+	if (lootable == _Armors && inVision())
 	{
-		glColor3f(0.941, 0.878, 0.439);
+		glColor3f(0.768, 0.117, 0.945);
 
 		glBegin(GL_POLYGON);
 		glVertex2f(-y, -x);
@@ -89,9 +89,9 @@ void Square::draw() {
 
 		glEnd();
 	}
-	if (lootable == _Potions)
+	if (lootable == _Potions && inVision())
 	{
-		glColor3f(0.898, 0.792, 0.043);
+		glColor3f(0.454, 0.062, 0.556);
 
 		glBegin(GL_POLYGON);
 		glVertex2f(-y, -x);
@@ -174,7 +174,7 @@ bool Square::getVisited() const{
 
 bool Square::inVision() 
 {
-	//return (vis == lightLevel_1 || vis == lightLevel_2 || vis == lightlevel_3);
+	return (vis == lightLevel_1 || vis == lightLevel_2 || vis == lightlevel_3);
 }
 
 void Square::_visited(bool visit){

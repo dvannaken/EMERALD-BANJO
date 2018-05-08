@@ -668,15 +668,29 @@ void Board::itemSpawner(int tries, int num)
 
 		if (canMove(rX, rY) && !currentlyViewed(rX, rY) && gameboard[rX][rY]->getTile() == Unused && gameboard[rX][rY]->getLootable() == _Empty)
 		{
-			switch (random->randomInt(3))
+			switch (random->randomInt(1,3))
 			{
 			case 1:
 				loot->spawnItem(weapon_, rX, rY);
+				gameboard[rX][rY]->setLootable(_Weapons);
+				std::cout << "Weapon at " << rX << " " << rY << std::endl;
+				break;
+			case 2:
+				loot->spawnItem(armor_, rX, rY);
+				gameboard[rX][rY]->setLootable(_Armors);
+				std::cout << "armor at " << rX << " " << rY << std::endl;
+				break;
+			case 3:
+				loot->spawnItem(potion_, rX, rY);
+				gameboard[rX][rY]->setLootable(_Potions);
+				std::cout << "potion at " << rX << " " << rY << std::endl;
+				break;
 			default:
 				break;
 			}
 			
 			numItems++;
+			std::cout << "spawned item " << numItems << " at " << rX << " " << rY << std::endl;
 		}
 
 	}
@@ -688,15 +702,12 @@ void Board::spawnHandler()
 	if (stepCounter == 1)
 	{
 		spawnMonster(1000, 10);
-		itemSpawner(100, 5);
+		itemSpawner(100, 4);
 	}
 	if (stepCounter % 100 == random->randomInt(100) && monsterList.size() <= 30) { // something to randomly spawn monster
 		spawnMonster(30, 1);
 	}
 
-	if (stepCounter % 100 == random->randomInt(30) && loot->getNumItems() <= 15) { // something to randomly spawn items
-		itemSpawner(30, 1);
-	}
 
 }
 

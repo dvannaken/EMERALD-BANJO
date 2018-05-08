@@ -42,7 +42,7 @@ class Square : public Rect {
     tileType tile;
 	entityType entityTile; // need better name
 	visibility vis;
-	lootType lootable;
+	
 	bool visited;
 	
 public:
@@ -52,6 +52,9 @@ public:
     Square(float, float, float, float, float, float);
 
 	
+	lootType lootable; // dont know why it breaks my stuff when its private
+
+
 	bool opaque;
 	
 
