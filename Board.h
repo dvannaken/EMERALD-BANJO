@@ -74,7 +74,7 @@ class Board {
 	void spawnHandler(); //uses step handler to spawn items.
 
 	// Monster Ai Logic
-	void MonsterIdle(int,int tires = 0); //monster idle movement 
+	void MonsterIdle(int,int tires = 0); //monster idle movement
 	void MonsterAi(int); // takes an integer for the index of monsterList
 	void monsterHandler();
 	bool monsterMoveHandler(int m, direction going,int = 0);
@@ -95,13 +95,13 @@ public:
     bool isUpToDate() const;
 	bool canMove(int,int);
 	bool canMove(int endX, int endY, bool player,int m = -1); // end X ,end Y, int m, bool player
-	
+
 	void debug();
 	void monsterDebug(int);
-	 
+
+	bool gameOver;
+
 	~Board();
 };
 
 #endif
-
-
