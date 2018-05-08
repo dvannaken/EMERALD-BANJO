@@ -2,6 +2,8 @@
 #define Square_h
 #include "Rect.h"
 #include "Player.h"
+#include "TexRect.h"
+#include "AnimatedRect.h"
 #include <algorithm>
 
 enum tileType {
@@ -13,7 +15,7 @@ enum tileType {
     OpenDoor,
     Upstairs,
     Downstairs
-}; 
+};
 
 enum entityType {
 	empty, // the palce is empty
@@ -38,20 +40,24 @@ class Square : public Rect {
 	entityType entityTile; // need better name
 	visibility vis;
 	bool visited;
-	
+
+//new
+float mx;
+float my;
+
 public:
     Square();
     Square(float);
     Square(float, float, float);
     Square(float, float, float, float, float, float);
 
-	
+
 	bool opaque;
-	
+
 
 
     void draw() const;
-	
+
 	void _visited(bool);
 	bool getVisited() const;
 
@@ -65,8 +71,15 @@ public:
 
     void clear();
 
+    //to get the graphics
+    void keyPress(unsigned char key);
+    Square(const char* label, int x, int y, int w, int h);
+    TexRect *playerPic;
+
 
     ~Square();
+
+
 };
 
 #endif
