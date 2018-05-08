@@ -10,7 +10,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     mx = 0.0;
     my = 0.0;
 
-    dungeon = new TexRect("dungeon.bmp", 6, 6, -1, 1, 2, 2);//
+    dungeon = new TexRect("dungeon.bmp", 1, 1, -1, 1, 2, 2);//
     gameBoard = new Board(50);
 }
 
