@@ -19,9 +19,13 @@ public:
 	~ItemManger();
 	void spawnItem(ItemTypes,int x = 0, int y = 0);
 	int itemAt(int, int); // returns the item index at that loaction
-	
-private:
+
+	int getNumItems();
+
+
 	std::vector<Item*> itemList;
+private:
+	int numItems;
 	RandomNum* numGenerator;
 };
 

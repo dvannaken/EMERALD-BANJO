@@ -1,6 +1,7 @@
 #include "ItemManger.h"
 ItemManger::ItemManger()
 {
+	numItems = 0;
 	numGenerator = new RandomNum();
 }
 
@@ -169,6 +170,7 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 	default:
 		break;
 	}
+	numItems++;
 }
 
 int ItemManger::itemAt(int x, int y)
@@ -180,5 +182,10 @@ int ItemManger::itemAt(int x, int y)
 			return i;
 		}
 	}
+}
+
+int ItemManger::getNumItems()
+{
+	return numItems;
 }
 

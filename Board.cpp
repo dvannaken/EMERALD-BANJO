@@ -43,7 +43,7 @@ Board::Board(int ii)
 	float startx = -1;
 	float starty = 1;
 
-
+	loot = new ItemManger();
 	map = new MapGen(size, size);
 	map->generate(random->randomInt(35, 50));
 	map->print();
@@ -215,7 +215,18 @@ void Board::handle(unsigned char key)
 		monsterHandler();
 		behind();
 	}
+	if (key == 'e') {
+		// pick up
 
+
+
+	}
+	if (key == 'f') {
+		// search
+
+
+
+	}
 
 
 }
@@ -640,15 +651,53 @@ void Board::spawnMonster(int tries, int num)
 
 }
 
+void Board::itemSpawner(int tries, int num)
+{
+	int numItems = 0;
+	int rX, rY; // random x random y
+
+	for (int i = 0; i < tries; i++)
+	{
+		if (numItems > num - 1)
+		{
+			break;
+		}
+
+		rX = random->randomInt(49);
+		rY = random->randomInt(49);
+
+		if (canMove(rX, rY) && !currentlyViewed(rX, rY) && gameboard[rX][rY]->getTile() == Unused && gameboard[rX][rY]->getLootable() == _Empty)
+		{
+			switch (random->randomInt(3))
+			{
+			case 1:
+				loot->spawnItem(weapon_, rX, rY);
+			default:
+				break;
+			}
+			
+			numItems++;
+		}
+
+	}
+
+}
+
 void Board::spawnHandler()
 {
 	if (stepCounter == 1)
 	{
 		spawnMonster(1000, 10);
+		itemSpawner(100, 5);
 	}
-	if (stepCounter % 100 == random->randomInt(30) && monsterList.size() <= 30) { // something to randomly spawn monster
+	if (stepCounter % 100 == random->randomInt(100) && monsterList.size() <= 30) { // something to randomly spawn monster
 		spawnMonster(30, 1);
 	}
+
+	if (stepCounter % 100 == random->randomInt(30) && loot->getNumItems() <= 15) { // something to randomly spawn items
+		itemSpawner(30, 1);
+	}
+
 }
 
 bool Board::currentlyViewed(int x, int y)
@@ -940,6 +989,7 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 }
 Board::~Board()
 {
+	delete loot;
 	delete random;
 	delete map;
 	delete player;
