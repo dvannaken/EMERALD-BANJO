@@ -81,6 +81,9 @@ class Board {
 
 	//loot mechanics
 	ItemManger *loot;
+    
+    bool gameStart;
+    bool gameEnd;
 
 
 public:
@@ -102,6 +105,12 @@ public:
 	bool gameOver;
 
 	~Board();
+    
+    void setGameStart(); // called when play has been selected
+    
+    //getters
+    bool getGameStartStatus();
+    bool getGameEndStatus();
 };
 
 #endif
