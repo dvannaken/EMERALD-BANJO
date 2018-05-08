@@ -188,4 +188,3 @@ int ItemManger::getNumItems()
 {
 	return numItems;
 }
-

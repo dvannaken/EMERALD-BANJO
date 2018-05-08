@@ -24,6 +24,10 @@ public:
 
 
 	std::vector<Item*> itemList;
+	std::vector<Weapons*> WeaponList;
+	std::vector<Armor*> ArmorList;
+	std::vector<Potion*> PotionList;
+
 private:
 	int numItems;
 	RandomNum* numGenerator;

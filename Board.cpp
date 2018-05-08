@@ -144,6 +144,10 @@ void Board::draw()
 
 void Board::handle(unsigned char key)
 {
+
+	if(!gameOver){
+
+
 	int playerX = player->getX();
 	int playerY = player->getY();
 
@@ -217,6 +221,26 @@ void Board::handle(unsigned char key)
 	}
 	if (key == 'e') {
 		// pick up
+		if (gameboard[playerX][playerY]->getLootable() != _Empty) {
+			// pick up the item.
+
+			int itemIndex = loot->itemAt(playerX,playerY);
+			switch (gameboard[playerX][playerY]->getLootable()) {
+				case _Weapons:
+					//player->switchArmor((Weapons)loot->itemList[];
+
+					break;
+				case _Armors:
+					break;
+				case _Potions:
+					break;
+			}
+
+			gameboard[playerX][playerY]->setLootable(_Empty);
+
+
+
+		}
 
 
 
@@ -227,6 +251,7 @@ void Board::handle(unsigned char key)
 
 
 	}
+}
 
 
 }
@@ -688,7 +713,7 @@ void Board::itemSpawner(int tries, int num)
 			default:
 				break;
 			}
-			
+
 			numItems++;
 			std::cout << "spawned item " << numItems << " at " << rX << " " << rY << std::endl;
 		}
@@ -788,7 +813,7 @@ void Board::MonsterAi(int m){
 		int monsterY = monsterList[m]->getY();
 		int playerX = player->getX();
 		int playerY = player->getY();
-		 
+
 		if (monsterX < playerX && monsterY > playerY) {
 			if (canMove(monsterList[m]->getX() + 1, monsterList[m]->getY() - 1)) {
 				monsterMoveHandler(m, upRight);
@@ -815,7 +840,7 @@ void Board::MonsterAi(int m){
 		else if (monsterX > playerX && monsterY == playerY) {
 			monsterMoveHandler(m, left);
 		}
-		
+
 	}
 	else if(stepCounter > 4 && !monsterList[m]->isAwake()){
 		//std::cout << "Monster " << m << " is not awake " << monsterList[m]->getX() << " " << monsterList[m]->getY() << '\n';
@@ -825,14 +850,14 @@ void Board::MonsterAi(int m){
 }
 
 void Board::MonsterIdle(int m,int t){
-	
+
 	int tries = t;
 	if (!monsterMoveHandler(m, (direction)random->randomInt(numDirections)) && tries < 5) {
 		tries++;
 		MonsterIdle(m,tries);
 	}
 
-	
+
 
 }
 
@@ -877,9 +902,9 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 			else if (monsterMoveHandler(m, up,tries))
 			return true;
 		}
-		
-		
-		
+
+
+
 		break;
 	case up:
 		if (canMove(monsterList[m]->getX(), monsterList[m]->getY() - 1, false, m)) {
@@ -910,9 +935,9 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 				if (monsterMoveHandler(m, right, tries))  return true;
 				else if (monsterMoveHandler(m, up,tries)) return true;
 			}
-			
+
 		}
-		
+
 		break;
 
 	case left:
@@ -1004,7 +1029,7 @@ Board::~Board()
 	delete random;
 	delete map;
 	delete player;
-	for (int i = 0; i < monsterList.size(); i++)	
+	for (int i = 0; i < monsterList.size(); i++)
 	{
 		delete monsterList[i];
 	}

@@ -24,7 +24,7 @@ enum Bonus
 class Potion : public Item
 {
 
-	
+
 
 	//enum adjatives {
 	//	Ruby,
@@ -52,14 +52,15 @@ class Potion : public Item
 
 public:
 	Potion();
-	Potion(int, int); // spawns potion on x,y 
+	Potion(int, int); // spawns potion on x,y
 	~Potion();
-
 	void setBonusModifer(int);
 
 	int getBonusModifer();
 	int getStatModifer();
 	std::string getName();
+
+
 protected:
 	Bonus changing;
 	//adjatives = nameModifer;
