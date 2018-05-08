@@ -122,6 +122,7 @@ Board::Board(int ii)
 	}
 
 
+	gameOver = false;
 	upToDate = true;
 	stepCounter = 0;
 	//inProgress = false;
@@ -587,6 +588,8 @@ void Board::combat(int m, bool attacking) {
 			else {
 				// player dies @todo
 				std::cout << "You DIE" << std::endl;
+
+				gameOver = true;
 			}
 		}
 
@@ -625,6 +628,7 @@ void Board::combat(int m, bool attacking) {
 			else {
 				// player dies @todo
 				std::cout << "You DIE" << std::endl;
+				gameOver == true;
 			}
 		}
 	}
