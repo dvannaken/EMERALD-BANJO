@@ -3,6 +3,21 @@
 #include "Items.h"
 #include <string>
 #include "RandomNum.h"
+
+
+enum weaponList {
+	BattleAxe,
+	GreatAxe,
+	GreatSword,
+	LongSword,
+	Warhammer,
+	Mjolnir,
+	Excalibur,
+	dagger,
+	weaponAmmount
+};
+
+
 class Weapons: public Item
 {
 public:

@@ -19,8 +19,7 @@ enum Bonus
 		chari,
 		health,
 		speed,
-		level,
-		other,
+		level
 	};
 class Potion : Item
 {
@@ -78,16 +77,65 @@ public:
 	{
 		this->bonusModifer = 0;
 		this->changing = health;
-		this->statModifer = dice->rollDie(4, 4);
+		this->statModifer = dice->rollDie(2, 4) + 2;
 	}
 
 	~HealthPotion()
 	{
 	}
 
-private:
+};
+
+class GreaterHealthPotion :Potion
+{
+public:
+	GreaterHealthPotion()
+	{
+		this->bonusModifer = 0;
+		this->changing = health;
+		this->statModifer = dice->rollDie(4, 4) + 4;
+	}
+
+	~GreaterHealthPotion()
+	{
+	}
 
 };
+
+class SuperiorHealthPotion :Potion
+{
+public:
+	SuperiorHealthPotion()
+	{
+		this->bonusModifer = 0;
+		this->changing = health;
+		this->statModifer = dice->rollDie(8, 4) + 8;
+	}
+};
+
+class SupremeHealthPotion : Potion
+{
+public:
+	SupremeHealthPotion()
+	{
+		this->bonusModifer = 0;
+		this->changing = health;
+		this->statModifer = dice->rollDie(10, 4) + 20;
+	}
+};
+
+class Poison :Potion
+{
+public:
+	Poison()
+	{
+		this->bonusModifer = 0;
+		this->changing = health;
+		this->statModifer = dice->rollDie(1, 6) + 3;
+	}
+};
+
+
 
 
 
