@@ -43,7 +43,7 @@ Board::Board(int ii)
 	float startx = -1;
 	float starty = 1;
 
-
+	loot = new ItemManger();
 	map = new MapGen(size, size);
 	map->generate(random->randomInt(35, 50));
 	map->print();
@@ -144,6 +144,10 @@ void Board::draw()
 
 void Board::handle(unsigned char key)
 {
+
+	if(!gameOver){
+
+
 	int playerX = player->getX();
 	int playerY = player->getY();
 
@@ -215,7 +219,39 @@ void Board::handle(unsigned char key)
 		monsterHandler();
 		behind();
 	}
+	if (key == 'e') {
+		// pick up
+		if (gameboard[playerX][playerY]->getLootable() != _Empty) {
+			// pick up the item.
 
+			int itemIndex = loot->itemAt(playerX,playerY);
+			switch (gameboard[playerX][playerY]->getLootable()) {
+				case _Weapons:
+					//player->switchArmor((Weapons)loot->itemList[];
+
+					break;
+				case _Armors:
+					break;
+				case _Potions:
+					break;
+			}
+
+			gameboard[playerX][playerY]->setLootable(_Empty);
+
+
+
+		}
+
+
+
+	}
+	if (key == 'f') {
+		// search
+
+
+
+	}
+}
 
 
 }
@@ -640,15 +676,64 @@ void Board::spawnMonster(int tries, int num)
 
 }
 
+void Board::itemSpawner(int tries, int num)
+{
+	int numItems = 0;
+	int rX, rY; // random x random y
+
+	for (int i = 0; i < tries; i++)
+	{
+		if (numItems > num - 1)
+		{
+			break;
+		}
+
+		rX = random->randomInt(49);
+		rY = random->randomInt(49);
+
+		if (canMove(rX, rY) && !currentlyViewed(rX, rY) && gameboard[rX][rY]->getTile() == Unused && gameboard[rX][rY]->getLootable() == _Empty)
+		{
+			switch (random->randomInt(1,3))
+			{
+			case 1:
+				loot->spawnItem(weapon_, rX, rY);
+				gameboard[rX][rY]->setLootable(_Weapons);
+				std::cout << "Weapon at " << rX << " " << rY << std::endl;
+				break;
+			case 2:
+				loot->spawnItem(armor_, rX, rY);
+				gameboard[rX][rY]->setLootable(_Armors);
+				std::cout << "armor at " << rX << " " << rY << std::endl;
+				break;
+			case 3:
+				loot->spawnItem(potion_, rX, rY);
+				gameboard[rX][rY]->setLootable(_Potions);
+				std::cout << "potion at " << rX << " " << rY << std::endl;
+				break;
+			default:
+				break;
+			}
+
+			numItems++;
+			std::cout << "spawned item " << numItems << " at " << rX << " " << rY << std::endl;
+		}
+
+	}
+
+}
+
 void Board::spawnHandler()
 {
 	if (stepCounter == 1)
 	{
 		spawnMonster(1000, 10);
+		itemSpawner(100, 4);
 	}
-	if (stepCounter % 100 == random->randomInt(30) && monsterList.size() <= 30) { // something to randomly spawn monster
+	if (stepCounter % 100 == random->randomInt(100) && monsterList.size() <= 30) { // something to randomly spawn monster
 		spawnMonster(30, 1);
 	}
+
+
 }
 
 bool Board::currentlyViewed(int x, int y)
@@ -728,7 +813,7 @@ void Board::MonsterAi(int m){
 		int monsterY = monsterList[m]->getY();
 		int playerX = player->getX();
 		int playerY = player->getY();
-		 
+
 		if (monsterX < playerX && monsterY > playerY) {
 			if (canMove(monsterList[m]->getX() + 1, monsterList[m]->getY() - 1)) {
 				monsterMoveHandler(m, upRight);
@@ -755,7 +840,7 @@ void Board::MonsterAi(int m){
 		else if (monsterX > playerX && monsterY == playerY) {
 			monsterMoveHandler(m, left);
 		}
-		
+
 	}
 	else if(stepCounter > 4 && !monsterList[m]->isAwake()){
 		//std::cout << "Monster " << m << " is not awake " << monsterList[m]->getX() << " " << monsterList[m]->getY() << '\n';
@@ -765,14 +850,14 @@ void Board::MonsterAi(int m){
 }
 
 void Board::MonsterIdle(int m,int t){
-	
+
 	int tries = t;
 	if (!monsterMoveHandler(m, (direction)random->randomInt(numDirections)) && tries < 5) {
 		tries++;
 		MonsterIdle(m,tries);
 	}
 
-	
+
 
 }
 
@@ -817,9 +902,9 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 			else if (monsterMoveHandler(m, up,tries))
 			return true;
 		}
-		
-		
-		
+
+
+
 		break;
 	case up:
 		if (canMove(monsterList[m]->getX(), monsterList[m]->getY() - 1, false, m)) {
@@ -850,9 +935,9 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 				if (monsterMoveHandler(m, right, tries))  return true;
 				else if (monsterMoveHandler(m, up,tries)) return true;
 			}
-			
+
 		}
-		
+
 		break;
 
 	case left:
@@ -940,10 +1025,11 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 }
 Board::~Board()
 {
+	delete loot;
 	delete random;
 	delete map;
 	delete player;
-	for (int i = 0; i < monsterList.size(); i++)	
+	for (int i = 0; i < monsterList.size(); i++)
 	{
 		delete monsterList[i];
 	}

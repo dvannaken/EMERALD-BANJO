@@ -4,6 +4,7 @@
 #include "Square.h"
 #include "MapGen.h"
 #include "MonsterList.h"
+#include "ItemManger.h"
 #include <cmath>
 
 typedef unsigned int uint;
@@ -69,6 +70,7 @@ class Board {
 
 	int monsterAt(int, int);
 	void spawnMonster(int,int);
+	void itemSpawner(int, int);
 	void spawnHandler(); //uses step handler to spawn items.
 
 	// Monster Ai Logic
@@ -77,6 +79,8 @@ class Board {
 	void monsterHandler();
 	bool monsterMoveHandler(int m, direction going,int = 0);
 
+	//loot mechanics
+	ItemManger *loot;
 
 
 public:
