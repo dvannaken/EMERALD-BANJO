@@ -21,11 +21,13 @@ class TexRect {
     int cols = 1;
     int curr_row = 1;
     int curr_col = 1;
+    bool complete;
 public:
     TexRect (const char*, int, int, float, float, float, float);
     void advance();
     void draw();
-
+    bool done();
+    
 };
 
 #endif

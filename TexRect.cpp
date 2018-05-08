@@ -54,6 +54,11 @@ void TexRect::draw(){
 
 }
 
+bool TexRect::done() {
+    return complete;
+}
+
+
 void TexRect::advance(){
     if (curr_col < cols){
         curr_col++;

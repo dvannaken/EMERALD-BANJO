@@ -3,6 +3,15 @@ using namespace std;
 
 static App* singleton;//
 
+void anim(int value){
+    
+    if (!singleton->deer->done()){
+        singleton->deer->advance();
+        singleton->redraw();
+        glutTimerFunc(32, anim, value);
+    }
+}
+
 App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w, h){
     // Initialize state variables
 
@@ -10,7 +19,8 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     mx = 0.0;
     my = 0.0;
 
-    dungeon = new TexRect("dungeon.bmp", 1, 1, -1, 1, 2, 2);//
+    dungeon = new TexRect("MenuScreenFinal.bmp", 1, 1, -1, 1, 2, 2);//
+    deer = new TexRect("deer.bmp",2, 4, .35, -.45, 0.25, 0.25);
     gameBoard = new Board(50);
 }
 
@@ -29,7 +39,9 @@ void App::draw() {
       glColor3d(1.0, 1.0, 1.0); //white background
 
       menuScreen();
+      deer ->draw();
       dungeon -> draw();//
+    
     }
     else {
         gameScreen();
@@ -66,6 +78,10 @@ void App::keyPress(unsigned char key) {
         delete gameBoard;
         exit(0);
     }
+    
+    if (singleton->deer && key == ' '){
+        anim(0);
+    }
 
     if(!game.getGameStartStatus()) {
         if((key == 'p') || (key == 'P')){
@@ -85,58 +101,6 @@ void App::keyPress(unsigned char key) {
 ////////////////////////////
 void App::menuScreen() {
     //TODO
-
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    glBegin(GL_POLYGON); //bottom menu border
-	glColor3d(0.0, 1.0, 1.0);
-	glVertex2f(-1.0, -0.9);
-	glVertex2f(1.0, -0.9);
-	glVertex2f(1.0, -1);
-	glVertex2f(-1.0, -1);
-    	glEnd();
-
-    glBegin(GL_POLYGON); //top menu border
-  	glColor3d(0.0, 1.0, 1.0);
-  	glVertex2f(-1.0, 0.9);
-  	glVertex2f(1.0, 0.9);
-  	glVertex2f(1.0, 1);
-  	glVertex2f(-1.0, 1);
-  	glEnd();
-
-    glBegin(GL_POLYGON); //left menu border
-  	glColor3d(0.0, 1.0, 1.0);
-  	glVertex2f(-1.0,-1.0);
-  	glVertex2f(-.9,-1.0);
-  	glVertex2f(-.9, 1.0);
-  	glVertex2f(-1.0, 1.0);
-  	glEnd();
-
-
-    glBegin(GL_POLYGON); //Right menu border
-        glColor3d(0.0, 1.0, 1.0);
-        glVertex2f(1.0,-1.0);
-        glVertex2f(.9,-1.0);
-        glVertex2f(.9, 1.0);
-        glVertex2f(1.0, 1.0);
-        glEnd();
-
-    //Menu Options
-    glRasterPos2f(-0.25f, -0.05f);
-    glColor3f(1.0f, 1.0f, 1.0f);
-
-    string message = "To play, press 'P' or 'p' ";
-
-    for(int i = 0; i < message.length(); ++i)
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, message[i]);
-
-
-    glFlush();
-    glutSwapBuffers();
-
-
 
 }
 
