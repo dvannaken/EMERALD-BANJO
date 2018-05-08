@@ -135,7 +135,7 @@ std::string Monster::getName() const
 
 int Monster::rollToHIt()
 {
-	numGenerator->randomInt(20) + toHit;
+	return numGenerator->randomInt(20) + toHit;
 
 }
 
