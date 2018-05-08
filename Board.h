@@ -4,6 +4,7 @@
 #include "Square.h"
 #include "MapGen.h"
 #include "MonsterList.h"
+#include "ItemManger.h"
 #include <cmath>
 
 typedef unsigned int uint;

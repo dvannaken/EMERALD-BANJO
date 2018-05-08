@@ -5,17 +5,6 @@
 #include "RandomNum.h"
 
 
-enum weaponList {
-	BattleAxe,
-	GreatAxe,
-	GreatSword,
-	LongSword,
-	Warhammer,
-	Mjolnir,
-	Excalibur,
-	dagger,
-	weaponAmmount
-};
 
 
 class Weapons: public Item
@@ -51,7 +40,7 @@ protected:
 class BattleAxe: public Weapons
 {
 public:
-	BattleAxe();
+	BattleAxe(int x, int y, int bonus = 0);
 	~BattleAxe();
 	
 };
@@ -59,35 +48,38 @@ public:
 class GreatAxe:public Weapons
 {
 public:
-	GreatAxe()
+	GreatAxe(int x, int y, int bonus = 0) :Weapons(x, y)
 	{
 		this->damageDie = 12;
 		this->oneHanded = false;
 		this->name = "Great Axe";
+		this->bonusModifer = bonus;
 	}
 
 };
 class Greatsword : public Weapons
 {
 public:
-	Greatsword()
+	Greatsword(int x, int y,int bonus = 0 ) :Weapons(x, y)
 	{
 		this->damageDie = 6;
 		this->numOfDamageDie = 2;
 		this->oneHanded = false;
 		this->name = "Greatsword";
+		this->bonusModifer = bonus;
 	}
 
 };
 class Longsword : public Weapons
 {
 public:
-	Longsword()
+	Longsword(int x = 0, int y = 0, int bonus = 0 ) : Weapons(x, y)
 	{
 		this->damageDie = 8;
 		this->numOfDamageDie = 1;
 		this->oneHanded = false;
 		this->name = "Longsword";
+		this->bonusModifer = bonus;
 	}
 
 };
@@ -95,48 +87,52 @@ public:
 class Warhammer : public Weapons
 {
 public:
-	Warhammer()
+	Warhammer(int x = 0, int y = 0, int bonus = 0 ) :Weapons(x, y)
 	{
 		this->damageDie = 8;
 		this->numOfDamageDie = 1;
 		this->oneHanded = true;
 		this->name = "Warhammer";
+		this->bonusModifer = bonus;
 	}
 
 };
 class Mjolnir : public Warhammer
 {
 public:
-	Mjolnir()
+	Mjolnir(int x, int y, int bonus = 0 ) : Warhammer(x, y)
 	{
 		this->damageDie = 12;
 		this->numOfDamageDie = 2;
 		this->oneHanded = true;
 		this->name = "Mjolnir";
+		this->bonusModifer = bonus;
 	}
 
 };
 class Excalibur : public Longsword
 {
 public:
-	Excalibur()
+	Excalibur(int x, int y, int bonus = 0 ) :Longsword(x, y)
 	{
 		this->damageDie = 6;
 		this->numOfDamageDie = 3;
 		this->oneHanded = true;
 		this->name = "Excalibur";
+		this->bonusModifer = bonus;
 	}
 
 };
 class Dagger : public Weapons
 {
 public:
-	Dagger()
+	Dagger(int x, int y, int bonus = 0 ) :Weapons(x, y)
 	{
 		this->damageDie = 4;
 		this->numOfDamageDie = 1;
 		this->oneHanded = true;
 		this->name = "Dagger";
+		this->bonusModifer = bonus;
 	}
 
 };

@@ -7,9 +7,9 @@
 
 enum ItemTypes
 {
-	weapon,
-	armor,
-	potion
+	weapon_,
+	armor_,
+	potion_
 };
 
 class ItemManger
@@ -17,11 +17,11 @@ class ItemManger
 public:
 	ItemManger();
 	~ItemManger();
-	void spawnItem(ItemTypes);
-	void spawnItem(ItemTypes,int, int);
-
+	void spawnItem(ItemTypes,int x = 0, int y = 0);
+	int itemAt(int, int); // returns the item index at that loaction
+	
 private:
-	std::vector<Item*> *itemList;
+	std::vector<Item*> itemList;
 	RandomNum* numGenerator;
 };
 

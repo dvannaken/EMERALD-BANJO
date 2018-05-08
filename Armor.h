@@ -50,10 +50,10 @@ protected:
 class Leather: public Armor
 {
 public:
-	Leather()
+	Leather(int x = 0, int y = 0, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 11;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Light;
 		this->name = "Leather Armor";
@@ -63,10 +63,10 @@ public:
 class StuddedLeather : public Armor
 {
 public:
-	StuddedLeather()
+	StuddedLeather(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 12;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Light;
 		this->name = "Studded Leather Armor";
@@ -77,10 +77,10 @@ public:
 class Hide : public Armor
 {
 public:
-	Hide()
+	Hide(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 12;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Medium;
 		this->name = "Hide Armor";
@@ -90,10 +90,10 @@ public:
 class Chain_Shirt : public Armor
 {
 public:
-	Chain_Shirt()
+	Chain_Shirt(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 13;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Medium;
 		this->name = "Chain Shirt";
@@ -105,10 +105,10 @@ public:
 class Scale_Mail : public Armor
 {
 public:
-	Scale_Mail()
+	Scale_Mail(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 14;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Medium;
 		this->name = "Scale Mail";
@@ -118,10 +118,10 @@ public:
 class Breastplate : public Armor
 {
 public:
-	Breastplate()
+	Breastplate(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 14;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Medium;
 		this->name = "Brestplate";
@@ -131,10 +131,10 @@ public:
 class Halfplate : public Armor
 {
 public:
-	Halfplate()
+	Halfplate(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 15;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Medium;
 		this->name = "Halfplate";
@@ -144,10 +144,10 @@ public:
 class Ring_Mail : public Armor
 {
 public:
-	Ring_Mail()
+	Ring_Mail(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 14;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Heavy;
 		this->name = "Ring Mail";
@@ -157,10 +157,10 @@ public:
 class Chain_Mail : public Armor
 {
 public:
-	Chain_Mail()
+	Chain_Mail(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 16;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Heavy;
 		this->strRequirement = 13;
@@ -172,10 +172,10 @@ public:
 class Splint : public Armor
 {
 public:
-	Splint()
+	Splint(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 17;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Heavy;
 		this->strRequirement = 15;
@@ -187,10 +187,10 @@ public:
 class Plate : public Armor
 {
 public:
-	Plate()
+	Plate(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 18;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = Body;
 		this->weight = Heavy;
 		this->strRequirement = 15;
@@ -199,20 +199,20 @@ public:
 
 };
 
-class Shield: public Armor
+class WearableShield: public Armor
 {
 public:
-	Shield()
+	WearableShield(int x, int y, int bonus = 0) : Armor(x, y)
 	{
 		this->ac = 2;
-		this->bonusModifer = 0;
+		this->bonusModifer = bonus;
 		this->type = ArmorType::shield;
 		this->weight = ArmorWeight::Shield;
 		this->name = "Shield";
 	}
 
-	~Shield()
-	{
+	~WearableShield(){
+
 	}
 
 private:

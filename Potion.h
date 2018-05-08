@@ -21,7 +21,7 @@ enum Bonus
 		speed,
 		level
 	};
-class Potion : Item
+class Potion : public Item
 {
 
 	
@@ -70,11 +70,18 @@ protected:
 };
 
 
-class HealthPotion: Potion
+class HealthPotion: public Potion
 {
 public:
 	HealthPotion()
 	{
+		this->bonusModifer = 0;
+		this->changing = health;
+		this->statModifer = dice->rollDie(2, 4) + 2;
+	}
+
+	HealthPotion(int x, int y) :Potion(x,y){
+
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(2, 4) + 2;
@@ -86,7 +93,7 @@ public:
 
 };
 
-class GreaterHealthPotion :Potion
+class GreaterHealthPotion : public Potion
 {
 public:
 	GreaterHealthPotion()
@@ -95,14 +102,18 @@ public:
 		this->changing = health;
 		this->statModifer = dice->rollDie(4, 4) + 4;
 	}
-
+	GreaterHealthPotion(int x, int y) :Potion(x, y) {
+		this->bonusModifer = 0;
+		this->changing = health;
+		this->statModifer = dice->rollDie(4, 4) + 4;
+	}
 	~GreaterHealthPotion()
 	{
 	}
 
 };
 
-class SuperiorHealthPotion :Potion
+class SuperiorHealthPotion : public Potion
 {
 public:
 	SuperiorHealthPotion()
@@ -111,9 +122,14 @@ public:
 		this->changing = health;
 		this->statModifer = dice->rollDie(8, 4) + 8;
 	}
+	SuperiorHealthPotion(int x, int y): Potion(x, y) {
+		this->bonusModifer = 0;
+		this->changing = health;
+		this->statModifer = dice->rollDie(8, 4) + 8;
+	}
 };
 
-class SupremeHealthPotion : Potion
+class SupremeHealthPotion :public  Potion
 {
 public:
 	SupremeHealthPotion()
@@ -122,9 +138,14 @@ public:
 		this->changing = health;
 		this->statModifer = dice->rollDie(10, 4) + 20;
 	}
+	SupremeHealthPotion(int x, int y) :Potion(x, y) {
+		this->bonusModifer = 0;
+		this->changing = health;
+		this->statModifer = dice->rollDie(10, 4) + 20;
+	}
 };
 
-class Poison :Potion
+class Poison : public Potion
 {
 public:
 	Poison()

@@ -74,8 +74,9 @@ void Weapons::switchDamage() {
 		this->damageDie = 8;
 	}
 }
-BattleAxe::BattleAxe()
+BattleAxe::BattleAxe(int x, int y, int bonus) : Weapons(x, y)
 {
+	this->bonusModifer = bonus;
 	this->damageDie = 8;
 	this->numOfDamageDie = 1;
 	this->name = "Battleaxe";
