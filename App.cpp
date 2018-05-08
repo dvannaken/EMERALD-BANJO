@@ -106,24 +106,13 @@ void App::menuScreen() {
   	glEnd();
 
 
-/*  glBegin(GL_POLYGON); //Right menu border. Does not show up on my screen??!! 
+    glBegin(GL_POLYGON); //Right menu border 
         glColor3d(0.0, 1.0, 1.0);
         glVertex2f(1.0,-1.0);
         glVertex2f(.9,-1.0);
         glVertex2f(.9, 1.0);
         glVertex2f(1.0, 1.0);
         glEnd();
-*/
-
-    glBegin(GL_POLYGON); // ADJUSTED right menu border.
-        glColor3d(0.0, 1.0, 1.0);
-        glVertex2f(0.9,-1.0);
-        glVertex2f(.8,-1.0);
-        glVertex2f(.8, 1.0);
-        glVertex2f(0.9, 1.0);
-        glEnd();
-	
-	
 	
     //Menu Options
     glRasterPos2f(-0.25f, -0.05f);
