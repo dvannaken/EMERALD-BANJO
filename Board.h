@@ -1,4 +1,4 @@
-#ifndef Board_h
+ #ifndef Board_h
 #define Board_h
 #include <vector>
 #include "Square.h"
@@ -23,8 +23,8 @@ enum direction {
 	left = 3,
 	right = 4,
 	downLeft  = 5 ,
-	down =6,
-	downRight =7,
+	down = 6,
+	downRight = 7,
 	numDirections = 8
 };
 
@@ -70,7 +70,7 @@ class Board {
 
 	int monsterAt(int, int);
 	void spawnMonster(int,int);
-	void itemSpawner(int, int);
+	
 	void spawnHandler(); //uses step handler to spawn items.
 
 	// Monster Ai Logic
@@ -81,7 +81,10 @@ class Board {
 
 	//loot mechanics
 	ItemManger *loot;
-
+	void pickUpManger(int,int);
+	void itemSpawner(int, int);
+	void randomItemSpawner(int tries, int num);
+	void lookAt(int,int); // looks at ground or other tile
 
 public:
     Board();

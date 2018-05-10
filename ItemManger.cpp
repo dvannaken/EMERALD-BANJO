@@ -7,9 +7,17 @@ ItemManger::ItemManger()
 
 ItemManger::~ItemManger()
 {
-	for (int i = 0; i < itemList.size(); i++)
+	for (int i = 0; i < WeaponList.size(); i++)
 	{
-		delete itemList[i];
+		delete WeaponList[i];
+	}
+	for (int i = 0; i < ArmorList.size(); i++)
+	{
+		delete ArmorList[i];
+	}
+	for (int i = 0; i < PotionList.size(); i++)
+	{
+		delete PotionList[i];
 	}
 
 	//delete itemList;
@@ -43,19 +51,19 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 			switch (numGenerator->randomInt(5))
 			{
 			case 1:
-				itemList.push_back(new BattleAxe(x, y, bonusmod));
+				WeaponList.push_back(new BattleAxe(x, y, bonusmod));
 				break;
 			case 2:
-				itemList.push_back(new GreatAxe(x, y, bonusmod));
+				WeaponList.push_back(new GreatAxe(x, y, bonusmod));
 				break;
 			case 3:
-				itemList.push_back(new Greatsword(x, y, bonusmod));
+				WeaponList.push_back(new Greatsword(x, y, bonusmod));
 				break;
 			case 4:
-				itemList.push_back(new Longsword(x, y, bonusmod));
+				WeaponList.push_back(new Longsword(x, y, bonusmod));
 				break;
 			case 5:
-				itemList.push_back(new Dagger(x, y, bonusmod));
+				WeaponList.push_back(new Dagger(x, y, bonusmod));
 				break;
 
 			}
@@ -63,12 +71,12 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 		else {
 			if (numGenerator->randomBool())
 			{
-				itemList.push_back(new Mjolnir(x, y, 3));
+				WeaponList.push_back(new Mjolnir(x, y, 3));
 
 			}
 			else
 			{
-				itemList.push_back(new Excalibur(x, y, 3));
+				WeaponList.push_back(new Excalibur(x, y, 3));
 			}
 		}
 
@@ -79,19 +87,19 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 			switch (numGenerator->randomInt(5))
 			{
 			case 1:
-				itemList.push_back(new Leather(x, y, bonusmod));
+				ArmorList.push_back(new Leather(x, y, bonusmod));
 				break;
 			case 2:
-				itemList.push_back(new StuddedLeather(x, y, bonusmod));
+				ArmorList.push_back(new StuddedLeather(x, y, bonusmod));
 				break;
 			case 3:
-				itemList.push_back(new Hide(x, y, bonusmod));
+				ArmorList.push_back(new Hide(x, y, bonusmod));
 				break;
 			case 4:
-				itemList.push_back(new Ring_Mail(x, y, bonusmod));
+				ArmorList.push_back(new Ring_Mail(x, y, bonusmod));
 				break;
 			case 5:
-				itemList.push_back(new Chain_Shirt(x, y, bonusmod));
+				ArmorList.push_back(new Chain_Shirt(x, y, bonusmod));
 				break;
 			default:
 				break;
@@ -102,19 +110,19 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 			switch (numGenerator->randomInt(5))
 			{
 			case 1:
-				itemList.push_back(new Scale_Mail(x, y, bonusmod));
+				ArmorList.push_back(new Scale_Mail(x, y, bonusmod));
 				break;
 			case 2:
-				itemList.push_back(new Breastplate(x, y, bonusmod));
+				ArmorList.push_back(new Breastplate(x, y, bonusmod));
 				break;
 			case 3:
-				itemList.push_back(new Chain_Mail(x, y, bonusmod));
+				ArmorList.push_back(new Chain_Mail(x, y, bonusmod));
 				break;
 			case 4:
-				itemList.push_back(new Ring_Mail(x, y, bonusmod));
+				ArmorList.push_back(new Ring_Mail(x, y, bonusmod));
 				break;
 			case 5:
-				itemList.push_back(new WearableShield(x, y, bonusmod));
+				ArmorList.push_back(new WearableShield(x, y, bonusmod));
 				break;
 			default:
 				break;
@@ -126,19 +134,19 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 			switch (numGenerator->randomInt(5))
 			{
 			case 1:
-				itemList.push_back(new Halfplate(x, y, bonusmod));
+				ArmorList.push_back(new Halfplate(x, y, bonusmod));
 				break;
 			case 2:
-				itemList.push_back(new Splint(x, y, bonusmod));
+				ArmorList.push_back(new Splint(x, y, bonusmod));
 				break;
 			case 3:
-				itemList.push_back(new Plate(x, y, bonusmod));
+				ArmorList.push_back(new Plate(x, y, bonusmod));
 				break;
 			case 4:
-				itemList.push_back(new Ring_Mail(x, y, bonusmod));
+				ArmorList.push_back(new Ring_Mail(x, y, bonusmod));
 				break;
 			case 5:
-				itemList.push_back(new Chain_Shirt(x, y, bonusmod));
+				ArmorList.push_back(new Chain_Shirt(x, y, bonusmod));
 				break;
 			default:
 				break;
@@ -151,19 +159,19 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 
 		if (lootchance < 50)
 		{
-			itemList.push_back(new HealthPotion(x, y));
+			PotionList.push_back(new HealthPotion(x, y));
 		}
 		else if (lootchance > 50 && lootchance < 80)
 		{
-			itemList.push_back(new GreaterHealthPotion(x, y));
+			PotionList.push_back(new GreaterHealthPotion(x, y));
 		}
 		else if (lootchance > 80 && lootchance < 96)
 		{
-			itemList.push_back(new SuperiorHealthPotion(x, y));
+			PotionList.push_back(new SuperiorHealthPotion(x, y));
 		}
 		else if (lootchance > 96 && lootchance < 100)
 		{
-			itemList.push_back(new SupremeHealthPotion(x, y));
+			PotionList.push_back(new SupremeHealthPotion(x, y));
 		}
 
 		break;
@@ -173,15 +181,41 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 	numItems++;
 }
 
-int ItemManger::itemAt(int x, int y)
+int ItemManger::itemAt(int x, int y, ItemTypes type)
 {
-	for (int i = 0; i < itemList.size(); i++)
+	switch (type)
 	{
-		if (x == itemList[i]->getX() && y == itemList[i]->getY() )
+	case weapon_:
+		for (int i = 0; i < WeaponList.size(); i++)
 		{
-			return i;
+			if (x == WeaponList[i]->getX() && y == WeaponList[i]->getY())
+			{
+				return i;
+			}
 		}
+		break;
+	case armor_:
+		for (int i = 0; i < ArmorList.size(); i++)
+		{
+			if (x == ArmorList[i]->getX() && y == ArmorList[i]->getY())
+			{
+				return i;
+			}
+		}
+		break;
+	case potion_:
+		for (int i = 0; i < PotionList.size(); i++)
+		{
+			if (x == PotionList[i]->getX() && y == PotionList[i]->getY())
+			{
+				return i;
+			}
+		}
+		break;
+	default:
+		break;
 	}
+	
 }
 
 int ItemManger::getNumItems()

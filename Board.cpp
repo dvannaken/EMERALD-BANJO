@@ -222,32 +222,16 @@ void Board::handle(unsigned char key)
 	}
 	if (key == 'e') {
 		// pick up
-		if (gameboard[playerX][playerY]->getLootable() != _Empty) {
-			// pick up the item.
-
-			int itemIndex = loot->itemAt(playerX,playerY);
-			switch (gameboard[playerX][playerY]->getLootable()) {
-				case _Weapons:
-					//player->switchArmor((Weapons)loot->itemList[];
-
-					break;
-				case _Armors:
-					break;
-				case _Potions:
-					break;
-			}
-
-			gameboard[playerX][playerY]->setLootable(_Empty);
-
-
-
-		}
+		pickUpManger(playerX, playerY);
+		
 
 
 
 	}
 	if (key == 'f') {
 		// search
+
+		lookAt(playerX, playerY);
 
 
 
@@ -506,9 +490,10 @@ void Board::doMonsterFov(uint x,uint y,int m){
 
 
 void Board::debug() {
+	std::cout << "_____________________________________________________________________" << std::endl;
 	std::cout << "AC " << player->getAC() << std::endl;
 	std::cout << "HP " << player->getHp() << std::endl;
-	std::cout << "Init Bonus " << player->getInitBonus() << std::endl;
+	//std::cout << "Init Bonus " << player->getInitBonus() << std::endl;
 	std::cout << "Num Attacks " << player->getNumAttacks() << std::endl;
 	std::cout << "STR " << player->getStre() << std::endl;
 	std::cout << "DEX " << player->getDex() << std::endl;
@@ -516,14 +501,18 @@ void Board::debug() {
 	std::cout << "WIS " << player->getWis() << std::endl;
 	std::cout << "INT " << player->getIntel() << std::endl;
 	std::cout << "CHAR " << player->getChari() << std::endl;
-
+	std::cout << "" << std::endl;
+	std::cout << "" << std::endl;
+	std::cout << "Player Wields a +" << player->getCurrentWeaponName() << " " << player->getCurrentWeaponName() << std::endl;
+	std::cout << "Player Wields a +" << player->getCurrentArmorBonusModifer() << " " << player->getCurrentArmorName() << std::endl;
+	std::cout << "_____________________________________________________________________" << std::endl;
 }
 
 void Board::monsterDebug(int m)
 {
 
 	int hp = monsterList[m]->getHp();
-	std::cout << m << " with "<< hp <<" at " << monsterList[m]->getX() << " " << monsterList[m]->getY() << std::endl;
+	//std::cout << m << " with "<< hp <<" at " << monsterList[m]->getX() << " " << monsterList[m]->getY() << std::endl;
 	if (hp < 0)
 	{
 		std::cout << "monster is dead " << std::endl;
@@ -536,7 +525,7 @@ void Board::monsterDebug(int m)
 
 
 void Board::combat(int m, bool attacking) {
-	debug();
+	
 	int numPlayerAttacks = player->getNumAttacks();
 	int numMonsterAttacks = monsterList[m]->getAttacks();
 	//int playerinit = random->randomInt(20) + player->getInitBonus();
@@ -572,18 +561,26 @@ void Board::combat(int m, bool attacking) {
 			numPlayerAttacks--;
 		}
 
-		monsterDebug(m);
+		//monsterDebug(m);
 		for (int i = 0; i < numMonsterAttacks; i++)
 		{
 			if (monsterList[m]->getHp() < 0) {
 				break;
 			}
-			std::cout << "player hp " << player->getHp() << std::endl;
+			//std::cout << "player hp " << player->getHp() << std::endl;
 			if (player->getHp() > 0) {
+				std::cout << monsterList[m]->getName() << " attacks and ";
 				if (monsterList[m]->rollToHIt() >= player->getAC()) {
-					//player->takesDamage(monsterList[m]->rollDamage());
+					
+					int damage = monsterList[m]->rollDamage();
+					std::cout << "deals " << damage << " damage " << std::endl;
+					player->takesDamage(damage);
 					//player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
 				}
+				else {
+					std::cout << "misses " << std::endl;
+				}
+				
 			}
 			else {
 				// player dies @todo
@@ -593,7 +590,7 @@ void Board::combat(int m, bool attacking) {
 			}
 		}
 
-		monsterDebug(m);
+		//monsterDebug(m);
 
 
 
@@ -601,13 +598,22 @@ void Board::combat(int m, bool attacking) {
 		if (monsterList[m]->getHp() <= 0)
 		{
 			std::cout << "Deleting Monster "  << m << std::endl;
-			std::cout << monsterList[m]->getX() << std::endl;
-			std::cout << monsterList[m]->getY() << std::endl;
+
+
 			int x = monsterList[m]->getX();
 			int y = monsterList[m]->getY();
+
+			if (random->randomInt(99) > 65)
+			{
+				itemSpawner(x, y);
+			}
+
 			delete monsterList[m];
 			monsterList.erase(monsterList.begin() + m);
+			
 			gameboard[x][y]->setEntityType(empty);
+			std::cout << "Deleting Monster 2" << m << std::endl;
+			
 		}
 	}
 	else
@@ -615,27 +621,33 @@ void Board::combat(int m, bool attacking) {
 
 		for (int i = 0; i < numMonsterAttacks; i++)
 		{
-			if (monsterList[m]->getHp() < 0) {
+			if (monsterList[m]->getHp() < 0 || player->getHp() < 0) {
 				break;
 			}
-			std::cout << "attacking Player " << player->getHp() << std::endl;
-			if (player->getHp() > 0) {
-				if (monsterList[m]->rollToHIt() >= player->getAC()) {
-					//player->takesDamage(monsterList[m]->rollDamage());
-					//player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
-				}
+			std::cout << monsterList[m]->getName() << " attacks and ";
+
+			if (monsterList[m]->rollToHIt() >= player->getAC()) {
+
+				int damage = monsterList[m]->rollDamage();
+				std::cout << "deals " << damage << " damage " << std::endl;
+				player->takesDamage(damage);
+				//player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
 			}
 			else {
+				std::cout << "misses " << std::endl;
+			}
+
+			if (player->getHp() < 0)  {
 				// player dies @todo
 				std::cout << "You DIE" << std::endl;
 				gameOver == true;
 			}
 		}
 	}
-	for (int i = 0; i < monsterList.size(); i++)
+	/*for (int i = 0; i < monsterList.size(); i++)
 	{
 		std::cout << i << " " << monsterList[i]->getX() << " " << monsterList[i]->getY() << std::endl;
-	}
+	}*/
 }
 
 int Board::monsterAt(int x, int y)
@@ -652,7 +664,7 @@ int Board::monsterAt(int x, int y)
 void Board::spawnMonster(int tries, int num)
 {
 	int numMonsters = 0;
-	std::cout << "spawned monster called " << std::endl;
+	//std::cout << "spawned monster called " << std::endl;
 	int rX, rY; // random x random y
 
 	for (int i = 0; i < tries; i++)
@@ -667,12 +679,12 @@ void Board::spawnMonster(int tries, int num)
 
 		if (canMove(rX, rY) && !currentlyViewed(rX, rY) && gameboard[rX][rY]->getTile() == Unused)
 		{
-			std::cout << rX << " " << rY << std::endl;
+			//std::cout << rX << " " << rY << std::endl;
 			monsterList.push_back(new Goblin(rX, rY)); //only one monster, plan to spawn different ones;
 
 			gameboard[rX][rY]->setEntityType(monster);
 
-			std::cout << "spawned monster " << numMonsters <<  " at " << monsterList[monsterAt(rX,rY)]->getX() << " " << monsterList[monsterAt(rX, rY)]->getY() <<  std::endl;
+			//std::cout << "spawned monster " << numMonsters <<  " at " << monsterList[monsterAt(rX,rY)]->getX() << " " << monsterList[monsterAt(rX, rY)]->getY() <<  std::endl;
 			numMonsters++;
 		}
 
@@ -680,7 +692,28 @@ void Board::spawnMonster(int tries, int num)
 
 }
 
-void Board::itemSpawner(int tries, int num)
+void Board::itemSpawner(int rX, int rY) {
+	std::cout << "Monster Droped an item " << std::endl;
+	switch (random->randomInt(1, 3))
+	{
+	case 1:
+		loot->spawnItem(weapon_, rX, rY);
+		gameboard[rX][rY]->setLootable(_Weapons);
+		break;
+	case 2:
+		loot->spawnItem(armor_, rX, rY);
+		gameboard[rX][rY]->setLootable(_Armors);
+		break;
+	case 3:
+		loot->spawnItem(potion_, rX, rY);
+		gameboard[rX][rY]->setLootable(_Potions);
+		break;
+	default:
+		break;
+	}
+}
+
+void Board::randomItemSpawner(int tries, int num)
 {
 	int numItems = 0;
 	int rX, rY; // random x random y
@@ -719,7 +752,7 @@ void Board::itemSpawner(int tries, int num)
 			}
 
 			numItems++;
-			std::cout << "spawned item " << numItems << " at " << rX << " " << rY << std::endl;
+			//std::cout << "spawned item " << numItems << " at " << rX << " " << rY << std::endl;
 		}
 
 	}
@@ -731,7 +764,8 @@ void Board::spawnHandler()
 	if (stepCounter == 1)
 	{
 		spawnMonster(1000, 10);
-		itemSpawner(100, 4);
+		randomItemSpawner(100, 5);
+		debug();
 	}
 	if (stepCounter % 100 == random->randomInt(100) && monsterList.size() <= 30) { // something to randomly spawn monster
 		spawnMonster(30, 1);
@@ -807,7 +841,11 @@ bool Board::canMove(int endX, int endY, bool player,int m)
 		return true;
 }
 
-
+void Board::monsterHandler(){
+	for (int i = 0; i < monsterList.size(); i++) {
+		MonsterAi(i);
+	}
+}
 void Board::MonsterAi(int m){
 	//std::cout << "Monster " << m << " " << monsterList[m]->isAwake()  << " "<< monsterList[m]->getX() << " " << monsterList[m]->getY() << '\n';
 	if (monsterList[m]->isAwake()){
@@ -852,7 +890,6 @@ void Board::MonsterAi(int m){
 		doMonsterFov(monsterList[m]->getX(),monsterList[m]->getY(),m);
 	}
 }
-
 void Board::MonsterIdle(int m,int t){
 
 	int tries = t;
@@ -865,11 +902,7 @@ void Board::MonsterIdle(int m,int t){
 
 }
 
-void Board::monsterHandler(){
-	for (int i = 0; i < monsterList.size(); i++) {
-		MonsterAi(i);
-	}
-}
+
 
 bool Board::monsterMoveHandler(int m, direction going,int tries) {
 	int monsterX = monsterList[m]->getX();
@@ -1026,6 +1059,61 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 	}
 	tries++;
 	return false;
+}
+
+void Board::pickUpManger(int playerX,int playerY)
+{
+	if (gameboard[playerX][playerY]->getLootable() != _Empty) {
+		// pick up the item.
+
+		int itemIndex = 0;
+		switch (gameboard[playerX][playerY]->getLootable()) {
+		case _Weapons:
+			itemIndex = loot->itemAt(playerX, playerY,weapon_);
+			player->switchWeapon(loot->WeaponList[itemIndex]);
+			break;
+		case _Armors:
+			itemIndex = loot->itemAt(playerX, playerY,armor_);
+			player->switchArmor(loot->ArmorList[itemIndex]);
+			break;
+		case _Potions:
+			itemIndex = loot->itemAt(playerX, playerY,potion_);
+			player->heals(loot->PotionList[itemIndex]->getStatModifer());
+			break;
+		}
+
+		gameboard[playerX][playerY]->setLootable(_Empty);
+
+
+	}
+
+}
+
+void Board::lookAt(int x, int y) {
+	debug();
+
+	if (gameboard[x][y]->getLootable() == _Empty)
+	{
+		std::cout << "There is nothing on the ground" << std::endl;
+	}
+	else
+	{
+		int itemIndex;
+		switch (gameboard[x][y]->getLootable()) {
+		case _Weapons:
+			itemIndex = loot->itemAt(x, y, weapon_);
+			std::cout << " At your feet you see a +" << loot->WeaponList[itemIndex]->getBonusModifer() << " " << loot->WeaponList[itemIndex]->getWeaponName() << std::endl;
+			break;
+		case _Armors:
+			itemIndex = loot->itemAt(x, y, armor_);
+			std::cout << " At your feet you see a +" << loot->ArmorList[itemIndex]->getBonusModifer() << " " << loot->ArmorList[itemIndex]->getName() << std::endl;
+			break;
+		case _Potions:
+			itemIndex = loot->itemAt(x, y, potion_);
+			std::cout << " At your feet you see a " << loot->PotionList[itemIndex]->getName() << std::endl;
+			break;
+		}
+	}
 }
 Board::~Board()
 {
