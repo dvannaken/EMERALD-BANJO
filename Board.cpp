@@ -146,7 +146,6 @@ void Board::draw()
 void Board::handle(unsigned char key)
 {
 
-
 	if(!gameOver){
 
 
@@ -504,7 +503,7 @@ void Board::debug() {
 	std::cout << "CHAR " << player->getChari() << std::endl;
 	std::cout << "" << std::endl;
 	std::cout << "" << std::endl;
-	std::cout << "Player Wields a +" << player->getCurrentWeaponBonusModifer() << " " << player->getCurrentWeaponName() << std::endl;
+	std::cout << "Player Wields a +" << player->getCurrentWeaponName() << " " << player->getCurrentWeaponName() << std::endl;
 	std::cout << "Player Wields a +" << player->getCurrentArmorBonusModifer() << " " << player->getCurrentArmorName() << std::endl;
 	std::cout << "_____________________________________________________________________" << std::endl;
 }
@@ -531,7 +530,6 @@ void Board::combat(int m, bool attacking) {
 	int numMonsterAttacks = monsterList[m]->getAttacks();
 	//int playerinit = random->randomInt(20) + player->getInitBonus();
 	//int monsterinit = random->randomInt(20) + monsterList[m]->getInitiativeBonus();
-
 
 	if (attacking) {
 
@@ -599,7 +597,7 @@ void Board::combat(int m, bool attacking) {
 
 		if (monsterList[m]->getHp() <= 0)
 		{
-			//std::cout << "Deleting Monster "  << m << std::endl;
+			std::cout << "Deleting Monster "  << m << std::endl;
 
 
 			int x = monsterList[m]->getX();
@@ -614,7 +612,7 @@ void Board::combat(int m, bool attacking) {
 			monsterList.erase(monsterList.begin() + m);
 			
 			gameboard[x][y]->setEntityType(empty);
-			//std::cout << "Deleting Monster 2" << m << std::endl;
+			std::cout << "Deleting Monster 2" << m << std::endl;
 			
 		}
 	}
@@ -696,20 +694,22 @@ void Board::spawnMonster(int tries, int num)
 
 void Board::itemSpawner(int rX, int rY) {
 	std::cout << "Monster Droped an item " << std::endl;
-	int num = random->randomInt(100);
-
-	
-	if (num > 75) {
+	switch (random->randomInt(1, 3))
+	{
+	case 1:
 		loot->spawnItem(weapon_, rX, rY);
 		gameboard[rX][rY]->setLootable(_Weapons);
-	}
-	else if (num > 50) {
+		break;
+	case 2:
 		loot->spawnItem(armor_, rX, rY);
 		gameboard[rX][rY]->setLootable(_Armors);
-	}
-	else{
+		break;
+	case 3:
 		loot->spawnItem(potion_, rX, rY);
 		gameboard[rX][rY]->setLootable(_Potions);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -818,17 +818,11 @@ bool Board::canMove(int endX, int endY)
 		return true;
 }
 
-bool Board::canMove(int endX, int endY, bool p,int m)
+bool Board::canMove(int endX, int endY, bool player,int m)
 {
-	if (player->getHp() < 0)
-	{
-		return false;	
-	}
-
-
 	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster || gameboard[endX][endY]->getEntityType() == entityType::player )
 	{
-		if (gameboard[endX][endY]->getEntityType() == monster && p == true) {
+		if (gameboard[endX][endY]->getEntityType() == monster && player == true) {
 			std::cout << "Starting Combat" << std::endl;
 			int attackedMonster = monsterAt(endX, endY);
 			combat(attackedMonster, true);
@@ -837,7 +831,7 @@ bool Board::canMove(int endX, int endY, bool p,int m)
 			behind();
 			//check();
 		}
-		else if (gameboard[endX][endY]->getEntityType() == entityType::player && p == false){
+		else if (gameboard[endX][endY]->getEntityType() == entityType::player && player == false){
 			combat(m, false);
 		}
 
@@ -1087,7 +1081,6 @@ void Board::pickUpManger(int playerX,int playerY)
 			player->heals(loot->PotionList[itemIndex]->getStatModifer());
 			break;
 		}
-
 
 		gameboard[playerX][playerY]->setLootable(_Empty);
 

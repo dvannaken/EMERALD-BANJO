@@ -148,10 +148,10 @@ void Player::init()
 		calculateBonus();
 		calculateProfBonus();
 		calculateToHitBonus();
-	} while ((stre + dex + con) < 35);
+	} while ((stre + dex + con + intel + wis + chari) < 65);
 	exp = 0;
 	level = 1;
-	hp = 15 + conBonus;
+	hp = 8 + conBonus;
 	hunger = Satiated;
 	numAttacks = 1;
 	expBoundries = level_1;
@@ -164,7 +164,7 @@ void Player::init()
 void Player::levelUp()
 {
 	level++;
-	hp += dice->rollDie(1, 12) + conBonus;
+	hp += dice->rollDie(1, 8) + conBonus;
 	calculateBonus();
 	calculateProfBonus();
 	calculateToHitBonus();
@@ -305,7 +305,7 @@ void Player::takesDamage(int damage)
 
 void Player::heals(int health)
 {
-	hp += (health);
+	hp += health;
 }
 
 //we're gonna use 2d array, so like 2 for loops???
