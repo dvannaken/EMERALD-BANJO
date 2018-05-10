@@ -108,6 +108,12 @@ public:
 	int getAC() const;
 	bool isUsingShield() const;
 
+	std::string getCurrentWeaponName();
+	int getCurrentWeaponBonusModifer();
+
+	std::string getCurrentArmorName();
+	int getCurrentArmorBonusModifer();
+
 	void setCon(int);
 	void setChari(int);
 	void setWis(int);
@@ -120,6 +126,7 @@ public:
 
 	void grantExp(int);
 	void takesDamage(int);
+	void heals(int);
 
 	//(virtual) add functions for movement: up, down, left and right
 	virtual void moveUp();
@@ -135,6 +142,7 @@ public:
 	void recalculateAC();
 	virtual void switchArmor(Armor*);
 	virtual void switchWeapon(Weapons*);
+
 };
 
 

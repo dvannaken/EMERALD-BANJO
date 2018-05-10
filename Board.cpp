@@ -490,9 +490,10 @@ void Board::doMonsterFov(uint x,uint y,int m){
 
 
 void Board::debug() {
+	std::cout << "_____________________________________________________________________" << std::endl;
 	std::cout << "AC " << player->getAC() << std::endl;
 	std::cout << "HP " << player->getHp() << std::endl;
-	std::cout << "Init Bonus " << player->getInitBonus() << std::endl;
+	//std::cout << "Init Bonus " << player->getInitBonus() << std::endl;
 	std::cout << "Num Attacks " << player->getNumAttacks() << std::endl;
 	std::cout << "STR " << player->getStre() << std::endl;
 	std::cout << "DEX " << player->getDex() << std::endl;
@@ -500,7 +501,11 @@ void Board::debug() {
 	std::cout << "WIS " << player->getWis() << std::endl;
 	std::cout << "INT " << player->getIntel() << std::endl;
 	std::cout << "CHAR " << player->getChari() << std::endl;
-
+	std::cout << "" << std::endl;
+	std::cout << "" << std::endl;
+	std::cout << "Player Wields a +" << player->getCurrentWeaponName() << " " << player->getCurrentWeaponName() << std::endl;
+	std::cout << "Player Wields a +" << player->getCurrentArmorBonusModifer() << " " << player->getCurrentArmorName() << std::endl;
+	std::cout << "_____________________________________________________________________" << std::endl;
 }
 
 void Board::monsterDebug(int m)
@@ -600,7 +605,7 @@ void Board::combat(int m, bool attacking) {
 
 			if (random->randomInt(99) > 65)
 			{
-				//itemSpawner(x, y);
+				itemSpawner(x, y);
 			}
 
 			delete monsterList[m];
@@ -1073,6 +1078,7 @@ void Board::pickUpManger(int playerX,int playerY)
 			break;
 		case _Potions:
 			itemIndex = loot->itemAt(playerX, playerY,potion_);
+			player->heals(loot->PotionList[itemIndex]->getStatModifer());
 			break;
 		}
 
@@ -1084,6 +1090,8 @@ void Board::pickUpManger(int playerX,int playerY)
 }
 
 void Board::lookAt(int x, int y) {
+	debug();
+
 	if (gameboard[x][y]->getLootable() == _Empty)
 	{
 		std::cout << "There is nothing on the ground" << std::endl;
