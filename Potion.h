@@ -79,6 +79,7 @@ public:
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(2, 4) + 2;
+		this->name = "healthPotion";
 	}
 
 	HealthPotion(int x, int y) :Potion(x,y){
@@ -86,6 +87,7 @@ public:
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(2, 4) + 2;
+		this->name = "healthPotion";
 	}
 
 	~HealthPotion()
@@ -102,11 +104,13 @@ public:
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(4, 4) + 4;
+		this->name = "Greater Health Potion";
 	}
 	GreaterHealthPotion(int x, int y) :Potion(x, y) {
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(4, 4) + 4;
+		this->name = "Greater Health Potion";
 	}
 	~GreaterHealthPotion()
 	{
@@ -122,11 +126,13 @@ public:
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(8, 4) + 8;
+		this->name = "Superior Health Potion";
 	}
 	SuperiorHealthPotion(int x, int y): Potion(x, y) {
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(8, 4) + 8;
+		this->name = "Superior Health Potion";
 	}
 };
 
@@ -138,11 +144,13 @@ public:
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(10, 4) + 20;
+		this->name = "Supreme Health Potion";
 	}
 	SupremeHealthPotion(int x, int y) :Potion(x, y) {
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(10, 4) + 20;
+		this->name = "Supreme Health Potion";
 	}
 };
 

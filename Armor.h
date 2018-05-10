@@ -41,9 +41,9 @@ protected:
 	int strRequirement;
 	int ac;
 	int bonusModifer;
-	ArmorType type;
 	ArmorWeight weight;
 	std::string name;
+	ArmorType type;
 
 };
 

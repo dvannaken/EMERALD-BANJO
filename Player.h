@@ -133,8 +133,8 @@ public:
 	void levelHandler();
 	
 	void recalculateAC();
-	void switchArmor(Armor*);
-	void switchWeapon(Weapons*);
+	virtual void switchArmor(Armor*);
+	virtual void switchWeapon(Weapons*);
 };
 
 

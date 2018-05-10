@@ -18,7 +18,8 @@ public:
 	ItemManger();
 	~ItemManger();
 	void spawnItem(ItemTypes,int x = 0, int y = 0);
-	int itemAt(int, int); // returns the item index at that loaction
+
+	int itemAt(int x, int y, ItemTypes types); // returns the item index at that loaction
 
 	int getNumItems();
 
