@@ -14,6 +14,10 @@ Board::Board()
 {
 
 	//generatoring new map
+    
+    gameStart = false;
+    gameEnd = false;
+
 
 	float xinc = 0.04;
 	float yinc = 0.04;
@@ -34,6 +38,21 @@ Board::Board()
 
 	// delay = 1000;
 }
+
+void Board::setGameStart() {
+    gameStart = !gameStart;
+}
+
+//getters
+bool Board::getGameStartStatus() {
+    return gameStart;
+}
+
+bool Board::getGameEndStatus() {
+    return gameEnd;
+}
+
+
 
 Board::Board(int ii)
 {
@@ -503,7 +522,7 @@ void Board::debug() {
 	std::cout << "CHAR " << player->getChari() << std::endl;
 	std::cout << "" << std::endl;
 	std::cout << "" << std::endl;
-	std::cout << "Player Wields a +" << player->getCurrentWeaponName() << " " << player->getCurrentWeaponName() << std::endl;
+	std::cout << "Player Wields a +" << player->getCurrentWeaponBonusModifer() << " " << player->getCurrentWeaponName() << std::endl;
 	std::cout << "Player Wields a +" << player->getCurrentArmorBonusModifer() << " " << player->getCurrentArmorName() << std::endl;
 	std::cout << "_____________________________________________________________________" << std::endl;
 }
@@ -694,23 +713,27 @@ void Board::spawnMonster(int tries, int num)
 
 void Board::itemSpawner(int rX, int rY) {
 	std::cout << "Monster Droped an item " << std::endl;
-	switch (random->randomInt(1, 3))
+
+	int num = random->randomInt(100);
+	if (num > 70)
 	{
-	case 1:
 		loot->spawnItem(weapon_, rX, rY);
 		gameboard[rX][rY]->setLootable(_Weapons);
-		break;
-	case 2:
+	}
+	else if(num >45){
 		loot->spawnItem(armor_, rX, rY);
 		gameboard[rX][rY]->setLootable(_Armors);
-		break;
-	case 3:
+	}
+	else {
 		loot->spawnItem(potion_, rX, rY);
 		gameboard[rX][rY]->setLootable(_Potions);
-		break;
-	default:
-		break;
+
 	}
+	
+		
+
+		
+	
 }
 
 void Board::randomItemSpawner(int tries, int num)
@@ -818,11 +841,16 @@ bool Board::canMove(int endX, int endY)
 		return true;
 }
 
-bool Board::canMove(int endX, int endY, bool player,int m)
+bool Board::canMove(int endX, int endY, bool isPlayer,int m)
 {
+	if (player->getHp() <= 0)
+	{
+		return false;
+	}
+
 	if (gameboard[endX][endY]->getTile() == Wall || gameboard[endX][endY]->getTile() == ClosedDoor || gameboard[endX][endY]->getEntityType() == monster || gameboard[endX][endY]->getEntityType() == entityType::player )
 	{
-		if (gameboard[endX][endY]->getEntityType() == monster && player == true) {
+		if (gameboard[endX][endY]->getEntityType() == monster && isPlayer == true) {
 			std::cout << "Starting Combat" << std::endl;
 			int attackedMonster = monsterAt(endX, endY);
 			combat(attackedMonster, true);
@@ -831,7 +859,7 @@ bool Board::canMove(int endX, int endY, bool player,int m)
 			behind();
 			//check();
 		}
-		else if (gameboard[endX][endY]->getEntityType() == entityType::player && player == false){
+		else if (gameboard[endX][endY]->getEntityType() == entityType::player && isPlayer == false){
 			combat(m, false);
 		}
 

@@ -85,6 +85,10 @@ class Board {
 	void itemSpawner(int, int);
 	void randomItemSpawner(int tries, int num);
 	void lookAt(int,int); // looks at ground or other tile
+    
+    bool gameStart;
+    bool gameEnd;
+
 
 public:
     Board();
@@ -105,6 +109,12 @@ public:
 	bool gameOver;
 
 	~Board();
+    
+    void setGameStart(); // called when play has been selected
+    
+    //getters
+    bool getGameStartStatus();
+    bool getGameEndStatus();
 };
 
 #endif
