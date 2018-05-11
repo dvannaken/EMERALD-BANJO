@@ -11,7 +11,6 @@
 
 
 Square::Square() : Rect(){
-	vis = unknownLit;
 	lootable = _Empty;
 	tile = Unused;
 	entityTile = empty;
@@ -20,18 +19,15 @@ Square::Square(float w) : Rect(0, 0, w, w){
 	lootable = _Empty;
 	tile = Unused;
 	entityTile = empty;
-	vis = unknownLit;
 }
 Square::Square(float x , float y, float w) : Rect(x, y, w, w) {
 
 	tile = Unused;
 	entityTile = empty;
-	vis = unknownLit;
 }
 Square::Square(float x, float y, float w, float r, float g, float b) : Rect(x, y, w, w, r, g, b) {
 	tile = Unused;
 	entityTile = empty;
-	vis = unknownLit;
 }
 
 void Square::draw() {
