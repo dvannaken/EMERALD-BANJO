@@ -15,8 +15,7 @@ Board::Board()
 
 	//generatoring new map
     
-    gameStart = false;
-    gameEnd = false;
+   
 
 
 	float xinc = 0.04;
@@ -39,23 +38,16 @@ Board::Board()
 	// delay = 1000;
 }
 
-void Board::setGameStart() {
-    gameStart = !gameStart;
-}
-
-//getters
-bool Board::getGameStartStatus() {
-    return gameStart;
-}
-
-bool Board::getGameEndStatus() {
-    return gameEnd;
-}
 
 
 
 Board::Board(int ii)
 {
+
+	gameStart = false;
+	gameEnd = false;
+
+
 	int size = ii;
 	float xinc = 0.04;
 	float yinc = 0.04;
@@ -310,22 +302,31 @@ bool Board::isOpaque(uint x, uint y) const
 
 void Board::lightPlayer(int x, int y)
 {
+	
+	fogOfWar();
+
+	
+
+	doFov(x, y);
+	doFov(x, y, 3, lightLevel_2);
+	doFov(x, y, 2, lightLevel_1);
+}
+
+void Board::fogOfWar()
+{
 	if (stepCounter > 2) {
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < 49; i++)
 		{
-			for (int j = 0; j < 50; j++)
+			for (int j = 0; j < 49; j++)
 			{
 				if (gameboard[i][j]->getVisited() == true)
 				{
 					gameboard[i][j]->setVis(recentlyLit);
 				}
 			}
+
 		}
 	}
-
-	doFov(x, y);
-	doFov(x, y, 3, lightLevel_2);
-	doFov(x, y, 2, lightLevel_1);
 }
 
 void Board::castLight(uint x, uint y, uint radius, uint row, float start_slope, float end_slope, uint xx, uint xy, uint yx, uint yy, visibility visState)
@@ -650,7 +651,6 @@ void Board::combat(int m, bool attacking) {
 				int damage = monsterList[m]->rollDamage();
 				std::cout << "deals " << damage << " damage " << std::endl;
 				player->takesDamage(damage);
-				//player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
 			}
 			else {
 				std::cout << "misses " << std::endl;
@@ -1143,6 +1143,21 @@ void Board::lookAt(int x, int y) {
 		}
 	}
 }
+
+void Board::setGameStart() {
+	gameStart = !gameStart;
+}
+
+//getters
+bool Board::getGameStartStatus() {
+	return gameStart;
+}
+
+bool Board::getGameEndStatus() {
+	return gameEnd;
+}
+
+
 Board::~Board()
 {
 	delete loot;

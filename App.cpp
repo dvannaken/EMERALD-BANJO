@@ -64,7 +64,7 @@ void App::keyPress(unsigned char key) {
     }
     
     else {
-        //std::cout << "inputing" << key <<std::endl;
+  
         gameBoard->handle(key);
         
     }
