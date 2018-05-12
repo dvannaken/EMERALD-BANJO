@@ -6,8 +6,9 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     mx = 0.0;
     my = 0.0;
     
-    dungeon = new TexRect("MenuScreenFinal.bmp", 1, 1, -1, 1, 2, 2);//
-    runner = new TexRect("loading.bmp", 2, 8, 0.65, -0.68, 0.25, 0.25);
+    dungeon = new TexRect("images/MenuScreenFinal.bmp", 1, 1, -1, 1, 2, 2);//
+    runner = new TexRect("images/hoodguy2.bmp", 1, 6, 0.65, -0.68, 0.25, 0.25);
+    //runner = new TexRect("images/run.bmp", 2, 8, 0.65, -0.68, 0.25, 0.25);
     gameBoard = new Board(50);
 }
 
@@ -101,7 +102,7 @@ void App::idle() {
     t = glutGet(GLUT_ELAPSED_TIME);
     delta = t - lastT;
 
-     if(delta >= 6000/60){
+     if(delta >= 9000/60){
         lastT = t;
         running();
     }
