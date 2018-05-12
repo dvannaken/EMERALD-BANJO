@@ -30,7 +30,6 @@ public:
     void idle();
     
     TexRect* dungeon;
-    TexRect* deer;
 };
 
 #endif
