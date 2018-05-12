@@ -1,25 +1,12 @@
 #include "App.h"
 
-static App* singleton;//
-
-void anim(int value){
-    
-    if (!singleton->deer->done()){
-        singleton->deer->advance();
-        singleton->redraw();
-        glutTimerFunc(32, anim, value);
-    }
-}
-
 App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w, h){
     // Initialize state variables
     
-    singleton = this;
     mx = 0.0;
     my = 0.0;
     
     dungeon = new TexRect("MenuScreenFinal.bmp", 1, 1, -1, 1, 2, 2);//
-    deer = new TexRect("deer.bmp",2, 4, .35, -.45, 0.25, 0.25);
     gameBoard = new Board(50);
 }
 
@@ -34,10 +21,7 @@ void App::draw() {
     
     if(!game.getGameStartStatus()) {
         glColor3d(1.0, 1.0, 1.0); //white background
-        
         menuScreen();
-        deer ->draw();
-        dungeon -> draw();//
         
     }
     else {
@@ -68,14 +52,9 @@ void App::mouseDrag(float x, float y){
 }
 
 void App::keyPress(unsigned char key) {
-	//std::cout << "inputing" << key <<std::endl;
     if (key == 27){
         delete gameBoard;
         exit(0);
-    }
-    
-    if (singleton->deer && key == ' '){
-        anim(0);
     }
     
     if(!game.getGameStartStatus()) {
@@ -85,7 +64,7 @@ void App::keyPress(unsigned char key) {
     }
     
     else {
-  
+        //std::cout << "inputing" << key <<std::endl;
         gameBoard->handle(key);
         
     }
@@ -93,8 +72,7 @@ void App::keyPress(unsigned char key) {
 }
 
 void App::menuScreen() {
-    //TODO
-    
+    dungeon->draw();
 }
 
 void App::gameScreen() {
@@ -103,6 +81,14 @@ void App::gameScreen() {
 
 
 void App::idle() {
+
+    t = glutGet(GLUT_ELAPSED_TIME);
+    delta = t - lastT;
+
+     if(delta >= 1000/60){
+        lastT = t;
+    }
+
     if (!gameBoard->isUpToDate()){
 		std::cout << "idling" << std::endl;
         redraw();
