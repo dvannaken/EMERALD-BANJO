@@ -5,6 +5,7 @@
 #include "MapGen.h"
 #include "MonsterList.h"
 #include "ItemManger.h"
+#include "TexRect.h"
 #include <cmath>
 
 typedef unsigned int uint;
@@ -108,14 +109,18 @@ public:
 	void monsterDebug(int);
 
 	bool gameOver;
+	TexRect* itsOver; 
 
 	~Board();
     
     void setGameStart(); // called when play has been selected
-    
+	void setGameEnd();
+
     //getters
     bool getGameStartStatus();
     bool getGameEndStatus();
+	void drawGameOver(bool);
+
 };
 
 #endif

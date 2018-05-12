@@ -7,6 +7,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     my = 0.0;
     
     dungeon = new TexRect("MenuScreenFinal.bmp", 1, 1, -1, 1, 2, 2);//
+    runner = new TexRect("loading.bmp", 2, 8, 0.65, -0.68, 0.25, 0.25);
     gameBoard = new Board(50);
 }
 
@@ -72,11 +73,26 @@ void App::keyPress(unsigned char key) {
 }
 
 void App::menuScreen() {
+    runner->draw();
     dungeon->draw();
 }
 
 void App::gameScreen() {
     gameBoard->draw();
+
+    /*
+    if(!game.getGameEndStatus()){
+        itsOver->draw();
+    }
+    */
+}
+
+
+void App::running() {
+    if (!this->runner->done()) {
+        this->runner->advance();
+        this->redraw();
+    }
 }
 
 
@@ -85,8 +101,9 @@ void App::idle() {
     t = glutGet(GLUT_ELAPSED_TIME);
     delta = t - lastT;
 
-     if(delta >= 1000/60){
+     if(delta >= 6000/60){
         lastT = t;
+        running();
     }
 
     if (!gameBoard->isUpToDate()){
@@ -97,4 +114,5 @@ void App::idle() {
         gameBoard->check();
     }
     
+    //redraw();
 }
