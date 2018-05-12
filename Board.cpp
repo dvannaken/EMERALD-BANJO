@@ -303,12 +303,21 @@ bool Board::isOpaque(uint x, uint y) const
 void Board::lightPlayer(int x, int y)
 {
 	
+	fogOfWar();
 
+	
 
+	doFov(x, y);
+	doFov(x, y, 3, lightLevel_2);
+	doFov(x, y, 2, lightLevel_1);
+}
+
+void Board::fogOfWar()
+{
 	if (stepCounter > 2) {
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < 49; i++)
 		{
-			for (int j = 0; j < 50; j++)
+			for (int j = 0; j < 49; j++)
 			{
 				std::cout << gameboard[i][j]->getVis();
 				if (gameboard[i][j]->getVisited() == true)
@@ -319,10 +328,6 @@ void Board::lightPlayer(int x, int y)
 			std::cout << "" << std::endl;
 		}
 	}
-
-	doFov(x, y);
-	doFov(x, y, 3, lightLevel_2);
-	doFov(x, y, 2, lightLevel_1);
 }
 
 void Board::castLight(uint x, uint y, uint radius, uint row, float start_slope, float end_slope, uint xx, uint xy, uint yx, uint yy, visibility visState)
