@@ -4,6 +4,16 @@
 #include <iostream>
 #include "RandomNum.h"
 #include <random>
+
+
+/*
+
+	This map generation implmentation came from an open source website rougebasin, which heavely came from user underww on the site.
+	http://www.roguebasin.com/index.php?title=Dungeon-Building_Algorithm
+
+
+*/
+
 struct Rectangle{
     int x,y;
     int width, height;
