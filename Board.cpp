@@ -319,13 +319,12 @@ void Board::fogOfWar()
 		{
 			for (int j = 0; j < 49; j++)
 			{
-				std::cout << gameboard[i][j]->getVis();
 				if (gameboard[i][j]->getVisited() == true)
 				{
 					gameboard[i][j]->setVis(recentlyLit);
 				}
 			}
-			std::cout << "" << std::endl;
+
 		}
 	}
 }
