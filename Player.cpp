@@ -232,6 +232,27 @@ bool Player::isUsingShield() const
 	return usingShield;
 }
 
+std::string Player::getCurrentWeaponName()
+{
+	return currentWeapon->getWeaponName();
+}
+
+int Player::getCurrentWeaponBonusModifer()
+{
+	return currentWeapon->getBonusModifer();
+}
+
+std::string Player::getCurrentArmorName()
+{
+	return currentArmor->getName();
+}
+
+int Player::getCurrentArmorBonusModifer()
+{
+	return currentArmor->getBonusModifer();
+}
+
+
 //setters
 void Player::setCon(int con) {
 	this->con = con;
@@ -280,6 +301,11 @@ void Player::grantExp(int exp)
 void Player::takesDamage(int damage)
 {
 	hp -= damage;
+}
+
+void Player::heals(int health)
+{
+	hp += health;
 }
 
 //we're gonna use 2d array, so like 2 for loops???

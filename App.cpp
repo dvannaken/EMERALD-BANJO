@@ -81,6 +81,14 @@ void App::gameScreen() {
 
 
 void App::idle() {
+
+    t = glutGet(GLUT_ELAPSED_TIME);
+    delta = t - lastT;
+
+     if(delta >= 1000/60){
+        lastT = t;
+    }
+
     if (!gameBoard->isUpToDate()){
 		std::cout << "idling" << std::endl;
         redraw();

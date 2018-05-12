@@ -17,6 +17,10 @@ class App: public GlutApp {
     Board game;
     void menuScreen();
     void gameScreen();
+
+    int t;
+    int lastT;
+    double delta;
     
 public:
     // Constructor, to initialize state
