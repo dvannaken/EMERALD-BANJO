@@ -10,7 +10,7 @@
 #include <GL/freeglut.h>
 #endif
 
-Board::Board() 
+Board::Board()
 {
 
 	//generatoring new map
