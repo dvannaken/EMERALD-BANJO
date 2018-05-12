@@ -43,6 +43,10 @@ void Board::setGameStart() {
     gameStart = !gameStart;
 }
 
+void Board::setGameEnd() {
+    gameEnd = !gameEnd;
+}
+
 //getters
 bool Board::getGameStartStatus() {
     return gameStart;
@@ -148,6 +152,7 @@ Board::Board(int ii)
 
 }
 
+
 void Board::draw()
 {
 
@@ -160,6 +165,13 @@ void Board::draw()
 		}
 	}
 	catchUp();
+}
+
+void Board::drawGameOver(bool gameEnd) {
+	//itsOver = new TexRect("gameOver.bmp", 1, 1, -2.5, 3.5, 5, 2);
+	if (gameEnd == true) {
+		itsOver->draw();
+	}
 }
 
 void Board::handle(unsigned char key)
@@ -606,6 +618,8 @@ void Board::combat(int m, bool attacking) {
 				std::cout << "You DIE" << std::endl;
 
 				gameOver = true;
+				gameEnd = true;
+
 			}
 		}
 

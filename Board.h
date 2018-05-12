@@ -5,6 +5,7 @@
 #include "MapGen.h"
 #include "MonsterList.h"
 #include "ItemManger.h"
+#include "TexRect.h"
 #include <cmath>
 
 typedef unsigned int uint;
@@ -47,7 +48,7 @@ class Board {
     void catchUp();
     void behind();
 
-	void lightPlayer(int,int); // lights player on pos x,y
+	
 
 	//C++ shadowcasting implementation - Bj�rn Bergstr�m [bjorn.bergstrom@roguelikedevelopment.org]
 	//with code from http://www.roguebasin.com/index.php?title=C%2B%2B_shadowcasting_implementation
@@ -62,7 +63,8 @@ class Board {
 	void doFov(uint x, uint y,uint radius,visibility vis);
 	void doMonsterFov(uint x, uint y,int m);
 	bool currentlyViewed(int, int);
-
+	void lightPlayer(int,int); // lights player on pos x,y
+	void fogOfWar();
 
 	// Combat for players and monsters
 
@@ -107,14 +109,18 @@ public:
 	void monsterDebug(int);
 
 	bool gameOver;
+	TexRect* itsOver; 
 
 	~Board();
     
     void setGameStart(); // called when play has been selected
-    
+	void setGameEnd();
+
     //getters
     bool getGameStartStatus();
     bool getGameEndStatus();
+	void drawGameOver(bool);
+
 };
 
 #endif

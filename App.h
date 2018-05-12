@@ -32,8 +32,11 @@ public:
     void mouseDown(float x, float y);
     void mouseDrag(float x, float y);
     void idle();
+
+    void running();
     
     TexRect* dungeon;
+    TexRect* runner;
 };
 
 #endif
