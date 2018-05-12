@@ -6,8 +6,8 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     mx = 0.0;
     my = 0.0;
     
-    dungeon = new TexRect("MenuScreenFinal.bmp", 1, 1, -1, 1, 2, 2);//
-    runner = new TexRect("loading.bmp", 2, 8, 0.65, -0.68, 0.25, 0.25);
+    dungeon = new TexRect("images/MenuScreenFinal.bmp", 1, 1, -1, 1, 2, 2);//
+    runner = new TexRect("images/loading.bmp", 2, 8, 0.65, -0.68, 0.25, 0.25);
     gameBoard = new Board(50);
 }
 
