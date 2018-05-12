@@ -4,7 +4,8 @@
 #define Player_h
 #include <vector>
 
-
+#include "Weapons.h"
+#include "Armor.h"
 
 class Player : public Entity { //must have health element
 private:
@@ -79,6 +80,15 @@ private:
 
 	std::vector<levelThreshold> expThreshold;
 	
+	// inventory 
+
+	bool usingShield;
+	Weapons* currentWeapon;
+	Armor* currentArmor;
+	
+
+
+
 
 public:
 
@@ -96,6 +106,13 @@ public:
 	int getHp() const;
 	int getInitBonus() const;
 	int getAC() const;
+	bool isUsingShield() const;
+
+	std::string getCurrentWeaponName();
+	int getCurrentWeaponBonusModifer();
+
+	std::string getCurrentArmorName();
+	int getCurrentArmorBonusModifer();
 
 	void setCon(int);
 	void setChari(int);
@@ -105,9 +122,11 @@ public:
 	void setStre(int);
 	void setNumAttacks(int);
 	void setInitBonus(int);
+	void setUsingShield(bool);
 
 	void grantExp(int);
 	void takesDamage(int);
+	void heals(int);
 
 	//(virtual) add functions for movement: up, down, left and right
 	virtual void moveUp();
@@ -119,6 +138,11 @@ public:
 	int rollToHit();
 
 	void levelHandler();
+	
+	void recalculateAC();
+	virtual void switchArmor(Armor*);
+	virtual void switchWeapon(Weapons*);
+
 };
 
 

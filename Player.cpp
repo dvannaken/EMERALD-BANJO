@@ -16,11 +16,15 @@ Player::Player() : Entity(25, 25)
 
 Player::Player(int x, int y) : Entity(x, y)
 {
+	currentWeapon = new Longsword();
+	currentArmor = new Leather();
 	init();
 }
 
 Player::~Player()
 {
+	delete currentArmor;
+	delete currentWeapon;
 	delete dice;
 }
 
@@ -59,8 +63,8 @@ int Player::calculateProfBonus() {
 
 int Player::rollAttackDamage() {
 	//based on weapons; @todo
-	int damage = dice->rollDie(1, 8) + streBonus;
-	return damage;
+	return currentWeapon->calculateDamage();
+	
 }
 
 void Player::calculateToHitBonus() {
@@ -77,9 +81,45 @@ void Player::levelHandler()
 	if (this->exp > expThreshold[level])
 	{
 		//player has leveled up;
+
+		std::cout << "You have leveled Up" << std::endl;
 		levelUp();
 	}
 
+}
+
+void Player::recalculateAC()
+{
+	switch (currentArmor->getWeight())
+	{
+	case Heavy:
+		ac = currentArmor->getAc() + currentArmor->getBonusModifer();
+		break;
+	case Medium:
+		ac = currentArmor->getAc() + currentArmor->getBonusModifer() +  std::min(dexBonus, 2);
+		break;
+	case Light:
+		ac = currentArmor->getAc() + currentArmor->getBonusModifer() + dexBonus;
+		break;
+	}
+	if (usingShield)
+	{
+		ac += 2;
+	}
+}
+
+void Player::switchArmor(Armor* pickedUpArmor)
+{
+	Armor* tempArmor = currentArmor;
+	currentArmor = pickedUpArmor;
+	delete tempArmor;
+	recalculateAC();
+}
+
+void Player::switchWeapon(Weapons* pickedUpWeapon) {
+	Weapons* tempWeap = currentWeapon;
+	currentWeapon = pickedUpWeapon;
+	delete tempWeap;
 }
 
 int Player::calculateBonus(int stat) // creates the bonus
@@ -96,11 +136,19 @@ void Player::calculateBonus() { // generates all the bonuses
 	chariBonus = calculateBonus(chari);
 }
 void Player::init()
-
-{
-	calculateBonus();
-	calculateProfBonus();
-	calculateToHitBonus();
+{	
+	do
+	{
+		setStre(generateStats());
+		setDex(generateStats());
+		setCon(generateStats());
+		setWis(generateStats());
+		setIntel(generateStats());
+		setChari(generateStats());
+		calculateBonus();
+		calculateProfBonus();
+		calculateToHitBonus();
+	} while ((stre + dex + con + intel + wis + chari) < 65);
 	exp = 0;
 	level = 1;
 	hp = 8 + conBonus;
@@ -110,6 +158,7 @@ void Player::init()
 	initBonus = dexBonus + profBonus;
 
 	expThreshold = {level_1, level_2,level_3,level_4,level_5,level_6,level_7,level_8,level_9,level_10};
+	recalculateAC();
 
 }
 void Player::levelUp()
@@ -178,6 +227,32 @@ int Player::getAC() const
 	return ac;
 }
 
+bool Player::isUsingShield() const
+{
+	return usingShield;
+}
+
+std::string Player::getCurrentWeaponName()
+{
+	return currentWeapon->getWeaponName();
+}
+
+int Player::getCurrentWeaponBonusModifer()
+{
+	return currentWeapon->getBonusModifer();
+}
+
+std::string Player::getCurrentArmorName()
+{
+	return currentArmor->getName();
+}
+
+int Player::getCurrentArmorBonusModifer()
+{
+	return currentArmor->getBonusModifer();
+}
+
+
 //setters
 void Player::setCon(int con) {
 	this->con = con;
@@ -213,6 +288,11 @@ void Player::setInitBonus(int bonus)
 	
 }
 
+void Player::setUsingShield(bool shield)
+{
+	this->usingShield = shield;
+}
+
 void Player::grantExp(int exp)
 {
 	this->exp += exp;
@@ -221,6 +301,11 @@ void Player::grantExp(int exp)
 void Player::takesDamage(int damage)
 {
 	hp -= damage;
+}
+
+void Player::heals(int health)
+{
+	hp += health;
 }
 
 //we're gonna use 2d array, so like 2 for loops???

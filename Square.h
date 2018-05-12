@@ -2,8 +2,6 @@
 #define Square_h
 #include "Rect.h"
 #include "Player.h"
-#include "TexRect.h"
-#include "AnimatedRect.h"
 #include <algorithm>
 
 enum tileType {
@@ -15,14 +13,19 @@ enum tileType {
     OpenDoor,
     Upstairs,
     Downstairs
-};
+}; 
 
 enum entityType {
 	empty, // the palce is empty
 	player,
-	monster,
-	item,
-	items
+	monster
+};
+
+enum lootType { // the three types of loot available 
+	_Empty,
+	_Weapons,
+	_Armors,
+	_Potions
 };
 enum visibility {
 	lightLevel_1,
@@ -30,7 +33,7 @@ enum visibility {
 	lightlevel_3,
 	recentlyLit,
 	litLevels,
-	unknownLit,
+	unknownLit
 };
 
 
@@ -39,47 +42,45 @@ class Square : public Rect {
     tileType tile;
 	entityType entityTile; // need better name
 	visibility vis;
+	
 	bool visited;
-
-//new
-float mx;
-float my;
-
+	
 public:
     Square();
     Square(float);
     Square(float, float, float);
     Square(float, float, float, float, float, float);
 
+	
+	lootType lootable; // dont know why it breaks my stuff when its private
+
 
 	bool opaque;
+	
 
 
-
-    void draw() const;
-
+    void draw();
+	
 	void _visited(bool);
 	bool getVisited() const;
+	bool inVision(); // utility function to see if the tile is in current vision
 
-    Entity* getEntityType() const;
+    entityType getEntityType() const;
     tileType getTile() const;
+	visibility getVis();
+	lootType getLootable();
+
+
+	void setLootable(lootType);
 	void setTile(tileType);
 	void setVis(visibility);
-	visibility getVis();
 	void setEntityType(entityType);
 	void setColor(float, float, float);
 
     void clear();
 
-    //to get the graphics
-    void keyPress(unsigned char key);
-    Square(const char* label, int x, int y, int w, int h);
-    TexRect *playerPic;
-
 
     ~Square();
-
-
 };
 
 #endif

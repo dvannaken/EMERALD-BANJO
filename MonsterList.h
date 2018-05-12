@@ -5,10 +5,14 @@
 class Goblin : public Monster {
 public:
 	Goblin(int, int);
+	~Goblin();
 };
+
 class GoblinLord :public Monster {
 public:
 	GoblinLord(int, int);
+	~GoblinLord();
+
 };
 
 

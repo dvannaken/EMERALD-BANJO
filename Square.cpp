@@ -11,12 +11,12 @@
 
 
 Square::Square() : Rect(){
-
+	lootable = _Empty;
 	tile = Unused;
 	entityTile = empty;
 }
 Square::Square(float w) : Rect(0, 0, w, w){
-
+	lootable = _Empty;
 	tile = Unused;
 	entityTile = empty;
 }
@@ -30,16 +30,7 @@ Square::Square(float x, float y, float w, float r, float g, float b) : Rect(x, y
 	entityTile = empty;
 }
 
-//graphic function
-Square::Square(const char* label, int x, int y, int w, int h) {
-	mx = 0.0;
-	my = 0.0;
-
-	playerPic = new TexRect("images/link2.png", 0, 0.67, 0.2, 0.2);
-}
-
-
-void Square::draw() const {
+void Square::draw() {
 
 	/*if (entityTile != empty) {
 		entity->draw();
@@ -47,24 +38,7 @@ void Square::draw() const {
 
 	if (entityTile == player)
 	{
-		std::cout << "Drawing Player" << std::endl;
-		//this draw the blue-ish box for Player
-		//need to put graphics on this part
-		// Clear the screen
-	 /*glClear(GL_COLOR_BUFFER_BIT);
-
-	 // Set background color to black
-	 glClearColor(0.0, 0.0, 1.0, 1.0);
-
-	 // Set up the transformations stack
-	 glMatrixMode(GL_MODELVIEW);
-	 glLoadIdentity();
-
-		playerPic->draw();
-
-	 glFlush();
-	 glutSwapBuffers();*/
-
+		//std::cout << "Drawing Player" << std::endl;
 		glColor3f(0.294, 0.466, 0.745);
 
 		glBegin(GL_POLYGON);
@@ -72,6 +46,58 @@ void Square::draw() const {
 		glVertex2f(-y, -(x + w));
 		glVertex2f(-( y - h),-(x + w));
 		glVertex2f(-(y - h),-x);
+
+		glEnd();
+	}
+
+	if (entityTile == monster && (vis == lightLevel_1 || vis == lightLevel_2 || vis == lightlevel_3) )
+	{
+		//std::cout << "Drawing Monster" << std::endl;
+		glColor3f(0.420, 0.557, 0.137);
+
+		glBegin(GL_POLYGON);
+		glVertex2f(-y, -x);
+		glVertex2f(-y, -(x + w));
+		glVertex2f(-(y - h), -(x + w));
+		glVertex2f(-(y - h), -x);
+
+		glEnd();
+	}
+
+	if (lootable == _Weapons && inVision())
+	{
+		glColor3f(0.882, 0.545, 0.972);
+
+		glBegin(GL_POLYGON);
+		glVertex2f(-y, -x);
+		glVertex2f(-y, -(x + w));
+		glVertex2f(-(y - h), -(x + w));
+		glVertex2f(-(y - h), -x);
+
+		glEnd();
+	}
+
+	if (lootable == _Armors && inVision())
+	{
+		glColor3f(0.768, 0.117, 0.945);
+
+		glBegin(GL_POLYGON);
+		glVertex2f(-y, -x);
+		glVertex2f(-y, -(x + w));
+		glVertex2f(-(y - h), -(x + w));
+		glVertex2f(-(y - h), -x);
+
+		glEnd();
+	}
+	if (lootable == _Potions && inVision())
+	{
+		glColor3f(0.454, 0.062, 0.556);
+
+		glBegin(GL_POLYGON);
+		glVertex2f(-y, -x);
+		glVertex2f(-y, -(x + w));
+		glVertex2f(-(y - h), -(x + w));
+		glVertex2f(-(y - h), -x);
 
 		glEnd();
 	}
@@ -98,13 +124,13 @@ void Square::draw() const {
 			glColor3f(r - darkness, g - darkness, b - darkness);
 			break;
 		}
-
+		
 	}
 	else
 	{
 		glColor3f(0, 0, 0);
 	}
-
+    
 
     glBegin(GL_POLYGON);
 	glVertex2f(-y, -x);
@@ -115,17 +141,22 @@ void Square::draw() const {
 
     glEnd();
 
-
+	
 
 }
 
 
-Entity* Square::getEntityType() const {
-    return entity;
+entityType Square::getEntityType() const {
+    return entityTile;
 }
 
 tileType Square::getTile() const{
     return tile;
+}
+
+void Square::setLootable(lootType loot)
+{
+	this->lootable = loot;
 }
 
 void Square::setTile(tileType t) {
@@ -141,6 +172,11 @@ bool Square::getVisited() const{
 	return visited;
 }
 
+bool Square::inVision() 
+{
+	return (vis == lightLevel_1 || vis == lightLevel_2 || vis == lightlevel_3);
+}
+
 void Square::_visited(bool visit){
 	this->visited = visit;
 }
@@ -148,6 +184,11 @@ void Square::_visited(bool visit){
 visibility Square::getVis()
 {
 	return vis;
+}
+
+lootType Square::getLootable()
+{
+	return lootable;
 }
 
 void Square::setEntityType(entityType tile)
@@ -165,7 +206,6 @@ void Square::setColor(float red, float green, float blue)
 void Square::clear() {
     if (entity != 0){
         delete entity;
-			//	delete playerPic;
     }
     entity = 0;
 	tile = Unused;
@@ -175,11 +215,4 @@ Square::~Square(){
     if (entity != 0){
         delete entity;
     }
-}
-
-void Square::keyPress(unsigned char key) {
-	if(key == 27) { //escape key pressed
-		delete playerPic;
-		exit(0);
-	}
 }

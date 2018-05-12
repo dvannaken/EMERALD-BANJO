@@ -1,4 +1,3 @@
-
 # CSE170 glutapp makefile v2.1 - M. Kallmann 2009
 
 SOURCES := $(shell echo $(./)*.cpp)
@@ -17,7 +16,7 @@ CFLAGS   = -w $(OPTFLAGS)
 ifeq ($(strip $(OS)),Darwin)
 	LDFLAGS = -framework GLUT -framework OpenGL
 else
-	LDFLAGS = -lGL -lglut
+	LDFLAGS = -lGL -lglut -lGLU
 endif
 
 #######################################################################
