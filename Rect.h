@@ -15,19 +15,19 @@ public:
     Rect(float, float, float, float);
     Rect(float, float, float, float, float, float, float);
     
-    float getX() const;
-    float getY() const;
-    float getW() const;
-    float getH() const;
+    virtual float getX() const;
+    virtual float getY() const;
+    virtual float getW() const;
+    virtual float getH() const;
     
-    void setX(float);
-    void setY(float);
-    void setH(float);
-    void setW(float);
+    virtual void setX(float);
+    virtual void setY(float);
+    virtual void setH(float);
+    virtual void setW(float);
     
-    void draw(bool solid = false) const;
+    virtual void draw(bool solid = false) const;
     
-    bool contains (float, float) const;
+    virtual bool contains (float, float) const;
 };
 
 #endif

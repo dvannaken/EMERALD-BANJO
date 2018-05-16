@@ -37,6 +37,8 @@ Board::Board()
 	inProgress = false;
 
 	// delay = 1000;
+	
+	menu = new MenuDisplay(0.4, -0.6);
 }
 
 void Board::setGameStart() {
@@ -150,12 +152,13 @@ Board::Board(int ii)
 	stepCounter = 0;
 	//inProgress = false;
 
+	menu = new MenuDisplay(0.4, -0.6);
 }
 
 
 void Board::draw()
 {
-
+	menu->display();
 	for (int i = 0; i < 50; i++)
 	{
 		for (int j = 0; j < 50; j++)
@@ -535,8 +538,21 @@ void Board::debug() {
 	std::cout << "" << std::endl;
 	std::cout << "" << std::endl;
 	std::cout << "Player Wields a +" << player->getCurrentWeaponBonusModifer() << " " << player->getCurrentWeaponName() << std::endl;
-	std::cout << "Player Wields a +" << player->getCurrentArmorBonusModifer() << " " << player->getCurrentArmorName() << std::endl;
+	std::cout << "Player Wears a +" << player->getCurrentArmorBonusModifer() << " " << player->getCurrentArmorName() << std::endl;
 	std::cout << "_____________________________________________________________________" << std::endl;
+
+
+//	------------------------------------------------ MENU ------------------------------------------------
+	menu->newline("----------------------------");
+	std::string s = std::string("AC ") + std::to_string(player->getAC());
+	menu->newline(s);
+	s = std::string("HP ") + std::to_string(player->getHp());
+	menu->newline(s);
+	s = std::string("Player Wields a +") + std::to_string(player->getCurrentWeaponBonusModifer()) + " " + player->getCurrentWeaponName();
+	menu->newline(s);
+	s = std::string("Player Wears a +") + std::to_string(player->getCurrentArmorBonusModifer()) + " " + player->getCurrentArmorName();
+	menu->newline(s);
+	menu->newline("----------------------------");
 }
 
 void Board::monsterDebug(int m)
@@ -561,6 +577,8 @@ void Board::combat(int m, bool attacking) {
 	int numMonsterAttacks = monsterList[m]->getAttacks();
 	//int playerinit = random->randomInt(20) + player->getInitBonus();
 	//int monsterinit = random->randomInt(20) + monsterList[m]->getInitiativeBonus();
+	
+	std::string s; // for menu
 
 	if (attacking) {
 
@@ -575,7 +593,11 @@ void Board::combat(int m, bool attacking) {
 				if (playerAttack >= monsterAC)
 				{
 					int damage = player->rollAttackDamage();
+					
 					std::cout << "You do " << damage << " to " << monsterList[m]->getName() << std::endl;
+					s = std::string("You do ") + std::to_string(damage) + " to " + monsterList[m]->getName();	// MENU OP
+					menu->newline(s);
+					
 					monsterList[m]->setHp(monsterList[m]->getHp() - damage);
 
 				}
@@ -583,6 +605,9 @@ void Board::combat(int m, bool attacking) {
 			if (monsterList[m]->getHp() < 0) {
 
 				std::cout << "You KILL the " << monsterList[m]->getName() << std::endl;
+				s = std::string("You KILL the ") + monsterList[m]->getName();									// MENU OP
+				menu->newline(s);
+				
 				player->grantExp(monsterList[m]->getExp());
 				player->levelHandler();
 
@@ -601,21 +626,32 @@ void Board::combat(int m, bool attacking) {
 			//std::cout << "player hp " << player->getHp() << std::endl;
 			if (player->getHp() > 0) {
 				std::cout << monsterList[m]->getName() << " attacks and ";
+				s = monsterList[m]->getName() + " attacks and ";												// MENU OP
+				menu->newline(s);
+				
 				if (monsterList[m]->rollToHIt() >= player->getAC()) {
 					
 					int damage = monsterList[m]->rollDamage();
+					
 					std::cout << "deals " << damage << " damage " << std::endl;
+					s = std::string("deals ") + std::to_string(damage) + " damage ";							// MENU OP
+					menu->newline(s);
+					
 					player->takesDamage(damage);
 					//player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
 				}
 				else {
 					std::cout << "misses " << std::endl;
+					s = "misses ";																				// MENU OP
+					menu->newline(s);
 				}
 				
 			}
 			else {
 				// player dies @todo
 				std::cout << "You DIE" << std::endl;
+				s = "You DIE";																					// MENU OP
+				menu->newline(s);
 
 				gameOver = true;
 				gameEnd = true;
@@ -658,21 +694,31 @@ void Board::combat(int m, bool attacking) {
 				break;
 			}
 			std::cout << monsterList[m]->getName() << " attacks and ";
+			s = monsterList[m]->getName() + " attacks and ";												// MENU OP
+			menu->newline(s);
 
 			if (monsterList[m]->rollToHIt() >= player->getAC()) {
 
 				int damage = monsterList[m]->rollDamage();
+
 				std::cout << "deals " << damage << " damage " << std::endl;
+				s = std::string("deals ") + std::to_string(damage) + " damage ";							// MENU OP
+				menu->newline(s);
+				
 				player->takesDamage(damage);
 				//player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
 			}
 			else {
 				std::cout << "misses " << std::endl;
+				s = "misses ";																				// MENU OP
+				menu->newline(s);
 			}
 
 			if (player->getHp() < 0)  {
 				// player dies @todo
 				std::cout << "You DIE" << std::endl;
+				s = "You DIE";																					// MENU OP
+				menu->newline(s);
 				gameOver == true;
 			}
 		}
@@ -681,6 +727,8 @@ void Board::combat(int m, bool attacking) {
 	{
 		std::cout << i << " " << monsterList[i]->getX() << " " << monsterList[i]->getY() << std::endl;
 	}*/
+
+	menu->newline("");
 }
 
 int Board::monsterAt(int x, int y)
@@ -726,7 +774,9 @@ void Board::spawnMonster(int tries, int num)
 }
 
 void Board::itemSpawner(int rX, int rY) {
-	std::cout << "Monster Droped an item " << std::endl;
+	std::cout << "Monster Dropped an item " << std::endl;
+	std::string s = "Monster Dropped an item ";																	// MENU OP
+	menu->newline(s);
 
 	int num = random->randomInt(100);
 	if (num > 70)
@@ -866,6 +916,9 @@ bool Board::canMove(int endX, int endY, bool isPlayer,int m)
 	{
 		if (gameboard[endX][endY]->getEntityType() == monster && isPlayer == true) {
 			std::cout << "Starting Combat" << std::endl;
+			std::string s = "Starting Combat";																	// MENU OP
+			menu->newline(s);
+			
 			int attackedMonster = monsterAt(endX, endY);
 			combat(attackedMonster, true);
 
@@ -1133,10 +1186,13 @@ void Board::pickUpManger(int playerX,int playerY)
 
 void Board::lookAt(int x, int y) {
 	debug();
+	std::string s;
 
 	if (gameboard[x][y]->getLootable() == _Empty)
 	{
 		std::cout << "There is nothing on the ground" << std::endl;
+		s = "There is nothing on the ground";															// MENU OP
+		menu->newline(s);
 	}
 	else
 	{
@@ -1145,14 +1201,20 @@ void Board::lookAt(int x, int y) {
 		case _Weapons:
 			itemIndex = loot->itemAt(x, y, weapon_);
 			std::cout << " At your feet you see a +" << loot->WeaponList[itemIndex]->getBonusModifer() << " " << loot->WeaponList[itemIndex]->getWeaponName() << std::endl;
+			s = std::string(" At your feet you see a +") + std::to_string(loot->WeaponList[itemIndex]->getBonusModifer()) + " " + loot->WeaponList[itemIndex]->getWeaponName();	// MENU OP
+			menu->newline(s);
 			break;
 		case _Armors:
 			itemIndex = loot->itemAt(x, y, armor_);
 			std::cout << " At your feet you see a +" << loot->ArmorList[itemIndex]->getBonusModifer() << " " << loot->ArmorList[itemIndex]->getName() << std::endl;
+			s = std::string(" At your feet you see a +") + std::to_string(loot->ArmorList[itemIndex]->getBonusModifer()) + " " + loot->ArmorList[itemIndex]->getName();	// MENU OP
+			menu->newline(s);
 			break;
 		case _Potions:
 			itemIndex = loot->itemAt(x, y, potion_);
 			std::cout << " At your feet you see a " << loot->PotionList[itemIndex]->getName() << std::endl;
+			s = std::string(" At your feet you see a ") + loot->PotionList[itemIndex]->getName();			// MENU OP
+			menu->newline(s);
 			break;
 		}
 	}

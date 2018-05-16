@@ -6,6 +6,7 @@
 #include "MonsterList.h"
 #include "ItemManger.h"
 #include "TexRect.h"
+#include "MenuDisplay.h"
 #include <cmath>
 
 typedef unsigned int uint;
@@ -15,7 +16,7 @@ static int multipliers[4][8] = {
 	{ 0, 1, -1, 0, 0, -1, 1, 0 },
 	{ 0, 1, 1, 0, 0, -1, -1, 0 },
 	{ 1, 0, 0, 1, -1, 0, 0, -1 }
-	};
+};
 
 enum direction {
 	upLeft = 0,
@@ -48,7 +49,7 @@ class Board {
     void catchUp();
     void behind();
 
-	
+	MenuDisplay *menu;
 
 	//C++ shadowcasting implementation - Bj�rn Bergstr�m [bjorn.bergstrom@roguelikedevelopment.org]
 	//with code from http://www.roguebasin.com/index.php?title=C%2B%2B_shadowcasting_implementation
