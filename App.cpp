@@ -39,6 +39,8 @@ void App::mouseDown(float x, float y){
     // Update app state
     mx = x;
     my = y;
+	
+	gameBoard->onClick(mx, my);
 
     // Redraw the scene
     redraw();
@@ -112,7 +114,7 @@ void App::idle() {
         redraw();
     }
     else{
-        gameBoard->check();
+        gameBoard->tick();
     }
     
     //redraw();

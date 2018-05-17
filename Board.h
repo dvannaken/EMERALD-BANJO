@@ -7,6 +7,7 @@
 #include "ItemManger.h"
 #include "TexRect.h"
 #include "MenuDisplay.h"
+#include "Bar.h"
 #include <cmath>
 
 typedef unsigned int uint;
@@ -49,7 +50,8 @@ class Board {
     void catchUp();
     void behind();
 
-	MenuDisplay *status;
+	Bar *healthbar;
+	MenuDisplay *log;
 	MenuDisplay *menu;
 
 	//C++ shadowcasting implementation - Bj�rn Bergstr�m [bjorn.bergstrom@roguelikedevelopment.org]
@@ -100,8 +102,9 @@ public:
 
     void draw();
     void handle(unsigned char);
+	void onClick(float, float);
 
-    void check();
+    void tick();
 
     bool isUpToDate() const;
 	bool canMove(int,int);

@@ -79,7 +79,7 @@ public:
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(2, 4) + 2;
-		this->name = "healthPotion";
+		this->name = "Health Potion";
 	}
 
 	HealthPotion(int x, int y) :Potion(x,y){
@@ -87,7 +87,7 @@ public:
 		this->bonusModifer = 0;
 		this->changing = health;
 		this->statModifer = dice->rollDie(2, 4) + 2;
-		this->name = "healthPotion";
+		this->name = "Health Potion";
 	}
 
 	~HealthPotion()

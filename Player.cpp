@@ -151,7 +151,8 @@ void Player::init()
 	} while ((stre + dex + con + intel + wis + chari) < 65);
 	exp = 0;
 	level = 1;
-	hp = 8 + conBonus;
+	maxHP = 8 + conBonus;
+	currentHP = maxHP;
 	hunger = Satiated;
 	numAttacks = 1;
 	expBoundries = level_1;
@@ -164,7 +165,8 @@ void Player::init()
 void Player::levelUp()
 {
 	level++;
-	hp += dice->rollDie(1, 8) + conBonus;
+	maxHP += dice->rollDie(1, 8) + conBonus;
+	currentHP += dice->rollDie(1, 8) + conBonus; 
 	calculateBonus();
 	calculateProfBonus();
 	calculateToHitBonus();
@@ -214,7 +216,20 @@ int Player::getNumAttacks() const
 
 int Player::getHp() const
 {
-	return hp;
+	return currentHP;
+}
+
+int Player::getMaxHp() const
+{
+	return maxHP;
+}
+
+double Player::getHpPercent() const
+{
+	if (currentHP == maxHP)
+		return 1.0;
+	else
+		return (double)currentHP / (double)maxHP;
 }
 
 int Player::getInitBonus() const
@@ -300,12 +315,18 @@ void Player::grantExp(int exp)
 
 void Player::takesDamage(int damage)
 {
-	hp -= damage;
+	currentHP -= damage;
+
+	if (currentHP < 0)
+		currentHP = 0;
 }
 
 void Player::heals(int health)
 {
-	hp += health;
+	currentHP += health;
+	
+	if (currentHP > maxHP)
+		currentHP = maxHP;
 }
 
 //we're gonna use 2d array, so like 2 for loops???

@@ -57,7 +57,8 @@ private:
 	int exp;
 	int level;
 	int ac; // armorclass needs to roll higher to hit
-	int hp;
+	int currentHP;
+	int maxHP;
 
 	HungerState hunger;
 	levelThreshold expBoundries;
@@ -104,6 +105,8 @@ public:
 	int getStre() const;
 	int getNumAttacks() const;
 	int getHp() const;
+	int getMaxHp() const;
+	double getHpPercent() const;
 	int getInitBonus() const;
 	int getAC() const;
 	bool isUsingShield() const;
