@@ -14,8 +14,8 @@ Expanding on the foundation laid by Russell and Co.
 * DLC lol
 
 # ISSUES:
-1: Crash during item pickup (not consistently replicable)
+1. __Crash during item pickup__ (not consistently replicable)
 	* it seems that lookAt() doesn't print "empty" (or anything) on certain empty tiles. This is probably related.
 	* check initialization of loot on board
-2: Items spawning in walls
-2: Merciless goblins (enemies attack twice)
+2. Items spawning in walls
+3. Merciless goblins (enemies attack twice)
