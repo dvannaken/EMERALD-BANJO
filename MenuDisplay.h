@@ -3,27 +3,25 @@
 
 #include "Rect.h"
 #include <string>
+#include <vector>
 
 class MenuDisplay : public Rect {
-	std::string s1;
-	std::string s2;
-	std::string s3;
-	std::string s4;
-	std::string s5;
-	std::string s6;
-	std::string s7;
+	unsigned maxlines;
+	std::vector < std::string > lines;
 
 public:
     MenuDisplay();
     
 	// (0.7, 0.9) is classic top-right corner
-    MenuDisplay(double, double);
+    MenuDisplay(unsigned, double, double, double, double);
 	
 	// moves text up, adds new line and removes oldest line
 	void newline(std::string);
 	
 	//display all 3 text lines within? rect
 	void display();
+	
+	void setMaxLines(unsigned);
 };
 
 #endif

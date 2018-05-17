@@ -38,7 +38,8 @@ Board::Board()
 
 	// delay = 1000;
 	
-	menu = new MenuDisplay(0.4, -0.6);
+	status = new MenuDisplay(2, 0.7, 0.9, 0.3, 0.15);
+	menu = new MenuDisplay(7, 0.4, -0.6, 0.6, 0.4);
 }
 
 void Board::setGameStart() {
@@ -152,12 +153,14 @@ Board::Board(int ii)
 	stepCounter = 0;
 	//inProgress = false;
 
-	menu = new MenuDisplay(0.4, -0.6);
+	status = new MenuDisplay(2, 0.7, 0.9, 0.3, 0.15);
+	menu = new MenuDisplay(7, 0.4, -0.6, 0.6, 0.4);
 }
 
 
 void Board::draw()
 {
+	status->display();
 	menu->display();
 	for (int i = 0; i < 50; i++)
 	{
@@ -543,16 +546,18 @@ void Board::debug() {
 
 
 //	------------------------------------------------ MENU ------------------------------------------------
-	menu->newline("----------------------------");
+//	menu->newline("----------------------------");
 	std::string s = std::string("AC ") + std::to_string(player->getAC());
-	menu->newline(s);
+//	menu->newline(s);
+	status->newline(s);
 	s = std::string("HP ") + std::to_string(player->getHp());
-	menu->newline(s);
-	s = std::string("Player Wields a +") + std::to_string(player->getCurrentWeaponBonusModifer()) + " " + player->getCurrentWeaponName();
-	menu->newline(s);
-	s = std::string("Player Wears a +") + std::to_string(player->getCurrentArmorBonusModifer()) + " " + player->getCurrentArmorName();
-	menu->newline(s);
-	menu->newline("----------------------------");
+//	menu->newline(s);
+	status->newline(s);
+//	s = std::string("Player Wields a +") + std::to_string(player->getCurrentWeaponBonusModifer()) + " " + player->getCurrentWeaponName();
+//	menu->newline(s);
+//	s = std::string("Player Wears a +") + std::to_string(player->getCurrentArmorBonusModifer()) + " " + player->getCurrentArmorName();
+//	menu->newline(s);
+//	menu->newline("----------------------------");
 }
 
 void Board::monsterDebug(int m)
@@ -728,7 +733,7 @@ void Board::combat(int m, bool attacking) {
 		std::cout << i << " " << monsterList[i]->getX() << " " << monsterList[i]->getY() << std::endl;
 	}*/
 
-	menu->newline("");
+	debug();
 }
 
 int Board::monsterAt(int x, int y)
@@ -1225,6 +1230,7 @@ Board::~Board()
 	delete random;
 	delete map;
 	delete player;
+	delete menu;
 	for (int i = 0; i < monsterList.size(); i++)
 	{
 		delete monsterList[i];

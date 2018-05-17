@@ -49,6 +49,7 @@ class Board {
     void catchUp();
     void behind();
 
+	MenuDisplay *status;
 	MenuDisplay *menu;
 
 	//C++ shadowcasting implementation - Bj�rn Bergstr�m [bjorn.bergstrom@roguelikedevelopment.org]

@@ -9,38 +9,43 @@
 #endif
 
 MenuDisplay::MenuDisplay() : Rect() {
-	s1 = "";
-	s2 = "";
-	s3 = "";
-	s4 = "";
-	s5 = "";
-	s6 = "";
-	s7 = "";
+	maxlines = 1;
+	lines.push_back("");
 }
 
-MenuDisplay::MenuDisplay(double x, double y) : Rect(x, y, 0.6, 0.4) {
-	s1 = "";
-	s2 = "";
-	s3 = "";
-	s4 = "";
-	s5 = "";
-	s6 = "";
-	s7 = "";
+MenuDisplay::MenuDisplay(unsigned n, double x, double y, double w = 0.6, double h = 0.4) : Rect(x, y, w, h) {
+	maxlines = n;
+	for (int i = 0; i < maxlines; i++) {
+		lines.push_back("");
+	}
+}
+
+void MenuDisplay::setMaxLines(unsigned n) {
+	for (int i = maxlines; i < n; i++) {
+		lines.push_back("");
+	}
+	maxlines = n;
 }
 
 void MenuDisplay::newline(std::string s) {
-	s7 = s6;
-	s6 = s5;
-	s5 = s4;
-	s4 = s3;
-	s3 = s2;
-	s2 = s1;
-	s1 = s;
+	for (int i = maxlines - 1; i > 0; i--) {
+		lines.at(i) = lines.at(i-1);
+	}
+
+	lines.at(0) = s;
 }
 
 void MenuDisplay::display() {
 	Rect::draw();
 	
+	float offset = (maxlines * 0.05);
+	for (int i = 0; i < maxlines; i++) {
+		glRasterPos2f(x + 0.01, y - offset);
+		const char* c = lines.at(i).c_str();
+		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_10, (const unsigned char*)c );
+		offset -= 0.05;
+	}
+/*	
 	glRasterPos2f(x + 0.01, y - 0.05);
 	const char* c = s7.c_str();
 	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_10, (const unsigned char*)c );
@@ -68,4 +73,5 @@ void MenuDisplay::display() {
 	glRasterPos2f(x + 0.01, y - 0.35);
 	c = s1.c_str();
 	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_10, (const unsigned char*)c );
+*/
 }
