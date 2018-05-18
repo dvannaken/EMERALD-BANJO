@@ -5,11 +5,13 @@ Expanding on the foundation laid by Russell and Co.
 
 # TODO:
 * Convert to timer system for animations
+	* Timer compiling on Timer branch, but graphics are wonky.
+	* Does SOIL lower res?
 * ~~On-screen menu~~
 * Fix combat/death
 * Stairs
-* inventory
-* non-hostile/shop NPCs
+* Inventory
+* Non-hostile/shop NPCs
 * Cool indie graphics
 * DLC lol
 
