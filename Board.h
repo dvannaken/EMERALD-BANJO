@@ -51,6 +51,7 @@ class Board {
     void behind();
 
 	Bar *healthbar;
+	Bar *expbar;
 	MenuDisplay *log;
 	MenuDisplay *menu;
 

@@ -1,6 +1,7 @@
 #ifndef Bar_h
 #define Bar_h
 
+#include <string>
 #include "Rect.h"
 
 class Bar {
@@ -10,7 +11,7 @@ class Bar {
 
 public:
     Bar();
-	Bar(float, float, float, float);
+	Bar(float, float, float, float, std::string);
 	~Bar();
 	
 	void setPercent(double);

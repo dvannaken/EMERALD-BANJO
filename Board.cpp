@@ -40,7 +40,8 @@ Board::Board()
 	
 	menu = new MenuDisplay(12, -0.2, 0.5, 0.4, 0.7, false);
 	log = new MenuDisplay(7, 0.4, -0.6, 0.6, 0.4, true);
-	healthbar = new Bar(0.7, 0.9, 0.3, 0.05);
+	healthbar = new Bar(0.7, 0.9, 0.3, 0.05, "health");
+	expbar = new Bar(0.7, 0.84, 0.3, 0.03, "exp");
 }
 
 void Board::setGameStart() {
@@ -156,7 +157,8 @@ Board::Board(int ii)
 
 	menu = new MenuDisplay(12, -0.2, 0.5, 0.4, 0.7, false);
 	log = new MenuDisplay(7, 0.4, -0.6, 0.6, 0.4, true);
-	healthbar = new Bar(0.7, 0.9, 0.25, 0.05);
+	healthbar = new Bar(0.7, 0.9, 0.3, 0.05, "health");
+	expbar = new Bar(0.7, 0.84, 0.3, 0.03, "exp");
 }
 
 
@@ -167,6 +169,7 @@ void Board::draw()
 	}
 	log->display();
 	healthbar->draw();
+	expbar->draw();
 
 	for (int i = 0; i < 50; i++)
 	{
@@ -283,6 +286,8 @@ void Board::onClick(float x, float y)
 {
 	if (log->contains(x, y)) {
 		player->heals(100);
+		player->grantExp(50);
+		player->levelHandler();
 	}
 }
 
@@ -293,7 +298,7 @@ void Board::tick()
 	menu->newline("Name:                         Player");
 	s = std::string("HP:                              ") + std::to_string(player->getHp()) + "/" + std::to_string(player->getMaxHp());
 	menu->newline(s);
-	s = std::string("AC:                             ") + std::to_string(player->getAC());
+	s = std::string("Level:                             ") + std::to_string(player->getLevel());
 	menu->newline(s);
 	s = std::string("CONSTITUTION:      ") + std::to_string(player->getAC());
 	menu->newline(s);
@@ -310,10 +315,11 @@ void Board::tick()
 	menu->newline("");
 	s = std::string("Player wields a +") + std::to_string(player->getCurrentWeaponBonusModifer()) + " " + player->getCurrentWeaponName();
 	menu->newline(s);
-	s = std::string("Player wears a +") + std::to_string(player->getCurrentArmorBonusModifer()) + " " + player->getCurrentArmorName();
+	s = std::string("Player wears a +") + std::to_string(player->getCurrentArmorBonusModifer()) + " " + player->getCurrentArmorName() + " with " + std::to_string(player->getAC()) + " AC";
 	menu->newline(s);
 //	------------------------------------------------ others ------------------------------------------------
-	healthbar->setPercent( player->getHpPercent() );
+	healthbar->setPercent( (double)player->getHp() / (double)player->getMaxHp() );
+	expbar->setPercent( (double)player->getExp() / (double)player->getMaxExp() );
 }
 
 
@@ -618,7 +624,7 @@ void Board::combat(int m, bool attacking) {
 					int damage = player->rollAttackDamage();
 					
 					std::cout << "You do " << damage << " to " << monsterList[m]->getName() << std::endl;
-					s = std::string("You do ") + std::to_string(damage) + " to " + monsterList[m]->getName();	// LOG OP
+					s = player->getName() + " does " + std::to_string(damage) + " to " + monsterList[m]->getName();	// LOG OP
 					log->newline(s);
 					
 					monsterList[m]->setHp(monsterList[m]->getHp() - damage);
@@ -628,12 +634,20 @@ void Board::combat(int m, bool attacking) {
 			if (monsterList[m]->getHp() < 0) {
 
 				std::cout << "You KILL the " << monsterList[m]->getName() << std::endl;
-				s = std::string("You KILL the ") + monsterList[m]->getName();									// LOG OP
+				s = player->getName() + " kills the " + monsterList[m]->getName();									// LOG OP
 				log->newline(s);
 				
 				player->grantExp(monsterList[m]->getExp());
-				player->levelHandler();
+				std::cout << "You gain " << monsterList[m]->getExp() << " experience" << std::endl;
+				s = player->getName() + " gains " + std::to_string(monsterList[m]->getExp()) + " experience";		// LOG OP
+				log->newline(s);
 
+				if ( player->levelHandler() ) {
+					s = player->getName() + " has leveled up";
+					log->newline(s);
+					s = player->getName() + " is now level " + std::to_string(player->getLevel());		// LOG OP
+					log->newline(s);
+				}
 				break;
 
 			}
@@ -661,7 +675,7 @@ void Board::combat(int m, bool attacking) {
 					log->newline(s);
 					
 					player->takesDamage(damage);
-					std::cout << "player has " << player->getHp() << " health of their max " << player->getMaxHp() << ", about " << player->getHpPercent() << "%" << std::endl;
+					std::cout << "player has " << player->getHp() << " health of their max " << player->getMaxHp() << std::endl;
 					//player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
 				}
 				else {
@@ -674,7 +688,7 @@ void Board::combat(int m, bool attacking) {
 			else {
 				// player dies @todo
 				std::cout << "You DIE" << std::endl;
-				s = "You DIE";																					// LOG OP
+				s = player->getName() + " dies...";																					// LOG OP
 				log->newline(s);
 
 				gameOver = true;
@@ -730,7 +744,7 @@ void Board::combat(int m, bool attacking) {
 				log->newline(s);
 				
 				player->takesDamage(damage);
-				std::cout << "player has " << player->getHp() << " health of their max " << player->getMaxHp() << ", about " << player->getHpPercent() << "%" << std::endl;
+				std::cout << "player has " << player->getHp() << " health of their max " << player->getMaxHp() << std::endl;
 				//player->takesDamage(random->rollDie(1, monsterList[m]->getWeaponType()));
 			}
 			else {
@@ -742,7 +756,7 @@ void Board::combat(int m, bool attacking) {
 			if (player->getHp() < 0)  {
 				// player dies @todo
 				std::cout << "You DIE" << std::endl;
-				s = "You DIE";																					// LOG OP
+				s = player->getName() + " dies...";																					// LOG OP
 				log->newline(s);
 				gameOver == true;
 			}
@@ -1186,7 +1200,7 @@ void Board::pickUpManger(int playerX,int playerY)
 			break;
 		case _Potions:
 			itemIndex = loot->itemAt(playerX, playerY,potion_);
-			std::string s = std::string("Healed ") + std::to_string( !(loot->PotionList[itemIndex]->getStatModifer()<(player->getMaxHp() - player->getHp()))?(player->getMaxHp() - player->getHp()):loot->PotionList[itemIndex]->getStatModifer() ) + " health";							// LOG OP
+			std::string s = player->getName() + " healed " + std::to_string( !(loot->PotionList[itemIndex]->getStatModifer()<(player->getMaxHp() - player->getHp()))?(player->getMaxHp() - player->getHp()):loot->PotionList[itemIndex]->getStatModifer() ) + " health";							// LOG OP
 			log->newline(s);
 			player->heals(loot->PotionList[itemIndex]->getStatModifer());
 			break;
@@ -1240,6 +1254,7 @@ Board::~Board()
 	delete menu;
 	delete log;
 	delete healthbar;
+	delete expbar;
 	for (int i = 0; i < monsterList.size(); i++)
 	{
 		delete monsterList[i];

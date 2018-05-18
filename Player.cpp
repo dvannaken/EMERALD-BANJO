@@ -76,16 +76,16 @@ int Player::rollToHit()
 	return dice->randomInt(20) + toHitBonus;
 }
 
-void Player::levelHandler()
+bool Player::levelHandler()
 {
 	if (this->exp > expThreshold[level])
 	{
 		//player has leveled up;
-
 		std::cout << "You have leveled Up" << std::endl;
 		levelUp();
+		return true;
 	}
-
+	return false;
 }
 
 void Player::recalculateAC()
@@ -149,6 +149,7 @@ void Player::init()
 		calculateProfBonus();
 		calculateToHitBonus();
 	} while ((stre + dex + con + intel + wis + chari) < 65);
+	name = "TEST";
 	exp = 0;
 	level = 1;
 	maxHP = 8 + conBonus;
@@ -165,8 +166,9 @@ void Player::init()
 void Player::levelUp()
 {
 	level++;
-	maxHP += dice->rollDie(1, 8) + conBonus;
-	currentHP += dice->rollDie(1, 8) + conBonus; 
+	int inc = dice->rollDie(1, 8) + conBonus;
+	maxHP += inc;
+	currentHP += inc; 
 	calculateBonus();
 	calculateProfBonus();
 	calculateToHitBonus();
@@ -224,12 +226,26 @@ int Player::getMaxHp() const
 	return maxHP;
 }
 
-double Player::getHpPercent() const
+int Player::getExp() const
 {
-	if (currentHP == maxHP)
-		return 1.0;
-	else
-		return (double)currentHP / (double)maxHP;
+	int currentExp = exp - expThreshold[level-1]; //experience for current level
+	return currentExp;
+}
+
+int Player::getMaxExp() const
+{
+	int currentMax = expThreshold[level] - expThreshold[level-1]; //experience quota for current level
+	return currentMax;
+}
+
+std::string Player::getName() const
+{
+	return name;
+}
+
+int Player::getLevel() const
+{
+	return level;
 }
 
 int Player::getInitBonus() const
@@ -269,6 +285,10 @@ int Player::getCurrentArmorBonusModifer()
 
 
 //setters
+void Player::setName(std::string name) {
+	this->name = name;
+}
+
 void Player::setCon(int con) {
 	this->con = con;
 }

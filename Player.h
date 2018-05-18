@@ -54,6 +54,7 @@ private:
 	int profBonus;
 	int initBonus;
 
+	std::string name;
 	int exp;
 	int level;
 	int ac; // armorclass needs to roll higher to hit
@@ -106,7 +107,10 @@ public:
 	int getNumAttacks() const;
 	int getHp() const;
 	int getMaxHp() const;
-	double getHpPercent() const;
+	int getExp() const;
+	int getMaxExp() const;
+	std::string getName() const;
+	int getLevel() const;
 	int getInitBonus() const;
 	int getAC() const;
 	bool isUsingShield() const;
@@ -117,6 +121,7 @@ public:
 	std::string getCurrentArmorName();
 	int getCurrentArmorBonusModifer();
 
+	void setName(std::string);
 	void setCon(int);
 	void setChari(int);
 	void setWis(int);
@@ -140,7 +145,7 @@ public:
 	int rollAttackDamage();
 	int rollToHit();
 
-	void levelHandler();
+	bool levelHandler();
 	
 	void recalculateAC();
 	virtual void switchArmor(Armor*);
