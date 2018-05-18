@@ -44,8 +44,8 @@ int RandomNum::randomInt(int exclusiveMax) {
 int RandomNum::randomInt(int min, int max) {
 	std::random_device rd;
 	std::mt19937 mt(rd());
-	std::uniform_int_distribution<> dist(0, max - min);
-	return dist(mt) + min;
+	std::uniform_int_distribution<> dist(min, max);
+	return dist(mt);
 }
 
 bool RandomNum::randomBool()

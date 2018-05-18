@@ -53,6 +53,7 @@ class Board {
 	Bar *healthbar;
 	Bar *expbar;
 	MenuDisplay *log;
+	MenuDisplay *location;
 	MenuDisplay *menu;
 
 	//C++ shadowcasting implementation - Bj�rn Bergstr�m [bjorn.bergstrom@roguelikedevelopment.org]

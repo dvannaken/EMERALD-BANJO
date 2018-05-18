@@ -79,116 +79,117 @@ bool MapGen::createFeature() {
 	return false;
 }
 bool MapGen::createFeature(int x, int y, Direction dir)
-	{
-		static const int roomChance = 35; // corridorChance = 100 - roomChance
- 
-		int dx = 0;
-		int dy = 0;
- 
-		if (dir == North)
-			dy = 1;
-		else if (dir == South)
-			dy = -1;
-		else if (dir == West)
-			dx = 1;
-		else if (dir == East)
-			dx = -1;
- 
-		if (getTile(x + dx, y + dy) != Floor && getTile(x + dx, y + dy) != Corridor)
-			return false;
- 
-		if (rng->randomInt(100) < roomChance)
-		{
-			if (makeRoom(x, y, dir,false))
-			{
+{
+	static const int roomChance = 35; // corridorChance = 100 - roomChance
 
-				if (rng->randomInt(10) > 3)
-				{
-					setTile(x, y, OpenDoor);
-				}
-				else {
-					setTile(x, y, Floor);
-				}
+	int dx = 0;
+	int dy = 0;
 
- 
-				return true;
-			}
-		}
- 
-		else
-		{
-			if (makeCorridor(x, y, dir))
-			{
-				if (getTile(x + dx, y + dy) == Floor) {
-					if (rng->randomBool())
-					{
-					setTile(x, y, OpenDoor);
-					}
-					else {
-					setTile(x, y, Floor);
-					}
-					
-				}
-					
-				else // don't place a door between corridors
-					setTile(x, y, Corridor);
- 
-				return true;
-			}
-		}
- 
+	if (dir == North)
+		dy = 1;
+	else if (dir == South)
+		dy = -1;
+	else if (dir == West)
+		dx = 1;
+	else if (dir == East)
+		dx = -1;
+
+	if (getTile(x + dx, y + dy) != Floor && getTile(x + dx, y + dy) != Corridor)
 		return false;
-	}
-bool MapGen::makeRoom(int x, int y, Direction dir, bool firstRoom = false){
-        static const int minRoomSize = 4;
-		static const int maxRoomSize = 7;
- 
-		Rectangle room;
-		room.width = rng->randomInt(minRoomSize, maxRoomSize);
-		room.height = rng->randomInt(minRoomSize, maxRoomSize);
- 
-		if (dir == North)
+
+	if (rng->randomInt(100) < roomChance)
+	{
+		if (makeRoom(x, y, dir,false))
 		{
-			room.x = x - room.width / 2;
-			room.y = y - room.height;
-		}
- 
-		else if (dir == South)
-		{
-			room.x = x - room.width / 2;
-			room.y = y + 1;
-		}
- 
-		else if (dir == West)
-		{
-			room.x = x - room.width;
-			room.y = y - room.height / 2;
-		}
- 
-		else if (dir == East)
-		{
-			room.x = x + 1;
-			room.y = y - room.height / 2;
-		}
- 
-		if (placeRect(room, Floor))
-		{
-			_rooms.emplace_back(room);
- 
-			if (dir != South || firstRoom) // north side
-				_exits.emplace_back(Rectangle{ room.x, room.y - 1, room.width, 1 });
-			if (dir != North || firstRoom) // south side
-				_exits.emplace_back(Rectangle{ room.x, room.y + room.height, room.width, 1 });
-			if (dir != East || firstRoom) // west side
-				_exits.emplace_back(Rectangle{ room.x - 1, room.y, 1, room.height });
-			if (dir != West || firstRoom) // east side
-				_exits.emplace_back(Rectangle{ room.x + room.width, room.y, 1, room.height });
- 
+
+			if (rng->randomInt(10) > 3)
+			{
+				setTile(x, y, OpenDoor);
+			}
+			else {
+				setTile(x, y, Floor);
+			}
+
+
 			return true;
 		}
+	}
+
+	else
+	{
+		if (makeCorridor(x, y, dir))
+		{
+			if (getTile(x + dx, y + dy) == Floor) {
+				if (rng->randomBool())
+				{
+				setTile(x, y, OpenDoor);
+				}
+				else {
+				setTile(x, y, Floor);
+				}
+				
+			}
+				
+			else // don't place a door between corridors
+				setTile(x, y, Corridor);
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool MapGen::makeRoom(int x, int y, Direction dir, bool firstRoom = false){
+	static const int minRoomSize = 4;
+	static const int maxRoomSize = 7;
+
+	Rectangle room;
+	room.width = rng->randomInt(minRoomSize, maxRoomSize);
+	room.height = rng->randomInt(minRoomSize, maxRoomSize);
+
+	if (dir == North)
+	{
+		room.x = x - room.width / 2;
+		room.y = y - room.height;
+	}
+
+	else if (dir == South)
+	{
+		room.x = x - room.width / 2;
+		room.y = y + 1;
+	}
+
+	else if (dir == West)
+	{
+		room.x = x - room.width;
+		room.y = y - room.height / 2;
+	}
+
+	else if (dir == East)
+	{
+		room.x = x + 1;
+		room.y = y - room.height / 2;
+	}
+
+	if (placeRect(room, Floor))
+	{
+		_rooms.emplace_back(room);
+
+		if (dir != South || firstRoom) // north side
+			_exits.emplace_back(Rectangle{ room.x, room.y - 1, room.width, 1 });
+		if (dir != North || firstRoom) // south side
+			_exits.emplace_back(Rectangle{ room.x, room.y + room.height, room.width, 1 });
+		if (dir != East || firstRoom) // west side
+			_exits.emplace_back(Rectangle{ room.x - 1, room.y, 1, room.height });
+		if (dir != West || firstRoom) // east side
+			_exits.emplace_back(Rectangle{ room.x + room.width, room.y, 1, room.height });
+
+		return true;
+	}
 
 
-		return false;
+	return false;
 }
 
 bool MapGen::makeCorridor(int x, int y, Direction dir){

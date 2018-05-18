@@ -45,6 +45,8 @@ class Square : public Rect {
 	
 	bool visited;
 	
+	lootType lootable; // dont know why it breaks my stuff when its private
+	
 public:
     Square();
     Square(float);
@@ -52,7 +54,7 @@ public:
     Square(float, float, float, float, float, float);
 
 	
-	lootType lootable; // dont know why it breaks my stuff when its private
+	//lootType lootable; // dont know why it breaks my stuff when its private
 
 
 	bool opaque;

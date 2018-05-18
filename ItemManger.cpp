@@ -1,4 +1,5 @@
 #include "ItemManger.h"
+#include <iostream>
 ItemManger::ItemManger()
 {
 	numItems = 0;
@@ -50,19 +51,19 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 		{
 			switch (numGenerator->randomInt(5))
 			{
-			case 1:
+			case 0:
 				WeaponList.push_back(new BattleAxe(x, y, bonusmod));
 				break;
-			case 2:
+			case 1:
 				WeaponList.push_back(new GreatAxe(x, y, bonusmod));
 				break;
-			case 3:
+			case 2:
 				WeaponList.push_back(new Greatsword(x, y, bonusmod));
 				break;
-			case 4:
+			case 3:
 				WeaponList.push_back(new Longsword(x, y, bonusmod));
 				break;
-			case 5:
+			case 4:
 				WeaponList.push_back(new Dagger(x, y, bonusmod));
 				break;
 
@@ -86,22 +87,20 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 		{
 			switch (numGenerator->randomInt(5))
 			{
-			case 1:
+			case 0:
 				ArmorList.push_back(new Leather(x, y, bonusmod));
 				break;
-			case 2:
+			case 1:
 				ArmorList.push_back(new StuddedLeather(x, y, bonusmod));
 				break;
-			case 3:
+			case 2:
 				ArmorList.push_back(new Hide(x, y, bonusmod));
 				break;
-			case 4:
+			case 3:
 				ArmorList.push_back(new Ring_Mail(x, y, bonusmod));
 				break;
-			case 5:
+			case 4:
 				ArmorList.push_back(new Chain_Shirt(x, y, bonusmod));
-				break;
-			default:
 				break;
 			}
 		}
@@ -109,22 +108,20 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 		{
 			switch (numGenerator->randomInt(5))
 			{
-			case 1:
+			case 0:
 				ArmorList.push_back(new Scale_Mail(x, y, bonusmod));
 				break;
-			case 2:
+			case 1:
 				ArmorList.push_back(new Breastplate(x, y, bonusmod));
 				break;
-			case 3:
+			case 2:
 				ArmorList.push_back(new Chain_Mail(x, y, bonusmod));
 				break;
-			case 4:
+			case 3:
 				ArmorList.push_back(new Ring_Mail(x, y, bonusmod));
 				break;
-			case 5:
+			case 4:
 				ArmorList.push_back(new WearableShield(x, y, bonusmod));
-				break;
-			default:
 				break;
 			}
 		}
@@ -133,22 +130,20 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 
 			switch (numGenerator->randomInt(5))
 			{
-			case 1:
+			case 0:
 				ArmorList.push_back(new Halfplate(x, y, bonusmod));
 				break;
-			case 2:
+			case 1:
 				ArmorList.push_back(new Splint(x, y, bonusmod));
 				break;
-			case 3:
+			case 2:
 				ArmorList.push_back(new Plate(x, y, bonusmod));
 				break;
-			case 4:
+			case 3:
 				ArmorList.push_back(new Ring_Mail(x, y, bonusmod));
 				break;
-			case 5:
+			case 4:
 				ArmorList.push_back(new Chain_Shirt(x, y, bonusmod));
-				break;
-			default:
 				break;
 			}
 
@@ -161,21 +156,23 @@ void ItemManger::spawnItem(ItemTypes type, int x, int y)
 		{
 			PotionList.push_back(new HealthPotion(x, y));
 		}
-		else if (lootchance > 50 && lootchance < 80)
+		else if (lootchance >= 50 && lootchance < 80)
 		{
 			PotionList.push_back(new GreaterHealthPotion(x, y));
 		}
-		else if (lootchance > 80 && lootchance < 96)
+		else if (lootchance >= 80 && lootchance < 96)
 		{
 			PotionList.push_back(new SuperiorHealthPotion(x, y));
 		}
-		else if (lootchance > 96 && lootchance < 100)
+		else if (lootchance >= 96)
 		{
 			PotionList.push_back(new SupremeHealthPotion(x, y));
 		}
 
 		break;
 	default:
+		std::cout << "ERROR: ITEMSPAWN FAILED" << std::endl;
+		std::cout << "item #" << numItems << " at " << x << ", " << y << std::endl;
 		break;
 	}
 	numItems++;
@@ -213,6 +210,8 @@ int ItemManger::itemAt(int x, int y, ItemTypes type)
 		}
 		break;
 	default:
+		std::cout << "ERROR: ITEMLOOKUP FAILED" << std::endl;
+		std::cout << "unknown item at " << x << ", " << y << std::endl;
 		break;
 	}
 	

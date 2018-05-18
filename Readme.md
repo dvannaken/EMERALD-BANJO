@@ -17,7 +17,7 @@ Expanding on the foundation laid by Russell and Co.
 
 # ISSUES:
 1. __Crash during item pickup__ (not consistently replicable)
-	* it seems that lookAt() doesn't print "empty" (or anything) on certain empty tiles. This is probably related.
-	* check initialization of loot on board
-2. Items spawning in walls
-3. Merciless goblins (enemies attack twice)
+	* ~~it seems that lookAt() doesn't print "empty" (or anything) on certain empty tiles. This is probably related.~~
+		* confirmed, certain tiles return NULL for getLootable()
+	* unrelated to the 5 items spawned by RandomItemSpawner(), phantom items (some in walls) crash game
+		* where are these items spawned?

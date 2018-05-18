@@ -157,6 +157,7 @@ Board::Board(int ii)
 
 	menu = new MenuDisplay(12, -0.2, 0.5, 0.4, 0.7, false);
 	log = new MenuDisplay(7, 0.4, -0.6, 0.6, 0.4, true);
+	location = new MenuDisplay(1, -0.9, 0.9, 0.2, 0.1, true);
 	healthbar = new Bar(0.7, 0.9, 0.3, 0.05, "health");
 	expbar = new Bar(0.7, 0.84, 0.3, 0.03, "exp");
 }
@@ -168,6 +169,7 @@ void Board::draw()
 		menu->display();
 	}
 	log->display();
+	location->display();
 	healthbar->draw();
 	expbar->draw();
 
@@ -175,7 +177,6 @@ void Board::draw()
 	{
 		for (int j = 0; j < 50; j++)
 		{
-
 			gameboard[i][j]->draw();
 		}
 	}
@@ -191,7 +192,6 @@ void Board::drawGameOver(bool gameEnd) {
 
 void Board::handle(unsigned char key)
 {
-
 	if(!gameOver){
 
 		if (key == 'm') {
@@ -320,6 +320,8 @@ void Board::tick()
 //	------------------------------------------------ others ------------------------------------------------
 	healthbar->setPercent( (double)player->getHp() / (double)player->getMaxHp() );
 	expbar->setPercent( (double)player->getExp() / (double)player->getMaxExp() );
+	s = std::to_string(player->getX()) + ", " + std::to_string(player->getY());
+	location->newline(s);
 }
 
 
@@ -828,7 +830,6 @@ void Board::itemSpawner(int rX, int rY) {
 	else {
 		loot->spawnItem(potion_, rX, rY);
 		gameboard[rX][rY]->setLootable(_Potions);
-
 	}
 }
 
@@ -839,13 +840,13 @@ void Board::randomItemSpawner(int tries, int num)
 
 	for (int i = 0; i < tries; i++)
 	{
-		if (numItems > num - 1)
+		if (numItems >= num)
 		{
 			break;
 		}
 
-		rX = random->randomInt(49);
-		rY = random->randomInt(49);
+		rX = random->randomInt(50);
+		rY = random->randomInt(50);
 
 		if (canMove(rX, rY) && !currentlyViewed(rX, rY) && gameboard[rX][rY]->getTile() == Unused && gameboard[rX][rY]->getLootable() == _Empty)
 		{
@@ -854,17 +855,20 @@ void Board::randomItemSpawner(int tries, int num)
 			case 1:
 				loot->spawnItem(weapon_, rX, rY);
 				gameboard[rX][rY]->setLootable(_Weapons);
-				std::cout << "Weapon at " << rX << " " << rY << std::endl;
+				std::cout << "Weapon at " << rX << " " << rY;
+				std::cout << ", a +" << loot->WeaponList[loot->itemAt(rX, rY, weapon_)]->getBonusModifer() << " " << loot->WeaponList[loot->itemAt(rX, rY, weapon_)]->getWeaponName() << std::endl;
 				break;
 			case 2:
 				loot->spawnItem(armor_, rX, rY);
 				gameboard[rX][rY]->setLootable(_Armors);
-				std::cout << "armor at " << rX << " " << rY << std::endl;
+				std::cout << "Armor at " << rX << " " << rY;
+				std::cout << ", a +" << loot->ArmorList[loot->itemAt(rX, rY, weapon_)]->getBonusModifer() << " " << loot->ArmorList[loot->itemAt(rX, rY, weapon_)]->getName() << std::endl;
 				break;
 			case 3:
 				loot->spawnItem(potion_, rX, rY);
 				gameboard[rX][rY]->setLootable(_Potions);
-				std::cout << "potion at " << rX << " " << rY << std::endl;
+				std::cout << "Potion at " << rX << " " << rY;
+				std::cout << ", a +" << loot->PotionList[loot->itemAt(rX, rY, potion_)]->getName() << std::endl;
 				break;
 			default:
 				break;
@@ -1212,7 +1216,6 @@ void Board::pickUpManger(int playerX,int playerY)
 }
 
 void Board::lookAt(int x, int y) {
-	debug();
 	std::string s;
 
 	if (gameboard[x][y]->getLootable() == _Empty)
@@ -1226,21 +1229,26 @@ void Board::lookAt(int x, int y) {
 		switch (gameboard[x][y]->getLootable()) {
 		case _Weapons:
 			itemIndex = loot->itemAt(x, y, weapon_);
-			std::cout << " At your feet you see a +" << loot->WeaponList[itemIndex]->getBonusModifer() << " " << loot->WeaponList[itemIndex]->getWeaponName() << std::endl;
+			std::cout << "At your feet you see a +" << loot->WeaponList[itemIndex]->getBonusModifer() << " " << loot->WeaponList[itemIndex]->getWeaponName() << std::endl;
 			s = std::string("At your feet you see a +") + std::to_string(loot->WeaponList[itemIndex]->getBonusModifer()) + " " + loot->WeaponList[itemIndex]->getWeaponName();	// LOG OP
 			log->newline(s);
 			break;
 		case _Armors:
 			itemIndex = loot->itemAt(x, y, armor_);
-			std::cout << " At your feet you see a +" << loot->ArmorList[itemIndex]->getBonusModifer() << " " << loot->ArmorList[itemIndex]->getName() << std::endl;
+			std::cout << "At your feet you see a +" << loot->ArmorList[itemIndex]->getBonusModifer() << " " << loot->ArmorList[itemIndex]->getName() << std::endl;
 			s = std::string("At your feet you see a +") + std::to_string(loot->ArmorList[itemIndex]->getBonusModifer()) + " " + loot->ArmorList[itemIndex]->getName();	// LOG OP
 			log->newline(s);
 			break;
 		case _Potions:
 			itemIndex = loot->itemAt(x, y, potion_);
-			std::cout << " At your feet you see a " << loot->PotionList[itemIndex]->getName() << std::endl;
+			std::cout << "At your feet you see a " << loot->PotionList[itemIndex]->getName() << std::endl;
 			s = std::string("At your feet you see a ") + loot->PotionList[itemIndex]->getName();			// LOG OP
 			log->newline(s);
+			break;
+		default:
+			std::cout << "ERROR: ITEMLOOKUP FAILED on board" << std::endl;
+			std::cout << "unknown item at " << x << ", " << y << std::endl;
+			std::cin >> s;
 			break;
 		}
 	}
@@ -1253,6 +1261,7 @@ Board::~Board()
 	delete player;
 	delete menu;
 	delete log;
+	delete location;
 	delete healthbar;
 	delete expbar;
 	for (int i = 0; i < monsterList.size(); i++)
