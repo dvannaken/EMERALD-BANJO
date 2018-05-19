@@ -116,7 +116,7 @@ public:
 	void monsterDebug(int);
 
 	bool gameOver;
-	TexRect* itsOver; 
+//	TexRect* itsOver; 
 
 	~Board();
     
@@ -126,7 +126,7 @@ public:
     //getters
     bool getGameStartStatus();
     bool getGameEndStatus();
-	void drawGameOver(bool);
+	bool getGameOver();
 
 };
 

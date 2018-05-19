@@ -65,6 +65,9 @@ bool Board::getGameEndStatus() {
 
 Board::Board(int ii)
 {
+	gameStart = false;
+    gameEnd = false;
+
 	int size = ii;
 	float xinc = 0.04;
 	float yinc = 0.04;
@@ -183,11 +186,12 @@ void Board::draw()
 	catchUp();
 }
 
-void Board::drawGameOver(bool gameEnd) {
+bool Board::getGameOver() {
 	//itsOver = new TexRect("gameOver.bmp", 1, 1, -2.5, 3.5, 5, 2);
-	if (gameEnd == true) {
-		itsOver->draw();
-	}
+//	if (gameEnd == true) {
+//		itsOver->draw();
+//	}
+	return gameOver;
 }
 
 void Board::handle(unsigned char key)

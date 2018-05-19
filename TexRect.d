@@ -1,1 +1,1 @@
-TexRect.o: TexRect.cpp TexRect.h RgbImage.h
+TexRect.o: TexRect.cpp TexRect.h

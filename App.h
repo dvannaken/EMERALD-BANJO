@@ -3,24 +3,16 @@
 
 #include "GlutApp.h"
 #include "TexRect.h"
+#include "AnimatedRect.h"
 #include <cmath>
 
-#include "GlutApp.h"
+#include "Title.h"
 #include "Board.h"
 
 class App: public GlutApp {
     // Maintain app state here
     float mx;
     float my;
-    Board* gameBoard;
-    
-    Board game;
-    void menuScreen();
-    void gameScreen();
-
-    int t;
-    int lastT;
-    double delta;
     
 public:
     // Constructor, to initialize state
@@ -32,11 +24,13 @@ public:
     void mouseDown(float x, float y);
     void mouseDrag(float x, float y);
     void idle();
+	
+	Title* titleScreen;
+    Board* gameBoard;
 
-    void running();
-    
-    TexRect* dungeon;
-    TexRect* runner;
+    int t;
+    int lastT;
+    double delta;
 };
 
 #endif
