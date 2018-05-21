@@ -75,6 +75,7 @@ Board::Board(int ii)
 	map = new MapGen(size, size);
 	map->generate(random->randomInt(35, 50));
 	map->print();
+	// TODO: FIX THIS. Squares are not where they should be, x and y are flipped everywhere
 	for (int row = 0; row < size; row++)
 	{
 		gameboard.push_back(std::vector<Square *>());
@@ -129,10 +130,16 @@ Board::Board(int ii)
 
 					doFov(x, y, 2, lightlevel_3);
 				}
-				else if (canMove(x, y - 1))
+				else if (canMove(x + 1, y))
 				{
-					player = new Player(x, y - 1); // spawns player right of upstairs
-					gameboard[x - 1][y]->setEntityType(entityType::player);
+					player = new Player(x + 1, y); // spawns player right of upstairs
+					gameboard[x + 1][y]->setEntityType(entityType::player);
+
+					doFov(x, y, 2, lightlevel_3);
+				}
+				else {
+					player = new Player(x, y); // spawns player on stairs, catch-all
+					gameboard[x][y]->setEntityType(entityType::player);
 
 					doFov(x, y, 2, lightlevel_3);
 				}
@@ -157,9 +164,10 @@ Board::Board(int ii)
 
 	menu = new MenuDisplay(12, -0.2, 0.5, 0.4, 0.7, false);
 	log = new MenuDisplay(7, 0.4, -0.6, 0.6, 0.4, true);
-	location = new MenuDisplay(1, -0.9, 0.9, 0.2, 0.1, true);
+	location = new MenuDisplay(2, -0.9, 0.9, 0.2, 0.15, true);
 	healthbar = new Bar(0.7, 0.9, 0.3, 0.05, "health");
 	expbar = new Bar(0.7, 0.84, 0.3, 0.03, "exp");
+	thots = new TextDisplay(450, player->getX(), player->getY(), xinc, yinc);
 }
 
 
@@ -170,6 +178,7 @@ void Board::draw()
 	}
 	log->display();
 	location->display();
+	thots->display(gameboard[player->getX()][player->getY()]->getX(), gameboard[player->getX()][player->getY()]->getY());
 	healthbar->draw();
 	expbar->draw();
 
@@ -321,6 +330,8 @@ void Board::tick()
 	healthbar->setPercent( (double)player->getHp() / (double)player->getMaxHp() );
 	expbar->setPercent( (double)player->getExp() / (double)player->getMaxExp() );
 	s = std::to_string(player->getX()) + ", " + std::to_string(player->getY());
+	location->newline(s);
+	s = std::to_string(gameboard[player->getX()][player->getY()]->getX()) + ", " + std::to_string(gameboard[player->getX()][player->getY()]->getY());
 	location->newline(s);
 }
 
@@ -675,6 +686,8 @@ void Board::combat(int m, bool attacking) {
 					std::cout << "deals " << damage << " damage " << std::endl;
 					s = std::string("deals ") + std::to_string(damage) + " damage ";							// LOG OP
 					log->newline(s);
+					s = std::to_string(damage);																	// TEXT OP
+					thots->newline(s);
 					
 					player->takesDamage(damage);
 					std::cout << "player has " << player->getHp() << " health of their max " << player->getMaxHp() << std::endl;
@@ -744,6 +757,8 @@ void Board::combat(int m, bool attacking) {
 				std::cout << "deals " << damage << " damage " << std::endl;
 				s = std::string("deals ") + std::to_string(damage) + " damage ";							// LOG OP
 				log->newline(s);
+				s = std::to_string(damage);																	// TEXT OP
+				thots->newline(s);
 				
 				player->takesDamage(damage);
 				std::cout << "player has " << player->getHp() << " health of their max " << player->getMaxHp() << std::endl;
@@ -888,7 +903,7 @@ void Board::spawnHandler()
 	{
 		spawnMonster(1000, 10);
 		randomItemSpawner(100, 5);
-		debug();
+		//debug();
 	}
 	if (stepCounter % 100 == random->randomInt(100) && monsterList.size() <= 30) { // something to randomly spawn monster
 		spawnMonster(30, 1);
@@ -1264,6 +1279,7 @@ Board::~Board()
 	delete location;
 	delete healthbar;
 	delete expbar;
+	delete thots;
 	for (int i = 0; i < monsterList.size(); i++)
 	{
 		delete monsterList[i];

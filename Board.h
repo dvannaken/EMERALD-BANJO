@@ -7,6 +7,7 @@
 #include "ItemManger.h"
 #include "TexRect.h"
 #include "MenuDisplay.h"
+#include "TextDisplay.h"
 #include "Bar.h"
 #include <cmath>
 
@@ -55,6 +56,7 @@ class Board {
 	MenuDisplay *log;
 	MenuDisplay *location;
 	MenuDisplay *menu;
+	TextDisplay *thots;
 
 	//C++ shadowcasting implementation - Bj�rn Bergstr�m [bjorn.bergstrom@roguelikedevelopment.org]
 	//with code from http://www.roguebasin.com/index.php?title=C%2B%2B_shadowcasting_implementation

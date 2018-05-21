@@ -6,6 +6,7 @@
 #include <vector>
 
 class MenuDisplay : public Rect {
+protected:
 	bool visible;
 	unsigned maxlines;
 	std::vector < std::string > lines;
@@ -19,10 +20,10 @@ public:
 	~MenuDisplay();
 	
 	// moves text up, adds new line and removes oldest line
-	void newline(std::string);
+	virtual void newline(std::string);
 	
-	//display all 3 text lines within? rect
-	void display();
+	//display all text lines within rect
+	virtual void display();
 	
 	bool isVisible();
 	
