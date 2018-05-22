@@ -213,6 +213,7 @@ void Board::handle(unsigned char key)
 
 		if (key == 'm') {
 			menu->toggleVisibility();
+			debug();
 		}
 		if (!menu->isVisible()) {
 
@@ -317,17 +318,17 @@ void Board::tick()
 	menu->newline(s);
 	s = std::string("Level:                             ") + std::to_string(player->getLevel());
 	menu->newline(s);
-	s = std::string("CONSTITUTION:      ") + std::to_string(player->getAC());
+	s = std::string("STRENGTH:              ") + std::to_string(player->getStre());
 	menu->newline(s);
-	s = std::string("CHARISMA:              ") + std::to_string(player->getAC());
+	s = std::string("DEXTERITY:             ") + std::to_string(player->getDex());
 	menu->newline(s);
-	s = std::string("WISDOM:                  ") + std::to_string(player->getAC());
+	s = std::string("CONSTITUTION:      ") + std::to_string(player->getCon());
 	menu->newline(s);
-	s = std::string("DEXTERITY:             ") + std::to_string(player->getAC());
+	s = std::string("WISDOM:                  ") + std::to_string(player->getWis());
 	menu->newline(s);
-	s = std::string("INTELLIGENCE:      ") + std::to_string(player->getAC());
+	s = std::string("INTELLIGENCE:      ") + std::to_string(player->getIntel());
 	menu->newline(s);
-	s = std::string("STRENGTH:              ") + std::to_string(player->getAC());
+	s = std::string("CHARISMA:              ") + std::to_string(player->getChari());
 	menu->newline(s);
 	menu->newline("");
 	s = std::string("Player wields a +") + std::to_string(player->getCurrentWeaponBonusModifer()) + " " + player->getCurrentWeaponName();
@@ -372,7 +373,6 @@ void Board::setVisited(uint x, uint y, bool visited)
 
 void Board::setVisible(uint x, uint y, visibility vis)
 {
-
 	gameboard[x][y]->setVis(vis);
 }
 
