@@ -2,14 +2,16 @@
 #ifndef Entity_h
 #define Entity_h
 
-class Entity {
-private:
+#include "TexRect.h"
 
+class Entity {
+	TexRect* objectTex;
 
 public:
 	int x;
 	int y;
-	Entity(int x, int y);
+	Entity(int, int);
+	~Entity();
 
 	float getX();
 	float getY();
@@ -17,7 +19,7 @@ public:
 	void setX(int);
 	void setY(int);
 	
-	virtual void draw() const {};
+	void draw();
 
 };
 

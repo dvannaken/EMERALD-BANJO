@@ -30,7 +30,7 @@ Board::Board()
 			/* if  (row == 0 || row == 49 || col == 0 || col == 49){
 				 squares.push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, 0, 0, 0));
 			 }*/
-			squares.push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8)); //walls
+			squares.push_back(new Square(startx + row * xinc, starty - col * yinc, 0.04, .8, .8, .8)); //walls
 		}
 	}
 	upToDate = true;
@@ -82,7 +82,7 @@ Board::Board(int ii)
 		for (int col = 0; col < size; col++)
 		{
 			// walls
-			gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8));
+			gameboard.at(row).push_back(new Square(startx + row * xinc, starty - col * yinc, 0.04, .8, .8, .8));
 		}
 	}
 
@@ -98,30 +98,37 @@ Board::Board(int ii)
 			case MapGen::Unused:
 				gameboard[x][y]->setTile(Unused);
 				gameboard[x][y]->setColor(.6, .6, .6);
+				//gameboard[x][y]->setTex("images/asteroid.png");
 				break;
 			case MapGen::Floor:
 				gameboard[x][y]->setTile(Floor);
 				gameboard[x][y]->setColor(0.6, 0.6, 0.6);
+				//gameboard[x][y]->setTex("images/asteroid.png");
 				break;
 			case MapGen::Corridor:
 				gameboard[x][y]->setTile(Corridor);
 				gameboard[x][y]->setColor(0.75, 0.75, 0.75);
+				//gameboard[x][y]->setTex("images/asteroid.png");
 				break;
 			case MapGen::Wall:
 				gameboard[x][y]->setTile(Wall);
 				gameboard[x][y]->setColor(0.75, 0.75, 0.75);
+				//gameboard[x][y]->setTex("images/asteroid.png");
 				break;
 			case MapGen::ClosedDoor:
 				gameboard[x][y]->setTile(ClosedDoor);
 				gameboard[x][y]->setColor(0.462, 0.423, 0.298);
+				//gameboard[x][y]->setTex("images/asteroid.png");
 				break;
 			case MapGen::OpenDoor:
 				gameboard[x][y]->setTile(OpenDoor);
 				gameboard[x][y]->setColor(0.4, 0.4, 0.4);
+				//gameboard[x][y]->setTex("images/asteroid.png");
 				break;
 			case MapGen::UpStairs:
 				gameboard[x][y]->setTile(Upstairs);
 				gameboard[x][y]->setColor(0.8, 0.1, 0.1);
+				//gameboard[x][y]->setTex("images/asteroid.png");
 
 				if (canMove(x - 1, y))
 				{
@@ -148,9 +155,10 @@ Board::Board(int ii)
 			case MapGen::DownStairs:
 				gameboard[x][y]->setTile(Downstairs);
 				gameboard[x][y]->setColor(0.8, 0.0, 0.0);
-
+				//gameboard[x][y]->setTex("images/asteroid.png");
 				break;
 			default:
+				std::cout << "ERROR" << std::endl;
 				break;
 			}
 		}
@@ -1205,26 +1213,35 @@ bool Board::monsterMoveHandler(int m, direction going,int tries) {
 void Board::pickUpManger(int playerX,int playerY)
 {
 	if (gameboard[playerX][playerY]->getLootable() != _Empty) {
-		// pick up the item.
+		std::cout << "now getting item at " << playerX << ", " << playerY << std::endl;
 
 		int itemIndex = 0;
 		switch (gameboard[playerX][playerY]->getLootable()) {
 		case _Weapons:
 			itemIndex = loot->itemAt(playerX, playerY,weapon_);
+			std::cout << "itemindex = " << itemIndex << std::endl;
 			player->switchWeapon(loot->WeaponList[itemIndex]);
 			break;
 		case _Armors:
 			itemIndex = loot->itemAt(playerX, playerY,armor_);
+			std::cout << "itemindex = " << itemIndex << std::endl;
 			player->switchArmor(loot->ArmorList[itemIndex]);
 			break;
 		case _Potions:
+		{
 			itemIndex = loot->itemAt(playerX, playerY,potion_);
 			std::string s = player->getName() + " healed " + std::to_string( !(loot->PotionList[itemIndex]->getStatModifer()<(player->getMaxHp() - player->getHp()))?(player->getMaxHp() - player->getHp()):loot->PotionList[itemIndex]->getStatModifer() ) + " health";							// LOG OP
 			log->newline(s);
 			player->heals(loot->PotionList[itemIndex]->getStatModifer());
+		}
+			break;
+		default:
+			std::cout << "ERROR: ITEMPICKUP FAILED on board" << std::endl;
+			std::cout << "unknown item at " << playerX << ", " << playerY << std::endl;
 			break;
 		}
 
+		std::cout << "now deleting item at " << playerX << ", " << playerY << std::endl;
 		gameboard[playerX][playerY]->setLootable(_Empty);
 	}
 
@@ -1263,7 +1280,6 @@ void Board::lookAt(int x, int y) {
 		default:
 			std::cout << "ERROR: ITEMLOOKUP FAILED on board" << std::endl;
 			std::cout << "unknown item at " << x << ", " << y << std::endl;
-			std::cin >> s;
 			break;
 		}
 	}

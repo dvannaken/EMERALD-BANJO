@@ -17,4 +17,4 @@ Expanding on the foundation laid by Russell and Co.
 
 # ISSUES:
 1. ~~__Crash during item pickup__~~ (wow that was stupid)
-2. x and y are inverted in generation, needed for lookups/animations
+2. ~~x and y are inverted in generation, needed for lookups/animations~~

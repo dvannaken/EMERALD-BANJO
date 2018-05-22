@@ -7,6 +7,7 @@ class TextDisplay : public MenuDisplay {
 	double timeToDisplay;
 	double lastT;
 	bool moving;
+	int rep;
 
 public:
     TextDisplay();

@@ -81,7 +81,7 @@ bool Player::levelHandler()
 	if (this->exp > expThreshold[level])
 	{
 		//player has leveled up;
-		std::cout << "You have leveled Up" << std::endl;
+		std::cout << "You have leveled up" << std::endl;
 		levelUp();
 		return true;
 	}
@@ -116,7 +116,8 @@ void Player::switchArmor(Armor* pickedUpArmor)
 	recalculateAC();
 }
 
-void Player::switchWeapon(Weapons* pickedUpWeapon) {
+void Player::switchWeapon(Weapons* pickedUpWeapon)
+{
 	Weapons* tempWeap = currentWeapon;
 	currentWeapon = pickedUpWeapon;
 	delete tempWeap;
@@ -161,7 +162,8 @@ void Player::init()
 
 	expThreshold = {level_1, level_2,level_3,level_4,level_5,level_6,level_7,level_8,level_9,level_10};
 	recalculateAC();
-
+	
+	//objectTex = new TexRect(filename,x,y,w,h);
 }
 void Player::levelUp()
 {

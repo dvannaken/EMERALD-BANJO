@@ -40,6 +40,8 @@ Square::Square(float x, float y, float w, float r, float g, float b) : Rect(x, y
 }
 
 void Square::draw() {
+//	objectTex->draw();
+
 
 	/*if (entityTile != empty) {
 		entity->draw();
@@ -51,10 +53,10 @@ void Square::draw() {
 		glColor3f(0.294, 0.466, 0.745);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-( y - h),-(x + w));
-		glVertex2f(-(y - h),-x);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h); 
 
 		glEnd();
 	}
@@ -65,10 +67,10 @@ void Square::draw() {
 		glColor3f(0.420, 0.557, 0.137);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-(y - h), -(x + w));
-		glVertex2f(-(y - h), -x);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h); 
 
 		glEnd();
 	}
@@ -78,10 +80,10 @@ void Square::draw() {
 		glColor3f(0.882, 0.545, 0.972);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-(y - h), -(x + w));
-		glVertex2f(-(y - h), -x);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h); 
 
 		glEnd();
 	}
@@ -91,10 +93,10 @@ void Square::draw() {
 		glColor3f(0.768, 0.117, 0.945);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-(y - h), -(x + w));
-		glVertex2f(-(y - h), -x);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h); 
 
 		glEnd();
 	}
@@ -103,10 +105,10 @@ void Square::draw() {
 		glColor3f(0.454, 0.062, 0.556);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-(y - h), -(x + w));
-		glVertex2f(-(y - h), -x);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h); 
 
 		glEnd();
 	}
@@ -142,10 +144,10 @@ void Square::draw() {
     
 
     glBegin(GL_POLYGON);
-	glVertex2f(-y, -x);
-	glVertex2f(-y, -(x + w));
-	glVertex2f(-( y - h),-(x + w));
-	glVertex2f(-(y - h),-x);
+	glVertex2f(x, y);
+	glVertex2f(x + w, y);
+	glVertex2f(x + w, y - h);
+	glVertex2f(x, y - h);
 
 
     glEnd();
@@ -154,13 +156,17 @@ void Square::draw() {
 
 }
 
-
 entityType Square::getEntityType() const {
     return entityTile;
 }
 
 tileType Square::getTile() const{
     return tile;
+}
+
+TexRect* Square::getHB() const 
+{ 
+	return objectTex;
 }
 
 void Square::setLootable(lootType loot)
@@ -212,6 +218,11 @@ void Square::setColor(float red, float green, float blue)
 	b = blue;
 }
 
+void Square::setTex(const char* filename)
+{
+	//objectTex = new TexRect(filename,x,y,w,h);
+}
+
 void Square::clear() {
     if (entity != 0){
         delete entity;
@@ -224,4 +235,5 @@ Square::~Square(){
     if (entity != 0){
         delete entity;
     }
+	//delete objectTex;
 }

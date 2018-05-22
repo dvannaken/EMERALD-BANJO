@@ -1,5 +1,7 @@
 #include "Entity.h"
 
+#include <iostream>
+
 #if defined WIN32
 #include <freeglut.h>
 #elif defined __APPLE__
@@ -12,6 +14,12 @@ Entity::Entity(int x, int y)
 {
 	this->x = x;
 	this->y = y;
+	//objectTex = new TexRect(filename,x,y,w,h);
+}
+
+Entity::~Entity()
+{
+	//delete objectTex;
 }
 
 float Entity::getX()  {
@@ -28,4 +36,8 @@ void Entity::setX(int) {
 
 void Entity::setY(int) {
   this->y = y;
+}
+
+void Entity::draw(){
+	objectTex->draw();
 }

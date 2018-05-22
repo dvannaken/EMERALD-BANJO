@@ -6,6 +6,8 @@ Monster::Monster():Entity(3,3) //constructor
 {
 	awake = false;
 	numGenerator = new RandomNum();
+	
+	//objectTex = new TexRect(filename,x,y,w,h);
 }
 
 Monster::~Monster()
@@ -15,6 +17,7 @@ Monster::~Monster()
 
 Monster::Monster(int x, int y) :Entity(x,y)
 {
+	//objectTex = new TexRect(filename,x,y,w,h);
 }
 
 Monster::Monster(const Monster & m2):Entity(m2.x,m2.y) {
@@ -27,6 +30,8 @@ Monster::Monster(const Monster & m2):Entity(m2.x,m2.y) {
 	movementPerRound = m2.movementPerRound;
 	detectionRadius = m2.detectionRadius;
 	weaponSize = m2.weaponSize;
+	
+	//objectTex = new TexRect(filename,x,y,w,h);
 }
 
 void Monster::moveUp()

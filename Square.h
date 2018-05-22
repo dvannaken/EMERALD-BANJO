@@ -1,5 +1,6 @@
 #ifndef Square_h
 #define Square_h
+#include "TexRect.h"
 #include "Rect.h"
 #include "Player.h"
 #include <algorithm>
@@ -39,6 +40,8 @@ enum visibility {
 
 class Square : public Rect {
     Entity* entity;
+	TexRect* objectTex;
+	
     tileType tile;
 	entityType entityTile; // need better name
 	visibility vis;
@@ -72,12 +75,15 @@ public:
 	visibility getVis();
 	lootType getLootable();
 
+	TexRect* getHB() const;
 
 	void setLootable(lootType);
 	void setTile(tileType);
 	void setVis(visibility);
 	void setEntityType(entityType);
 	void setColor(float, float, float);
+	
+	void setTex(const char*);
 
     void clear();
 

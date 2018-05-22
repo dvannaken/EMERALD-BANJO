@@ -2,13 +2,12 @@
 
 Item::Item():Entity(0,0)
 {
-
-	// default constructor, place holder location
-
+	//objectTex = new TexRect(filename,x,y,w,h);
 }
 
 Item::Item(int x, int y):Entity(x,y)
 {
+	//objectTex = new TexRect(filename,x,y,w,h);
 }
 
 Item::~Item()

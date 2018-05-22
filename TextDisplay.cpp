@@ -31,6 +31,7 @@ TextDisplay::~TextDisplay() {}
 
 void TextDisplay::newline(std::string s) {
 	lastT = glutGet(GLUT_ELAPSED_TIME);
+	rep = 0;
 
 //	for (int i = maxlines - 1; i > 0; i--) {
 //		lines.at(i) = lines.at(i-1);
@@ -44,18 +45,20 @@ void TextDisplay::display(double x, double y) {
     double delta = t - lastT;
 	
 	if ( delta < timeToDisplay ) {
-		std::cout << "displaying " << lines.at(0) << " at " << x << ", " << y << std::endl;
-
 		glColor3f(1, 0.1, 0);
 		const char* c = lines.at(0).c_str();
 //		double size = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_10, (const unsigned char*)c ) * w;
-//		double x_offset = (w - size)/2;
-//		double y_offset = 0.01;
+		double x_offset = 0.01 * rep;
+		double y_offset = 0.005 * rep;
 
-		glRasterPos2f(x, y);
+		glRasterPos2f(x + x_offset, y + y_offset);
 //		std::cout << "offsets at " << x_offset << ", " << y_offset << std::endl;
 		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_10, (const unsigned char*)c );
+
+		rep++;
 	}
+	else
+		rep = 0;
 }
 
 bool TextDisplay::isMoving() {
