@@ -51,10 +51,10 @@ void Square::draw() {
 		glColor3f(0.294, 0.466, 0.745);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-( y - h),-(x + w));
-		glVertex2f(-(y - h),-x);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h);
 
 		glEnd();
 	}
@@ -65,23 +65,22 @@ void Square::draw() {
 		glColor3f(0.420, 0.557, 0.137);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-(y - h), -(x + w));
-		glVertex2f(-(y - h), -x);
-
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h);
 		glEnd();
 	}
 
 	if (lootable == _Weapons && inVision())
 	{
 		glColor3f(0.882, 0.545, 0.972);
-
+		
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-(y - h), -(x + w));
-		glVertex2f(-(y - h), -x);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h);
 
 		glEnd();
 	}
@@ -91,10 +90,10 @@ void Square::draw() {
 		glColor3f(0.768, 0.117, 0.945);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-(y - h), -(x + w));
-		glVertex2f(-(y - h), -x);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h);
 
 		glEnd();
 	}
@@ -103,10 +102,10 @@ void Square::draw() {
 		glColor3f(0.454, 0.062, 0.556);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(-y, -x);
-		glVertex2f(-y, -(x + w));
-		glVertex2f(-(y - h), -(x + w));
-		glVertex2f(-(y - h), -x);
+		glVertex2f(x, y);
+		glVertex2f(x + w, y);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x, y - h);
 
 		glEnd();
 	}
@@ -142,10 +141,10 @@ void Square::draw() {
     
 
     glBegin(GL_POLYGON);
-	glVertex2f(-y, -x);
-	glVertex2f(-y, -(x + w));
-	glVertex2f(-( y - h),-(x + w));
-	glVertex2f(-(y - h),-x);
+	glVertex2f(x, y);
+	glVertex2f(x + w, y);
+	glVertex2f(x + w, y - h);
+	glVertex2f(x, y - h);
 
 
     glEnd();

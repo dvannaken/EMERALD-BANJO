@@ -82,7 +82,7 @@ Board::Board(int ii)
 		for (int col = 0; col < size; col++)
 		{
 			// walls
-			gameboard.at(row).push_back(new Square(startx + col * xinc, starty - row * yinc, 0.04, .8, .8, .8));
+			gameboard.at(row).push_back(new Square(startx + row * xinc, starty - col * yinc, 0.04, .8, .8, .8));
 		}
 	}
 
